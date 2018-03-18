@@ -4,6 +4,8 @@ Project logo TBD
 
 ### Synchronization and collaboration project for Kottev Hostel in Jerusalem. See the [Wiki](../../wiki/home) for more details.
 
+### [![Join the chat at https://gitter.im/Hostel-Harmony/Lobby](https://badges.gitter.im/Hostel-Harmony/Lobby.svg)](https://gitter.im/Hostel-Harmony/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Disclaimer
 This project is developed as part of the requirements for a [software engineering course](https://github.com/jce-il/se-class/wiki) at the software engineering department - [Azrieli College of Engineering](http://www.jce.ac.il/), Jerusalem, Israel.
 
