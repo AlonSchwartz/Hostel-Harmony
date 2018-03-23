@@ -1,6 +1,6 @@
 # Hostel Harmony
 
-Project logo TBD
+![Kottev logo](http://kottev.co.il/wp-content/uploads/2017/01/logoooo.png)
 
 ### Synchronization and collaboration project for Kottev Hostel in Jerusalem. See the [Wiki](../../wiki/home) for more details.
 
