@@ -11,17 +11,17 @@ This project is developed as part of the requirements for a [software engineerin
 
 Please visit our wiki for furthur project info: 
 
-### [User Manual](../../wiki/user-manual) (empty for now)
+### [User Manual](../../wiki/User-manual-(empty)) (empty for now)
 
-### [Team Page](../../wiki/team)
+### [Team Page](../../wiki/Team)
 
-### Project Documents
+### ~~Project Documents
 - [Project Idea](docs/idea.pdf) ([Presentation](docs/idea-slides.pdf))
 - [Project Inception](../../wiki/inception)
 - [Software Requirements Specification](../../wiki/srs)
 - [Software Design Specification](../../wiki/sds)
 
-### Iteration Pages
+### ~~Iteration Pages
 - [Iteration 0 - ZFR](../../wiki/iter0-zfr)
 - [Iteration 1 - MVP]()
 - [Iteration 2 - Feature X]()
