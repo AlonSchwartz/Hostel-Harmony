@@ -15,10 +15,12 @@ Please visit our wiki for furthur project info:
 
 ### [Team Page](../../wiki/Team)
 
-### ~~Project Documents~~
+### Project Documents
+
+- [Project Inception](../../wiki/inception)
+- [Software Requirements Specification](../../wiki/srs)
+
 ~~- [Project Idea](docs/idea.pdf) ([Presentation](docs/idea-slides.pdf))~~
-~~- [Project Inception](../../wiki/inception)~~
-~~- [Software Requirements Specification](../../wiki/srs)~~
 ~~- [Software Design Specification](../../wiki/sds)~~
 
 ### ~~Iteration Pages~~
