@@ -17,7 +17,7 @@ Please visit our wiki for furthur project info:
 
 ### Project Documents
 
-- [Project Inception](../../wiki/inception)
+- [Project Inception](../../wiki/inception---planning)
 - [Software Requirements Specification](../../wiki/srs)
 
 ~~- [Project Idea](docs/idea.pdf) ([Presentation](docs/idea-slides.pdf))~~
