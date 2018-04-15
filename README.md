@@ -21,7 +21,7 @@ Please visit our wiki for furthur project info:
 - [Software Requirements Specification](../../wiki/srs)
 
 ~~- [Project Idea](docs/idea.pdf) ([Presentation](docs/idea-slides.pdf))~~
-~~- [Software Design Specification](../../wiki/sds)~~
+- [Software Design Specification](../../wiki/sds)
 
 ### ~~Iteration Pages~~
 ~~- [Iteration 0 - ZFR](../../wiki/iter0-zfr)~~
