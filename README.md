@@ -25,8 +25,8 @@ Please visit our wiki for furthur project info:
 ~~- [Project Idea](docs/idea.pdf) ([Presentation](docs/idea-slides.pdf))~~
 
 ### ~~Iteration Pages~~
-~~- [Iteration 0 - ZFR](../../wiki/iter0-zfr)~~
-~~- [Iteration 1 - MVP]()~~
+- [Iteration 0 - ZFR](../../wiki/iter0-zfr)
+- [Iteration 1 - MVP](https://github.com/elchi28/Hostel-Harmony/wiki/Iter1-MVP)
 ~~- [Iteration 2 - Feature X]()~~
 ~~- [Iteration 3 - Feature Y]()~~
 ~~- [Iteration 4 - Feature Z]()~~
