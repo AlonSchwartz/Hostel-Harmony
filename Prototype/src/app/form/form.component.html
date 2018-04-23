@@ -1,0 +1,23 @@
+<div class="forms">
+  <h1>
+    הוסף אירוע חדש עבור
+  </h1>
+  <form>
+    <button>בחר תאריך</button>
+    <select>
+        <option selected disabled hidden >סוג האירוע</option>
+        <option value="form">כללי</option>
+        <option value="form">פגישה</option>
+        <option value="form">טיפול</option>
+        <option value="form">....</option>
+    </select>
+    <div>
+      <input type="checkbox">דרוש ליווי
+    </div>
+    <input class="tbox" type="text" style="font-size:14pt" placeholder="תיאור....">
+    <button><a routerLink="/calendar" >submit</a></button>
+  </form>
+  <div id="return">
+    <button ><a routerLink="/menu" >חזור לתפריט</a></button>
+  </div>
+</div>

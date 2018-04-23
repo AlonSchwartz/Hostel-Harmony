@@ -1,0 +1,24 @@
+<div id="menu">
+<p>
+  שלום בן, מה ברצונך לעשות?
+</p>
+<form>
+<select (change)="navigateTo($event.target.value)">
+    <option selected disabled hidden >קבע אירוע לדייר</option>
+    <option value="form">ויסאם</option>
+    <option value="form">אלחנן</option>
+    <option value="form">אלון</option>
+    <option value="form">עמית</option>
+</select>
+<select (change)="navigateTo($event.target.value)">
+    <option selected disabled hidden >צפה ביומן של</option>
+    <option value="calendar" >ויסאם</option>
+    <option value="calendar">אלחנן</option>
+    <option value="calendar">אלון</option>
+    <option value="calendar">עמית</option>
+</select>
+<button><a routerLink="" >הוספת איש צוות למאגר</a></button>
+<button><a routerLink="" >הוספת דייר למאגר</a></button>
+</form>
+<button id = "logout"><a routerLink="/login" >התנתק</a></button>
+</div>
