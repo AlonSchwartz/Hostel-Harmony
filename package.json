@@ -16,11 +16,16 @@
     "url": "https://github.com/jce-il/project-template/issues"
   },
   "homepage": "https://github.com/jce-il/project-template#readme",
+<<<<<<< HEAD
   "dependencies": {
     "bootstrap": "^4.1.1",
     "ngx-bootstrap": "^2.0.5"
   },
   "devDependencies": {
     "@angular/cli": "^6.0.0"
+=======
+  "devDependencies": {
+    "@angular/cli": "^1.7.4"
+>>>>>>> 2e122ecedd816adeafd2c3c74ec4855c40401e44
   }
 }
