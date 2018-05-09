@@ -6,7 +6,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import {Staff} from '../models/staff.model'
+import {addStaff} from '../models/add-staff.model'
 import {NgModel} from '@angular/forms';
 import {FormControl, Validators} from '@angular/forms';
 
@@ -26,14 +26,14 @@ export class AddStaffComponent implements OnInit {
             '';
   }
 
-  private model: Staff ;
+  private model: addStaff ;
   private submitted: boolean;
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model); }
 
   constructor( ) {
     this.submitted = false;
-    this.model = new Staff(
+    this.model = new addStaff(
       null, 
       null,
       null,

@@ -1,4 +1,4 @@
-export class Resident{
+export class addResident{
     constructor(
         public name: string, 
         public surname: string, 

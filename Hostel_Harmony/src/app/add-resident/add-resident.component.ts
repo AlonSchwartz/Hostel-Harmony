@@ -4,7 +4,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import {Resident} from '../models/resident.model';
+import {addResident} from '../models/add-resident.model';
 import {NgModel} from '@angular/forms';
 
 
@@ -15,7 +15,7 @@ import {NgModel} from '@angular/forms';
 })
 // TODO: check required fields
 export class AddResidentComponent implements OnInit {
-  private model: Resident ;
+  private model: addResident ;
   private submitted: boolean;
   
   // TODO: Remove this when we're done--->testing purposes
@@ -23,7 +23,7 @@ export class AddResidentComponent implements OnInit {
 
   constructor( ) {
     this.submitted = false;
-    this.model = new Resident(
+    this.model = new addResident(
       null, 
       null,
       null, 

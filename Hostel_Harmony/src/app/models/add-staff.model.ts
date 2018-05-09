@@ -1,4 +1,4 @@
-export class Staff{
+export class addStaff{
     constructor(
         public name: string, 
         public surname: string, 
