@@ -18,7 +18,7 @@ import { MenuComponent } from './menu/menu.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { AddResidentComponent } from './add-resident/add-resident.component';
 import { AddStaffComponent } from './add-staff/add-staff.component';
-import { SingleDayColComponent } from './single-day-col/single-day-col.component';
+
 import { EventComponent } from './event/event.component';
 import { OwlDateTimeModule,OwlNativeDateTimeModule ,OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -40,7 +40,6 @@ import { environment } from '../environments/environment';
     CalendarComponent,
     AddResidentComponent,
     AddStaffComponent,
-    SingleDayColComponent,
     EventComponent,
     TestingComponent
   ],
