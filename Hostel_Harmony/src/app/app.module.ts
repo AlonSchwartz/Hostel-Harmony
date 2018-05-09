@@ -21,6 +21,11 @@ import { OwlDateTimeModule,OwlNativeDateTimeModule ,OWL_DATE_TIME_LOCALE } from 
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import { TestingComponent } from './testing/testing.component';
+import { UserService } from './services/user/user.service';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -48,11 +53,15 @@ import { TestingComponent } from './testing/testing.component';
     MatDatepickerModule,
     FormsModule,
     BrowserModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireDatabaseModule
   ],
   providers: [
     NameSelectService,
-    {provide: OWL_DATE_TIME_LOCALE, useValue: 'il'}
+    {provide: OWL_DATE_TIME_LOCALE, useValue: 'il'},
+    UserService
   ],
   bootstrap: [AppComponent]
 })
