@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/jce-il/project-template/issues"
   },
-  "homepage": "https://github.com/jce-il/project-template#readme"
+  "homepage": "https://github.com/jce-il/project-template#readme",
+  "dependencies": {
+    "bootstrap": "^4.1.1",
+    "ngx-bootstrap": "^2.0.5"
+  },
+  "devDependencies": {
+    "@angular/cli": "^6.0.0"
+  }
 }
