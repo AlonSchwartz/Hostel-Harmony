@@ -1,0 +1,81 @@
+<div class="container">
+  <h1>Resident Form</h1>
+  {{diagnostic}}
+  <form (ngSubmit)="subResident(resForm.value)" #resForm="ngForm">
+    <div class="form-group">
+      <label for="name">שם</label>
+      <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name">
+    </div>
+
+    <div class="form-group">
+      <label for="surname">משפחה</label>
+      <input type="text" class="form-control" id="surname" required [(ngModel)]="model.surname" name="surname">
+    </div>
+
+    <div class="form-group">
+      <label for="phone">טלפון</label>
+      <input type="phone" pattern="[0-9]{10}" class="form-control" id="phone" [(ngModel)]="model.phone" name="phone">
+    </div>
+
+    <div class="form-group">
+        <label for="age">תאריך לידה</label> 
+      <mat-form-field>
+          
+            <input matInput [matDatepicker]="picker" placeholder="בחר תאריך" id="age" required  [(ngModel)]="model.age" name="age">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    
+
+    <div class="form-group">
+      <label for="assigned">מתאם טיפול</label>
+      <input type="text" class="form-control" id="assigned" required [(ngModel)]="model.assigned" name="assigned">
+    </div>
+    <hr>
+    <h4>אנשי קשר</h4>
+    <div class="form-group">
+      <label for="emergencyn">שם</label>
+      <input type="text" class="form-control" id="emergencyn"  [(ngModel)]="model.emergency.name" name="emergencyn">
+    </div>
+    <div class="form-group">
+        <label for="rel">איש קשר</label>
+        <input type="text" class="form-control" id="rel"  [(ngModel)]="model.emergency.rel" name="rel">
+      </div>
+    <div class="form-group">
+      <label for="emergencyp">טלפון</label>
+      <input type="phone" pattern="[0-9]{10}" class="form-control" id="emergencyp"  [(ngModel)]="model.emergency.phone" name="emergencyp">
+    </div>
+    <hr>
+    <h4>עבודה</h4>
+    <div class="form-group">
+      <label for="workinf">מקום עבודה</label>
+      <input type="text" class="form-control" id="workinf"  [(ngModel)]="model.work.info" name="workinf">
+    </div>
+
+    <div class="form-group">
+      <label for="workp">טלפון</label>
+      <input type="phone" pattern="[0-9]{10}" class="form-control" id="workp"  [(ngModel)]="model.work.phone" name="workp">
+    </div>
+
+    <div class="form-group">
+      <label for="workloc">מיקום</label>
+      <input type="text" class="form-control" id="workloc"  [(ngModel)]="model.work.location" name="workloc">
+    </div>
+    <hr>
+    <h4>רופא</h4>
+    <div class="form-group">
+      <label for="doctorps">פסיכיאטר</label>
+      <input type="text" class="form-control" id="doctorps"  [(ngModel)]="model.doctor.psych" name="doctorps">
+    </div>
+
+    <div class="form-group">
+      <label for="doctorgp">רופא משפחה</label>
+      <input type="text" class="form-control" id="doctorgp"  [(ngModel)]="model.doctor.gp" name="doctorgp">
+    </div>
+  
+    <button type="submit" class="btn btn-success" [disabled]="!resForm.valid ">Submit</button>
+
+  </form>
+</div>
