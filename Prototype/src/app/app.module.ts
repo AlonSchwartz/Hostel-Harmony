@@ -10,6 +10,13 @@ import { FormComponent } from './form/form.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { AddResidentComponent } from './add-resident/add-resident.component';
 import { AddStaffComponent } from './add-staff/add-staff.component';
+import { UserService } from './services/user/user.service';
+import { TestingComponent } from './testing/testing.component';
+import { AngularFireModule } from 'angularfire2';
+import { environment } from '../environments/environment';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+
 
 
 @NgModule({
@@ -20,13 +27,20 @@ import { AddStaffComponent } from './add-staff/add-staff.component';
     FormComponent,
     CalendarComponent,
     AddResidentComponent,
-    AddStaffComponent
+    AddStaffComponent,
+    TestingComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireDatabaseModule
   ],
-  providers: [],
+  providers: [
+    UserService
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

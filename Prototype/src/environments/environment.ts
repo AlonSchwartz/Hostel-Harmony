@@ -4,5 +4,14 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  // Initialize Firebase
+  firebase: {
+    apiKey: "AIzaSyDwxTEzgt26QlW5kd0ysvRMx8yoEREFEfk",
+    authDomain: "hostel-harmony.firebaseapp.com",
+    databaseURL: "https://hostel-harmony.firebaseio.com",
+    projectId: "hostel-harmony",
+    storageBucket: "hostel-harmony.appspot.com",
+    messagingSenderId: "416910024968"
+  }
 };
