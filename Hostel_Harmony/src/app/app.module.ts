@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material';
 import { MatNativeDateModule } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NameSelectService } from './service/New folder/name-select.service';
+import { CalendarModule } from 'angular-calendar';
+import { BsDropdownModule } from 'ngx-bootstrap';
 
 import { appRoutes } from './app.router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -16,6 +18,7 @@ import { MenuComponent } from './menu/menu.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { AddResidentComponent } from './add-resident/add-resident.component';
 import { AddStaffComponent } from './add-staff/add-staff.component';
+import { SingleDayColComponent } from './single-day-col/single-day-col.component';
 import { EventComponent } from './event/event.component';
 import { OwlDateTimeModule,OwlNativeDateTimeModule ,OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -28,15 +31,16 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
 
 
+
 @NgModule({
   declarations: [
-    
     AppComponent,
     LoginComponent,
     MenuComponent,
     CalendarComponent,
     AddResidentComponent,
     AddStaffComponent,
+    SingleDayColComponent,
     EventComponent,
     TestingComponent
   ],
@@ -52,8 +56,10 @@ import { environment } from '../environments/environment';
     ReactiveFormsModule,
     MatDatepickerModule,
     FormsModule,
+    BsDropdownModule.forRoot(),
     BrowserModule,
     RouterModule.forRoot(appRoutes),
+    CalendarModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireDatabaseModule
@@ -66,3 +72,6 @@ import { environment } from '../environments/environment';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
