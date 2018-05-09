@@ -16,7 +16,7 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
   }
   
-  viewDate: Date = new Date();
+ date = new Date();
 
   events: CalendarEvent[] = [
     {
@@ -29,16 +29,16 @@ export class CalendarComponent implements OnInit {
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void 
   {
-    if (isSameMonth(date, this.viewDate)) {
+    if (isSameMonth(date, this.date)) {
       if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        (isSameDay(this.date, date) && this.activeDayIsOpen === true) ||
         events.length === 0
       ) 
       {
         this.activeDayIsOpen = false;
       } else {
         this.activeDayIsOpen = true;
-        this.viewDate = date;
+        this.date = date;
       }
     }
   
