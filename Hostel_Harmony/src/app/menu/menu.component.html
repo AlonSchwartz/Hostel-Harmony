@@ -12,11 +12,24 @@
         </div>
         <div id="bar">
             <nav id="nev" class=" nav nav-pills flex-column flex-sm-row p-2 mb-2 bg-primary text-white font-weight-bold">
-                    <a class="flex-sm-fill text-sm-center nav-link text-white" href="/form">הוסף איש צוות</a>
+                    <a class="flex-sm-fill text-sm-center nav-link text-white" href="/add-staff">הוסף איש צוות</a>
+                    <a class="flex-sm-fill text-sm-center nav-link text-white" routerLink="/add-resident"> הוסף דייר</a>
                     <div class="btn-group" dropdown>
-                        <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle font-weight-bold"
+                        <button id="button-basic" dropdownToggle  type="button" class="btn btn-primary dropdown-toggle font-weight-bold "
+                                aria-controls="dropdown-basic">הוסף אירוע</button>
+                        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                            role="menu" aria-labelledby="button-basic">
+                            <li class="dropdown-header">צוות</li>
+                            <li role="menuitem"  (click)="sendVal(user)" *ngFor = "let user of staff" ><a class="dropdown-item" href="/event">{{user}}</a></li>
+                            <li class="divider dropdown-divider"></li>
+                            <li class="dropdown-header">דיירים</li>
+                            <li role="menuitem"  (click)="sendVal(user)" *ngFor = "let user of resident" ><a class="dropdown-item" href="/event">{{user}}</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group" dropdown>
+                        <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle font-weight-bold "
                                 aria-controls="dropdown-basic">
-                          יומנים   <span class="caret"></span>
+                          יומנים   
                         </button>
                         <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
                             role="menu" aria-labelledby="button-basic">
@@ -33,10 +46,8 @@
                             <li role="menuitem"><a class="dropdown-item" href="#">דייר5</a></li>
                             <li role="menuitem"><a class="dropdown-item" href="#">דייר6</a></li>
                         </ul>
-                      </div>
-                    <a class="flex-sm-fill text-sm-center nav-link text-white" href="/form"> הוסף דייר</a>
-                    <a class="flex-sm-fill text-sm-center nav-link text-white"  href="/form">הוסף אירוע</a>
-                    <a class="flex-sm-fill text-sm-center nav-link active text-white" href="/manu">בית</a>  
+                    </div>
+                    <a class="flex-sm-fill text-sm-center nav-link active text-white" routerLink="/menu">בית</a>  
             </nav>  
         </div> 
     </div>
