@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
 import { MatNativeDateModule } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { NameSelectService } from './service/New folder/name-select.service';
+import { NameSelectService } from './service/nameSelect/name-select.service';
 import { CalendarModule } from 'angular-calendar';
 import { BsDropdownModule } from 'ngx-bootstrap';
 
@@ -18,7 +18,6 @@ import { MenuComponent } from './menu/menu.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { AddResidentComponent } from './add-resident/add-resident.component';
 import { AddStaffComponent } from './add-staff/add-staff.component';
-
 import { EventComponent } from './event/event.component';
 import { OwlDateTimeModule,OwlNativeDateTimeModule ,OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import {MatCheckboxModule} from '@angular/material/checkbox';

@@ -8,7 +8,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Event} from '../models/event.model';
 import {NgModel} from '@angular/forms';
-import {NameSelectService} from '../service/New folder/name-select.service';
+import {NameSelectService} from '../service/nameSelect/name-select.service';
 
 @Component({
   selector: 'app-event',
@@ -39,7 +39,7 @@ export class EventComponent implements OnInit {
     );
   }
   ngOnInit() {
-    this.nameSel.cm.subscribe(message =>this.message=message);
+    this.nameSel.cm.subscribe(message => this.message = message);console.log(this.message);
   }
     
   subEvent(obj:object) {

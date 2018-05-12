@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {NameSelectService} from '../service/New folder/name-select.service';
+import {NameSelectService} from '../service/nameSelect/name-select.service';
+import {NgModel} from '@angular/forms';
 
 @Component({
   selector: 'app-menu',
