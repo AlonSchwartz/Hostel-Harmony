@@ -15,16 +15,15 @@
                     <a class="flex-sm-fill text-sm-center nav-link text-white" href="/add-staff">הוסף איש צוות</a>
                     <a class="flex-sm-fill text-sm-center nav-link text-white" routerLink="/add-resident"> הוסף דייר</a>
                     <div class="btn-group" dropdown>
-                        <button id="button-basic" dropdownToggle  type="button" class="btn btn-primary dropdown-toggle font-weight-bold "
-                                aria-controls="dropdown-basic">הוסף אירוע</button>
-                        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
-                            role="menu" aria-labelledby="button-basic">
-                            <li class="dropdown-header">צוות</li>
-                            <li role="menuitem"  (click)="sendVal(user)" *ngFor = "let user of staff" ><a class="dropdown-item" href="/event">{{user}}</a></li>
-                            <li class="divider dropdown-divider"></li>
-                            <li class="dropdown-header">דיירים</li>
-                            <li role="menuitem"  (click)="sendVal(user)" *ngFor = "let user of resident" ><a class="dropdown-item" href="/event">{{user}}</a></li>
-                        </ul>
+                        <select class="btn btn-primary dropdown-toggle font-weight-bold " title="קבע אירוע לדייר" #tem (change)="navigateTo('/event');sendVal(tem.value);" >
+                            <option selected disabled hidden >קבע אירוע לדייר</option>
+                            <optgroup label="איש צוות">
+                            <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
+                        </optgroup>
+                        <optgroup label="דיירים">
+                            <option  [value]="user" *ngFor = "let user of residents" >{{user}}</option>
+                        </optgroup>
+                        </select>
                     </div>
                     <div class="btn-group" dropdown>
                         <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle font-weight-bold "

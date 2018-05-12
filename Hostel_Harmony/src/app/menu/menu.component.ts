@@ -14,7 +14,7 @@ export class MenuComponent implements OnInit {
   message:string;
   current = new Date()
   staff:string[]=['עמית','ויסאם','אלחנן','אלון','בן'];
-  resident:string[]=['דייר 1','דייר 2','דייר 3','דייר 4','דייר 5'];
+  residents:string[]=['דייר 1','דייר 2','דייר 3','דייר 4','דייר 5'];
   navigateTo(value) {
     if (value) {
       this.router.navigate([value]);
