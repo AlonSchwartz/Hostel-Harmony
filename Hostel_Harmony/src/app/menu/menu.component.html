@@ -16,7 +16,7 @@
                     <a class="flex-sm-fill text-sm-center nav-link text-white" routerLink="/add-resident"> הוסף דייר</a>
                     <div class="btn-group" dropdown>
                         <select class="btn btn-primary dropdown-toggle font-weight-bold " title="קבע אירוע לדייר" #tem (change)="navigateTo('/event');sendVal(tem.value);" >
-                            <option selected disabled hidden >קבע אירוע לדייר</option>
+                            <option selected disabled hidden >הוסף אירוע</option>
                             <optgroup label="איש צוות">
                             <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
                         </optgroup>
