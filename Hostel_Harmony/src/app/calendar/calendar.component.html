@@ -1,11 +1,5 @@
 <div id="calendar">
   <div [ngSwitch]="view">
-    <mwl-calendar-month-view
-      *ngSwitchCase="'month'"
-      [viewDate]="viewDate"
-      [events]="events"
-      (dayClicked)="viewDate = $event.day.date; view = 'day'">
-    </mwl-calendar-month-view>
     <mwl-calendar-week-view
       *ngSwitchCase="'week'"
       [viewDate]="viewDate"
