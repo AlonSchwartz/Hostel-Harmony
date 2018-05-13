@@ -1,0 +1,21 @@
+label  {
+    float:right;
+}
+input  {
+    direction: rtl;
+}
+
+hr{border-color: black ;}
+h4{direction: rtl;}
+.form-group{
+    text-align: right;
+    width: 100%;
+}
+mat-form-field.input{
+    width: 100%;
+}
+mat-form-field{
+    width: 50%;
+    display:block;
+    text-align: inherit;
+}
