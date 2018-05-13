@@ -26,25 +26,15 @@
                         </select>
                     </div>
                     <div class="btn-group" dropdown>
-                        <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle font-weight-bold "
-                                aria-controls="dropdown-basic">
-                          יומנים   
-                        </button>
-                        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
-                            role="menu" aria-labelledby="button-basic">
-                            <li class="dropdown-header">צוות</li>
-                            <li role="menuitem"><a class="dropdown-item" href="#">אלחנן</a></li>
-                            <li role="menuitem"><a class="dropdown-item" href="#">ויסאם</a></li>
-                            <li role="menuitem"><a class="dropdown-item" href="#">אלון</a></li>
-                            <li class="divider dropdown-divider"></li>
-                            <li class="dropdown-header">דיירים</li>
-                            <li role="menuitem"><a class="dropdown-item" href="#">דייר1</a></li>
-                            <li role="menuitem"><a class="dropdown-item" href="#">דייר2</a></li>
-                            <li role="menuitem"><a class="dropdown-item" href="#">דייר3</a></li>
-                            <li role="menuitem"><a class="dropdown-item" href="#">דייר4</a></li>
-                            <li role="menuitem"><a class="dropdown-item" href="#">דייר5</a></li>
-                            <li role="menuitem"><a class="dropdown-item" href="#">דייר6</a></li>
-                        </ul>
+                            <select class="btn btn-primary dropdown-toggle font-weight-bold " title="יומנים" #tem (change)="navigateTo('/calendar');sendVal(tem.value);" >
+                                <option selected disabled hidden >יומנים</option>
+                                <optgroup label="איש צוות">
+                                <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
+                            </optgroup>
+                            <optgroup label="דיירים">
+                                <option  [value]="user" *ngFor = "let user of residents" >{{user}}</option>
+                            </optgroup>
+                            </select>
                     </div>
                     <a class="flex-sm-fill text-sm-center nav-link active text-white" routerLink="/menu">בית</a>  
             </nav>  
