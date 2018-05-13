@@ -29,7 +29,7 @@ Please visit our wiki for furthur project info:
 ### Iteration Pages
 - [Iteration 0 - ZFR](../../wiki/iter0-zfr)
 - [Iteration 1 - MVP](https://github.com/elchi28/Hostel-Harmony/wiki/Iter1-MVP)
+- [Iteration 2 - Integration](https://github.com/elchi28/Hostel-Harmony/wiki/Iter2--Integartion)
+- [Iteration 3 - Xtra Features](https://github.com/elchi28/Hostel-Harmony/wiki/Iter3-Extra-Features)
 
-~~- [Iteration 2 - Feature X]()~~
-~~- [Iteration 3 - Feature Y]()~~
-~~- [Iteration 4 - Feature Z]()~~
+~~- [Iteration 4 --Bugs & Testing]()~~
