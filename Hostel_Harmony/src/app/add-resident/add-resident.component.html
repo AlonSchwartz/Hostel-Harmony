@@ -75,7 +75,8 @@
       <input type="text" class="form-control" id="doctorgp"  [(ngModel)]="model.doctor.gp" name="doctorgp">
     </div>
   
-    <button type="submit" class="btn btn-success" [disabled]="!resForm.valid ">Submit</button>
+    <button type="submit" class="btn btn-success btn-block" [disabled]="!resForm.valid ">Submit</button>
+    <button type="button" class="btn btn-success btn-block" routerLink="/menu">Return</button>
 
   </form>
 </div>

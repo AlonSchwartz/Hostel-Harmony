@@ -42,7 +42,7 @@
       <input type="text" class="form-control" id="role" [(ngModel)]="model.role" name="role">
     </div>
 
-    <button type="submit" class="btn btn-success" [disabled]="!staffForm.valid || !email.valid">Submit</button>
-
+    <button type="submit" class="btn btn-success btn-block" [disabled]="!staffForm.valid || !email.valid">Submit</button>
+    <button type="button" class="btn btn-success btn-block" routerLink="/menu">Return</button>
   </form>
 </div>
