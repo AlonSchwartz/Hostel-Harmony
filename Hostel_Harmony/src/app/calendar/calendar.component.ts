@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 //import { CalendarEvent } from 'calendar-utils';
-import { CalendarEvent, CalendarEventTitleComponent } from 'angular-calendar';
+import { CalendarEvent, CalendarEventTitleFormatter } from 'angular-calendar';
 import {  ChangeDetectionStrategy } from '@angular/core';
 import {  CalendarMonthViewDay } from 'angular-calendar';
 import { isSameMonth, isSameDay } from 'ngx-bootstrap/chronos/utils/date-getters';
@@ -13,7 +13,7 @@ import { CustomEventTitleFormatter } from '../provider/custom-event-title-format
   styleUrls: ['./calendar.component.css'],
   providers: [
     {
-      provide: CalendarEventTitleComponent,
+      provide: CalendarEventTitleFormatter,
       useClass: CustomEventTitleFormatter
     }
     
@@ -28,7 +28,7 @@ export class CalendarComponent implements OnInit {
   events: CalendarEvent[] = [
     {
       start: new Date(),
-      title: 'An event',
+      title: 'test event',
     }
   ];
 
