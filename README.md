@@ -17,7 +17,7 @@ Please visit our wiki for furthur project info:
 
 ### [Team Page](../../wiki/Team)
 
-[Project Management Board](https://github.com/elchi28/Hostel-Harmony/projects/1)
+### [Project Management Board](https://github.com/elchi28/Hostel-Harmony/projects/1)
 ### Project Documents
 
 - [Project Inception](../../wiki/inception---planning)
