@@ -28,7 +28,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
-
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AuthService } from './services/auth/auth.service';
 
 
 @NgModule({
@@ -60,12 +61,14 @@ import { environment } from '../environments/environment';
     CalendarModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   providers: [
     NameSelectService,
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'il'},
-    UserService
+    UserService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
