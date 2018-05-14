@@ -1,8 +1,28 @@
+#menu
+{
+    min-height: 100%;
+    min-width: 1024px;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    
+    background-image: linear-gradient(white,palegreen)
+}
+
 #head{
     margin-bottom: 20px;
+}
+#bar{
+    font-size: 20px;
 }
 #nev{
     border-radius: 15px;   
     margin-top: 10px;
     padding-bottom: 20px;
+    
+}
+#drop2{
+    font-size: 100px;
 }

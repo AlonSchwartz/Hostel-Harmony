@@ -39,7 +39,7 @@ export class EventComponent implements OnInit {
     );
   }
   ngOnInit() {
-    this.nameSel.cm.subscribe(message => this.message = message);console.log(this.message);
+    this.nameSel.cm.subscribe(message => this.message = message);
   }
     
   subEvent(obj:object) {

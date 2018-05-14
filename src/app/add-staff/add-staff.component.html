@@ -1,0 +1,48 @@
+<div class="container">
+  <h1>Staff Form</h1>
+  {{diagnostic}}
+  <form #staffForm="ngForm" (ngSubmit)="subStaff(staffForm.value)" >
+    <div class="form-group">
+      <label for="name">שם</label>
+      <input type="text" class="form-control" id="name"  [(ngModel)]="model.name" name="name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="surname">משפחה</label>
+      <input type="text" class="form-control" id="surname" [(ngModel)]="model.surname" name="surname" required>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">טלפון</label>
+      
+      <input type="phone" pattern="[0-9]{10}" class="form-control" id="phone" [(ngModel)]="model.phone" name="phone" required>
+      <mat-error *ngIf="!staffForm.valid" >הכנס מספר טלפון*</mat-error>
+    </div>
+
+    <div class="form-group">
+        <label for="mail">E-MAIL</label>
+        <mat-form-field>
+            <input matInput placeholder="Enter your email" [formControl]="email" id="mail" [(ngModel)]="model.mail" name="mail">
+            <mat-error *ngIf="email.invalid" >{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+    </div>
+
+    <div class="form-group">
+        <label for="age">תאריך לידה</label> 
+      <mat-form-field>
+          
+            <input matInput [matDatepicker]="picker" placeholder="בחר תאריך" id="age" [(ngModel)]="model.age" name="age"   required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="role">תפקיד</label>
+      <input type="text" class="form-control" id="role" [(ngModel)]="model.role" name="role">
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="!staffForm.valid || !email.valid">Submit</button>
+
+  </form>
+</div>
