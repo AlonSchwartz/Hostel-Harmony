@@ -30,6 +30,7 @@ export class TestingComponent implements OnInit {
     this.userService.testing.push(this.bla);
     this.userService.residentsUsers.push(this.resident);
     this.userService.staffUsers.push(this.staff);
+
    // localStorage.setItem("residentUsers", JSON.stringify(this.userService.residentsUsers));
 
   }

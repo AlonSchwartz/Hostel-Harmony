@@ -5,7 +5,9 @@ import { resident } from '../../models/resident.model';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { firebase } from '../../../environments/environment.prod';
 import { FirebaseDatabase } from '@firebase/database-types';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, snapshotChanges } from 'angularfire2/database';
+
+// This file is very messy right now, with alot of comments and testing. I will organize it soon. 
 
 @Injectable()
 export class UserService  {
@@ -79,10 +81,47 @@ export class UserService  {
     
     
     // According to AngularFireDatabase
-    afs.list('/residents/test2').push(this.residentsUsers);
-    afs.list('/staff').push(this.staffUsers);
+    
+    var dbtest = afs.database;
+    var ref  = dbtest.ref("residents/");
+    var temp;
+
+    // To get the data from firebase. will get all the data from 'ref', as initilized 2 lines up
+    ref.on("value", function(snapshot)
+    { console.log(snapshot.val()); temp = snapshot.val();  }, 
+    function (errorObject){
+      console.log("the read failed: " + errorObject.code)
+    });
+    console.log("------------");
+    
+    afs.list('/residents/test3').push(this.residentsUsers);
+    //afs.list('/staff').push(this.staffUsers);
     
     
+    afs.database.ref('testing/' + 5678).set(this.residentsUsers); // This way we don't have unique key for each line at the database
+    console.log("name = " + afs.database.ref.length);
+    //afs.database.ref('testing/' + 5678).update(this.residentsUsers);    
+    /*
+    //More testing...
+    const updates = {}; 
+    updates['/hello'] = 5;
+    updates['/goodbye'] = 4;
+    console.log(updates);
+    
+    
+    afs.database.ref('what').update(updates);
+    */
+    
+    
+    afs.database.ref('testing/' + 5678).push({just: "a test"});
+    afs.database.ref('testing/' + 5678).update(({what: "is this"}));
+    afs.database.ref('testing/' + 5678).update(({does: "it works?"}));
+    afs.database.ref('testing/' + 80).update(({does: "it works?"}));
+    
+    
+    
+    
+    console.log(this.residentsUsers);
     //this.staff.push(this.testArray);
     
     
