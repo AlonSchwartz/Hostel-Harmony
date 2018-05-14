@@ -3,7 +3,7 @@ import { UserService } from '../services/user/user.service';
 import { test } from '../models/test.model';
 import { resident } from '../models/resident.model';
 import { staff } from '../models/staff.model';
-import { Router } from '@angular/router';
+import { Router ,RouterEvent} from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 
 @Component({
@@ -27,10 +27,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.email=null;
     this.pass=null;
-    
-    this.router.resetConfig([
+    /** Caused a crash in routing! */
+  //   this.router.resetConfig([
       
-    ])
-  }
+  //   ])
+   }
   
 }
