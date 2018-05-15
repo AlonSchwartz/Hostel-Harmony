@@ -18,12 +18,6 @@ export class TestingComponent implements OnInit {
 
   ngOnInit() {
     
-    // Working, but this is not the way we want to pass the data
-    this.userService.staff.push( {
-      name: "hhello",
-      age: "what",
-    });
-    
     this.resident = new resident("Rami from test", "Ami2", 542, true, "4/2/3", 2, "Benni", true, false) // According to resident.option #2
     this.staff = new staff("avi from test","ron2",8651, true, "2/4/6", 2, "sadsadsadsa", "supervisor"); // According to staff.option #2
     

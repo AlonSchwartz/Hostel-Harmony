@@ -68,7 +68,8 @@ import { AuthService } from './services/auth/auth.service';
     NameSelectService,
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'il'},
     UserService,
-    AuthService
+    AuthService,
+    CalendarComponent
   ],
   bootstrap: [AppComponent]
 })

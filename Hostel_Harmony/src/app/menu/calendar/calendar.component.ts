@@ -5,6 +5,8 @@ import {  ChangeDetectionStrategy } from '@angular/core';
 import {  CalendarMonthViewDay } from 'angular-calendar';
 import { isSameMonth, isSameDay } from 'ngx-bootstrap/chronos/utils/date-getters';
 import { CustomEventTitleFormatter } from '../../provider/custom-event-title-formatter.provider';
+import { EventComponent } from '../../event/event.component';
+import {Event} from '../../models/event.model';
 
 
 @Component({
@@ -38,5 +40,16 @@ export class CalendarComponent implements OnInit {
   ];
 
   
+  addEvent(eve: Event){
+
+    alert("I'm in calendar and i got your event!");
+    console.log(eve);
+    console.log("----Details----");
+    console.log("activity = " + eve.activity);
+    console.log("asign = " + eve.asign);
+    console.log("describe = " + eve.describe);
+    console.log("settime = ");
+    console.log(eve.settime);
+  }
   
 }
