@@ -3,3 +3,7 @@
     background-color:white;
     opacity: 1;
 }
+h2{
+    text-align: right;
+    direction: rtl;
+}

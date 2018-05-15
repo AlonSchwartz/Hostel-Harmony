@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit,Input, ViewChild, TemplateRef } from '@angular/core';
 //import { CalendarEvent } from 'calendar-utils';
 import { CalendarEvent, CalendarEventTitleFormatter } from 'angular-calendar';
 import {  ChangeDetectionStrategy } from '@angular/core';
 import {  CalendarMonthViewDay } from 'angular-calendar';
 import { isSameMonth, isSameDay } from 'ngx-bootstrap/chronos/utils/date-getters';
-import { CustomEventTitleFormatter } from '../provider/custom-event-title-formatter.provider';
+import { CustomEventTitleFormatter } from '../../provider/custom-event-title-formatter.provider';
+
 
 @Component({
   selector: 'app-calendar',
@@ -20,6 +21,10 @@ import { CustomEventTitleFormatter } from '../provider/custom-event-title-format
   ]
 })
 export class CalendarComponent implements OnInit {
+  constructor( ){}
+  @Input()//for getting name wanted
+  name:string;
+
   ngOnInit() {
   }
   view: string ='week'
