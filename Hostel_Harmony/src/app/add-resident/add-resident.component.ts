@@ -37,6 +37,7 @@ export class AddResidentComponent implements OnInit {
       {info:null,phone:null,location:null},
       {psych:null,gp:null}
     );
+    //this.model.contacts=this.buildItem('asd').get('rel').value;
     console.log(this.buildItem('asd').get('rel').value);
     // console.log(this.myForm.controls.items );
   }
