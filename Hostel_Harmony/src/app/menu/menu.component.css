@@ -26,3 +26,6 @@
 #drop2{
     font-size: 100px;
 }
+select{
+    direction: rtl;
+}

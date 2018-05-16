@@ -6,7 +6,7 @@ input  {
 }
 
 hr{border-color: black ;}
-h4{direction: rtl;}
+h4{direction: rtl;text-align: center;}
 .form-group{
     text-align: right;
     width: 100%;

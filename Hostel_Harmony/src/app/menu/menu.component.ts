@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {NameSelectService} from '../service/nameSelect/name-select.service';
+import {NameSelectService} from '../services/nameSelect/name-select.service';
 import {NgModel} from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
 

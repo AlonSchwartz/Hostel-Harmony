@@ -16,7 +16,7 @@
                     <a class="flex-sm-fill text-sm-center nav-link text-white" href="/add-staff">הוסף איש צוות</a>
                     <a class="flex-sm-fill text-sm-center nav-link text-white" routerLink="/add-resident"> הוסף דייר</a>
                     <div class="btn-group flex-sm-fill text-sm-center nav-link text-white" dropdown>
-                        <select style="font-size: 20px" class="btn btn-primary dropdown-toggle font-weight-bold" title="קבע אירוע לדייר" #tem (change)="navigateTo('/event');sendVal(tem.value);" >
+                        <select style="font-size: 20px" class="btn btn-primary dropdown-toggle font-weight-bold" title="קבע אירוע" #event (change)="navigateTo('/event');sendVal(event.value);" >
                             <option selected disabled hidden>הוסף אירוע</option>
                             <optgroup label="איש צוות">
                                 <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
@@ -27,9 +27,11 @@
                         </select>
                     </div>
                     <div  class="btn-group flex-sm-fill text-sm-center nav-link text-white" dropdown>
-                        <select style="font-size: 20px" class="btn btn-primary dropdown-toggle font-weight-bold " title="יומנים" #tem  (change)="sendVal(tem.value);" >
-                            <option   disabled hidden >יומנים</option>
-                            <optgroup label="איש צוות">
+
+                            <select style="font-size: 20px" class="btn btn-primary dropdown-toggle font-weight-bold " title="יומנים" #diary  (change)="sendVal(diary.value);" >
+                                <option   disabled hidden >יומנים</option>
+                                <optgroup label="איש צוות">
+
                                 <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
                             </optgroup>
                             <optgroup label="דיירים">
@@ -41,6 +43,7 @@
                 </nav>  
             </div> 
         </div>
-        <app-calendar [name]="tem.value"></app-calendar>
+        <app-calendar [name]="diary.value"></app-calendar>
     </div>
+
 </div>
