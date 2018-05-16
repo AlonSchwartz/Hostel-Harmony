@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth/auth.service';
 })
 export class MenuComponent implements OnInit {
   
-  constructor(private router: Router,private data:NameSelectService, public authService: AuthService) { }
+  constructor(private router: Router,private data:NameSelectService, private authService: AuthService) { }
   name:string;
   current = new Date()
   staff:string[]=['עמית','ויסאם','אלחנן','אלון','בן'];

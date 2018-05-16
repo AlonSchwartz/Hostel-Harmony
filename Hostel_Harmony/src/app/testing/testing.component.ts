@@ -12,7 +12,7 @@ import { AuthService } from '../services/auth/auth.service';
 })
 export class TestingComponent implements OnInit {
   
-  constructor(private userService: UserService, public authService: AuthService) { }
+  constructor(private userService: UserService, private authService: AuthService) { }
   bla: test;
   resident: resident;
   staff: staff;
