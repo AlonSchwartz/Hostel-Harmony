@@ -36,7 +36,7 @@ export class UserService  {
     // this.dc.add(this.residentsUsers);
     
     this.residentsUsers = [
-      new resident("Yossi", "Avi", 542, true, "1/2/3", 2, "David", false, false), // According to resident.option #2
+      //new resident("Yossi", "Avi", 542, true, "1/2/3", 2, "David", false, false), // According to resident.option #2
     ];
     
     
@@ -70,7 +70,7 @@ export class UserService  {
     
     // To get the data from firebase. will get all the data from 'ref', as initilized 2 lines up
     ref.on("value", function(snapshot)
-    { //console.log(snapshot.val()); 
+    { console.log(snapshot.val()); 
       temp = snapshot.val();  }, 
     function (errorObject){
       console.log("the read failed: " + errorObject.code)

@@ -3,35 +3,35 @@
   {{diagnostic}}
   <form #staffForm="ngForm" (ngSubmit)="subStaff(staffForm.value)" >
     <div class="form-group">
-      <label for="name">שם</label>
-      <input type="text" class="form-control" id="name"  [(ngModel)]="model.name" name="name" required>
+      <label for="firstName">שם</label>
+      <input type="text" class="form-control" id="firstName"  [(ngModel)]="model.firstName" name="firstName" required>
     </div>
 
     <div class="form-group">
-      <label for="surname">משפחה</label>
-      <input type="text" class="form-control" id="surname" [(ngModel)]="model.surname" name="surname" required>
+      <label for="lastName">משפחה</label>
+      <input type="text" class="form-control" id="lastName" [(ngModel)]="model.lastName" name="lastName" required>
     </div>
 
     <div class="form-group">
-      <label for="phone">טלפון</label>
+      <label for="phoneNumber">טלפון</label>
       
-      <input type="phone" pattern="[0-9]{10}" class="form-control" id="phone" [(ngModel)]="model.phone" name="phone" required>
+      <input type="phone" pattern="[0-9]{10}" class="form-control" id="phoneNumber" [(ngModel)]="model.phoneNumber" name="phoneNumber" required>
       <mat-error *ngIf="!staffForm.valid" >הכנס מספר טלפון*</mat-error>
     </div>
 
     <div class="form-group">
-        <label for="mail">E-MAIL</label>
+        <label for="email">E-MAIL</label>
         <mat-form-field>
-            <input matInput placeholder="Enter your email" [formControl]="email" id="mail" [(ngModel)]="model.mail" name="mail">
+            <input matInput placeholder="Enter your email" [formControl]="email" id="email" [(ngModel)]="model.email" name="email">
             <mat-error *ngIf="email.invalid" >{{getErrorMessage()}}</mat-error>
           </mat-form-field>
     </div>
 
     <div class="form-group">
-        <label for="age">תאריך לידה</label> 
+        <label for="birthday">תאריך לידה</label> 
       <mat-form-field>
           
-            <input matInput [matDatepicker]="picker" placeholder="בחר תאריך" id="age" [(ngModel)]="model.age" name="age"   required>
+            <input matInput [matDatepicker]="picker" placeholder="בחר תאריך" id="birthday" [(ngModel)]="model.birthday" name="birthday"   required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>

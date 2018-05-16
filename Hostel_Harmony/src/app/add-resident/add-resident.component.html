@@ -4,51 +4,85 @@
   <form (ngSubmit)="subResident(resForm.value)" #resForm="ngForm">
     <div class="form-group">
       <label for="name">שם</label>
-      <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name">
+      <input type="text" class="form-control" id="name" required [(ngModel)]="model.firstName" name="firstName">
     </div>
 
     <div class="form-group">
       <label for="surname">משפחה</label>
-      <input type="text" class="form-control" id="surname" required [(ngModel)]="model.surname" name="surname">
+      <input type="text" class="form-control" id="surname" required [(ngModel)]="model.lastName" name="lastName">
     </div>
 
     <div class="form-group">
       <label for="phone">טלפון</label>
-      <input type="phone" pattern="[0-9]{10}" class="form-control" id="phone" [(ngModel)]="model.phone" name="phone">
+      <input type="phone" pattern="[0-9]{10}" class="form-control" id="phone" [(ngModel)]="model.phoneNumber" name="phoneNumber">
     </div>
 
     <div class="form-group">
         <label for="age">תאריך לידה</label> 
-      <mat-form-field>
-          
-            <input matInput [matDatepicker]="picker" placeholder="בחר תאריך" id="age" required  [(ngModel)]="model.age" name="age">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+      <mat-form-field>  
+            <input matInput [matDatepicker]="picker1" placeholder="בחר תאריך" id="age" required  [(ngModel)]="model.birthday" name="birthday">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
       </mat-form-field>
     </div>
-
-    
-
+    <div class="form-group">
+      <label for="age">תאריך קליטה</label> 
+    <mat-form-field>
+          <input matInput [matDatepicker]="picker2" placeholder="בחר תאריך" id="since" required  [(ngModel)]="model.memberSince" name="memberSince">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+  </div>
     <div class="form-group">
       <label for="assigned">מתאם טיפול</label>
-      <input type="text" class="form-control" id="assigned" required [(ngModel)]="model.assigned" name="assigned">
+      <input type="text" class="form-control" id="assigned" required [(ngModel)]="model.caretaker" name="caretaker">
     </div>
     <hr>
     <h4>אנשי קשר</h4>
-    <div class="form-group">
-      <label for="emergencyn">שם</label>
-      <input type="text" class="form-control" id="emergencyn"  [(ngModel)]="model.emergency.name" name="emergencyn">
+    <div [formGroup]="myForm" >
+      <fieldset formArrayName="items" >
+        <div class="form-group row" style ="direction: rtl"
+          *ngFor="let item of myForm.get('items').controls; let i=index"
+          [formGroup]="item">
+          <h4>איש קשר {{i+1}}</h4>
+          <div class="col-sm-4">
+            <label [attr.for]="'name'+i">שם</label>
+            <input type="text" class="form-control" [attr.id]="'name'+i" formControlName="name"  >
+          </div>
+          <div class="col-sm-3">
+            <label [attr.for]="'phone'+i">טלפון</label>
+            <input type="phone" pattern="[0-9]{10}" class="form-control" [attr.id]="'phone'+i" formControlName="phone" >
+          </div>
+          <div class="col-sm-3">
+            <label [attr.for]="'rel'+i">קירבה</label>
+            <input type="text" class="form-control" [attr.id]="'rel'+i" formControlName="rel" >
+          </div>
+        </div>
+      </fieldset>
+  <div class="form-group row">
+    <div class="col-sm-2 col-sm-offset-10">
+      <button type="button" class="btn btn-link"
+         (click)="myForm.get('items').push(buildItem('')); model.contacts.push(this.buildItem(null).value)">לחץ להוספת עוד אנשי קשר</button>
     </div>
-    <div class="form-group">
-        <label for="rel">איש קשר</label>
-        <input type="text" class="form-control" id="rel"  [(ngModel)]="model.emergency.rel" name="rel">
+  </div>
+</div>
+   <!-- <div class="form-group row" [formGroup]="myForm" >
+      <div class="form-group">
+       <label for="emergencyn">שם</label>
+       <input type="text" class="form-control" id="emergencyn"  [(ngModel)]="model.contacts.name" name="name">
       </div>
-    <div class="form-group">
-      <label for="emergencyp">טלפון</label>
-      <input type="phone" pattern="[0-9]{10}" class="form-control" id="emergencyp"  [(ngModel)]="model.emergency.phone" name="emergencyp">
-    </div>
+     
+     <div class="form-group">
+       <label for="emergencyp">טלפון</label>
+       <input type="phone" pattern="[0-9]{10}" class="form-control" id="emergencyp"  [(ngModel)]="model.contacts.phone" name="emergencyp">
+     </div>
+  </div>-->
     <hr>
     <h4>עבודה</h4>
+    <div class="form-group">
+      <mat-checkbox  [(ngModel)]="model.hasWork" name ="hasWork">עובד</mat-checkbox>
+  </div>
+  <div class="work" [hidden]="!model.hasWork"> 
     <div class="form-group">
       <label for="workinf">מקום עבודה</label>
       <input type="text" class="form-control" id="workinf"  [(ngModel)]="model.work.info" name="workinf">
@@ -63,16 +97,17 @@
       <label for="workloc">מיקום</label>
       <input type="text" class="form-control" id="workloc"  [(ngModel)]="model.work.location" name="workloc">
     </div>
+  </div> 
     <hr>
     <h4>רופא</h4>
     <div class="form-group">
       <label for="doctorps">פסיכיאטר</label>
-      <input type="text" class="form-control" id="doctorps"  [(ngModel)]="model.doctor.psych" name="doctorps">
+      <input type="text" class="form-control" id="doctorps"  [(ngModel)]="model.doctors.psych" name="doctorps">
     </div>
 
     <div class="form-group">
       <label for="doctorgp">רופא משפחה</label>
-      <input type="text" class="form-control" id="doctorgp"  [(ngModel)]="model.doctor.gp" name="doctorgp">
+      <input type="text" class="form-control" id="doctorgp"  [(ngModel)]="model.doctors.gp" name="doctorgp">
     </div>
   
     <button type="submit" class="btn btn-success btn-block" [disabled]="!resForm.valid ">Submit</button>

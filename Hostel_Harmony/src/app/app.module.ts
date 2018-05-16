@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
 import { MatNativeDateModule } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { NameSelectService } from './service/nameSelect/name-select.service';
+import { NameSelectService } from './services/nameSelect/name-select.service';
 import { CalendarModule } from 'angular-calendar';
 import { BsDropdownModule } from 'ngx-bootstrap';
 

@@ -4,8 +4,8 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import {addResident} from '../models/add-resident.model';
-import {NgModel} from '@angular/forms';
+import {resident} from '../models/resident.model';
+import {NgModel,FormGroup,FormArray,FormBuilder ,FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -15,31 +15,51 @@ import {NgModel} from '@angular/forms';
 })
 // TODO: check required fields
 export class AddResidentComponent implements OnInit {
-  private model: addResident ;
+  private model: resident ;
   private submitted: boolean;
-  
+  myForm: FormGroup;
   // TODO: Remove this when we're done--->testing purposes
   get diagnostic() { return JSON.stringify(this.model); }
 
-  constructor( ) {
+  constructor(private fb:FormBuilder ) {
     this.submitted = false;
-    this.model = new addResident(
+    this.model = new resident(
       null, 
       null,
+      null,
+      true,
+      null,
       null, 
-      {rel:null, name:null,phone:null},
       null,
       null,
-      {info:null,phone:null,location:null} 
-      ,{psych:null, gp:null}
+      false,
+      [this.buildItem(null).value,this.buildItem(null).value,],
+      {info:null,phone:null,location:null},
+      {psych:null,gp:null}
     );
+    console.log(this.buildItem('asd').get('rel').value);
+    // console.log(this.myForm.controls.items );
   }
   ngOnInit() {
+    this.myForm = this.fb.group({
+      items: this.fb.array(
+        [this.buildItem(''), this.buildItem('')])
+    })
+  }
+
+
+  public buildItem(val: string) {
+    return new FormGroup({
+      rel:new FormControl(val),
+      name: new FormControl(val),
+      phone: new FormControl(null),
+    })
   }
   subResident(obj:object) {
     this.submitted = true;/*do something*/
     alert(this.submitted);
     console.log(obj);
   }
+ 
 
 }

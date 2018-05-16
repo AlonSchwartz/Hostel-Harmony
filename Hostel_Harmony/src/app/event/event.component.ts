@@ -8,7 +8,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Event} from '../models/event.model';
 import {NgModel} from '@angular/forms';
-import {NameSelectService} from '../service/nameSelect/name-select.service';
+import {NameSelectService} from '../services/nameSelect/name-select.service';
 import { supportsPassiveEventListeners } from '@angular/cdk/platform';
 import { UserService } from '../services/user/user.service';
 

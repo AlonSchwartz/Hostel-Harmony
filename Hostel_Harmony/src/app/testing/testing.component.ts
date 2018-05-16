@@ -18,7 +18,7 @@ export class TestingComponent implements OnInit {
 
   ngOnInit() {
     
-    this.resident = new resident("Rami from test", "Ami2", 542, true, "4/2/3", 2, "Benni", true, false) // According to resident.option #2
+    this.resident;// = new resident("Rami from test", "Ami2", 542, true, "4/2/3", 2, "Benni", true, false) // According to resident.option #2
     this.staff = new staff("avi from test","ron2",8651, true, "2/4/6", 2, "sadsadsadsa", "supervisor"); // According to staff.option #2
     
     this.userService.testing.push(this.bla);
