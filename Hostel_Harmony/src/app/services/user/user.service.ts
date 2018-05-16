@@ -90,15 +90,10 @@ export class UserService  {
 
     // To get the data from firebase. will get all the data from 'ref', as initilized 2 lines up
     ref.on("value", function(snapshot)
-<<<<<<< HEAD
     { //console.log(snapshot.val()); 
       temp = snapshot.val();  
       
     }, 
-=======
-    { console.log(snapshot.val()); 
-      temp = snapshot.val();  }, 
->>>>>>> cccdd72ef8cb42f7efcf4d535a3ab2edc7b66886
       function (errorObject){
         console.log("the read failed: " + errorObject.code)
       });
