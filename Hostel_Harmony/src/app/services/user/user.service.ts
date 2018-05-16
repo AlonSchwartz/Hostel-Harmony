@@ -72,46 +72,46 @@ export class UserService  {
     ref.on("value", function(snapshot)
     { console.log(snapshot.val()); 
       temp = snapshot.val();  }, 
-    function (errorObject){
-      console.log("the read failed: " + errorObject.code)
-    });
-    //console.log("------------");
-    
-    afs.list('/residents/test3').push(this.residentsUsers);
-    //afs.list('/staff').push(this.staffUsers);
-    
-    
-    afs.database.ref('testing/' + 5678).set(this.residentsUsers); // This way we don't have unique key for each line at the database
-   
-    //console.log("length = " + afs.database.ref.length);
-    //afs.database.ref('testing/' + 5678).update(this.residentsUsers);    
-    /*
-    //More testing...
-    const updates = {}; 
-    updates['/hello'] = 5;
-    updates['/goodbye'] = 4;
-    console.log(updates);
-    
-    afs.database.ref('what').update(updates);
-    */
-    
-
-    afs.database.ref('testing/' + 5678).push({just: "a test"});
-    afs.database.ref('testing/' + 5678).update(({what: "is this"}));
-    afs.database.ref('testing/' + 5678).update(({does: "it works?"}));
-    afs.database.ref('testing/' + 80).update(({does: "it works?"}));
-    
-   // console.log(this.residentsUsers);
+      function (errorObject){
+        console.log("the read failed: " + errorObject.code)
+      });
+      //console.log("------------");
       
-  }
-  // To pass event to the calendar
-  public passEvent(eve:Event){
+      afs.list('/residents/test3').push(this.residentsUsers);
+      //afs.list('/staff').push(this.staffUsers);
+      
+      afs.database.ref('testing/' + 5678).set(this.residentsUsers); // This way we don't have unique key for each line at the database
+      
+      //console.log("length = " + afs.database.ref.length);
+      //afs.database.ref('testing/' + 5678).update(this.residentsUsers);    
+      /*
+      //More testing...
+      const updates = {}; 
+      updates['/hello'] = 5;
+      updates['/goodbye'] = 4;
+      console.log(updates);
+      
+      afs.database.ref('what').update(updates);
+      */
+      
+      
+      afs.database.ref('testing/' + 5678).push({just: "a test"});
+      afs.database.ref('testing/' + 5678).update(({what: "is this"}));
+      afs.database.ref('testing/' + 5678).update(({does: "it works?"}));
+      afs.database.ref('testing/' + 80).update(({does: "it works?"}));
+      
+      // console.log(this.residentsUsers);
+      
+    }
+    // To pass event to the calendar
+    public passEvent(eve:Event){
+      
+      alert("I'm in userService and i got your event!")
+      // console.log(eve);
+      // here needs to be some checking... if everything is ok, add to database and then pass it to the calendar.
+      this.calendar.addEvent(eve);
+      
+    }
     
-    alert("I'm in userService and i got your event!")
-   // console.log(eve);
-    // here needs to be some checking... if everything is ok, add to database and then pass it to the calendar.
-    this.calendar.addEvent(eve);
-
   }
   
-}

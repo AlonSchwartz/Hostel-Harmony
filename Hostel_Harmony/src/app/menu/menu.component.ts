@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {NameSelectService} from '../services/nameSelect/name-select.service';
 import {NgModel} from '@angular/forms';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,8 +10,8 @@ import {NgModel} from '@angular/forms';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-
-  constructor(private router: Router,private data:NameSelectService) { }
+  
+  constructor(private router: Router,private data:NameSelectService, private authService: AuthService) { }
   name:string;
   current = new Date()
   staff:string[]=['עמית','ויסאם','אלחנן','אלון','בן'];
@@ -27,5 +28,10 @@ export class MenuComponent implements OnInit {
   sendVal(selval:string){
     this.data.changeMessage(selval);
   }
-
+  
+  logout(){
+    this.authService.logout();
+    this.router.navigateByUrl('login');
+  }
+  
 }

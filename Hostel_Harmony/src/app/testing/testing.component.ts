@@ -3,6 +3,7 @@ import { test } from '../models/test.model';
 import { resident } from '../models/resident.model';
 import { staff } from '../models/staff.model';
 import { UserService } from '../services/user/user.service';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-testing',
@@ -11,22 +12,27 @@ import { UserService } from '../services/user/user.service';
 })
 export class TestingComponent implements OnInit {
   
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private authService: AuthService) { }
   bla: test;
   resident: resident;
   staff: staff;
-
+  
   ngOnInit() {
     
     this.resident;// = new resident("Rami from test", "Ami2", 542, true, "4/2/3", 2, "Benni", true, false) // According to resident.option #2
     this.staff = new staff("avi from test","ron2",8651, true, "2/4/6", 2, "sadsadsadsa", "supervisor"); // According to staff.option #2
     
-    this.userService.testing.push(this.bla);
-    this.userService.residentsUsers.push(this.resident);
-    this.userService.staffUsers.push(this.staff);
-
-   // localStorage.setItem("residentUsers", JSON.stringify(this.userService.residentsUsers));
-
+    //this.userService.testing.push(this.bla);
+    //this.userService.residentsUsers.push(this.resident);
+    //this.userService.staffUsers.push(this.staff);
+    
+    // localStorage.setItem("residentUsers", JSON.stringify(this.userService.residentsUsers));
+    
+  }
+  
+  isLoggedIn(){
+    var answer = this.authService.isLoggedIn;
+    alert(answer);
   }
   
 }
