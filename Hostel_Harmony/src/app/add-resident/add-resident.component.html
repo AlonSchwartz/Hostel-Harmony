@@ -14,7 +14,7 @@
 
     <div class="form-group">
       <label for="phone">טלפון</label>
-      <input type="phone" pattern="[0-9]{10}" class="form-control" id="phone" [(ngModel)]="model.phoneNumber" name="phoneNumber">
+      <input type="phone" pattern="0[2-9]\d\d\d\d\d\d\d(\d)?" class="form-control" id="phone" [(ngModel)]="model.phoneNumber" name="phoneNumber">
     </div>
 
     <div class="form-group">
@@ -47,15 +47,15 @@
           <h4>איש קשר {{i+1}}</h4>
           <div class="col-sm-4">
             <label [attr.for]="'name'+i">שם</label>
-            <input type="text" class="form-control" [attr.id]="'name'+i" formControlName="name"  [(ngModel)]="model.contacts[i].name" name="name" >
+            <input type="text" class="form-control" [attr.id]="'name'+i" formControlName="name"  >
           </div>
           <div class="col-sm-3">
             <label [attr.for]="'phone'+i">טלפון</label>
-            <input type="phone" pattern="[0-9]{10}" class="form-control" [attr.id]="'phone'+i" formControlName="phone" [(ngModel)]="model.contacts[i].phone" name="phone">
+            <input type="phone" pattern="0[2-9]\d\d\d\d\d\d\d(\d)?" class="form-control" [attr.id]="'phone'+i" formControlName="phone" >
           </div>
           <div class="col-sm-3">
             <label [attr.for]="'rel'+i">קירבה</label>
-            <input type="text" class="form-control" [attr.id]="'rel'+i" formControlName="rel" [(ngModel)]="model.contacts[i].rel" name="rel">
+            <input type="text" class="form-control" [attr.id]="'rel'+i" formControlName="rel" >
           </div>
         </div>
       </fieldset>
@@ -66,7 +66,17 @@
     </div>
   </div>
 </div>
-
+   <!-- <div class="form-group row" [formGroup]="myForm" >
+      <div class="form-group">
+       <label for="emergencyn">שם</label>
+       <input type="text" class="form-control" id="emergencyn"  [(ngModel)]="model.contacts.name" name="name">
+      </div>
+     
+     <div class="form-group">
+       <label for="emergencyp">טלפון</label>
+       <input type="phone" pattern="[0-9]{10}" class="form-control" id="emergencyp"  [(ngModel)]="model.contacts.phone" name="emergencyp">
+     </div>
+  </div>-->
     <hr>
     <h4>עבודה</h4>
     <div class="form-group">
@@ -80,7 +90,7 @@
 
     <div class="form-group">
       <label for="workp">טלפון</label>
-      <input type="phone" pattern="[0-9]{10}" class="form-control" id="workp"  [(ngModel)]="model.work.phone" name="workp">
+      <input type="phone" pattern="0[2-9]\d\d\d\d\d\d\d(\d)?" class="form-control" id="workp"  [(ngModel)]="model.work.phone" name="workp">
     </div>
 
     <div class="form-group">
