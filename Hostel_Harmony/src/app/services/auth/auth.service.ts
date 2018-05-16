@@ -40,7 +40,6 @@ export class AuthService {
   }
   
   public async loginWithEmailAndPassword(email: string, pass: string) {
-    console.log("??????");
     console.log(email);
     console.log(pass);
     

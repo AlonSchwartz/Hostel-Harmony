@@ -67,11 +67,33 @@ export class UserService  {
     var dbtest = afs.database;
     var ref  = dbtest.ref("residents/");
     var temp;
-    
+    /*
+    console.log("------ Testing ------");
+
+    var abc = dbtest.ref();
+    abc.on("value", function(snapshot2)
+    { //console.log(snapshot.val()); 
+      console.log(snapshot2.val().what.goodbye); // = 4
+      abc.orderByChild("what").on("child_added", function(snapshot3){
+        //console.log(snapshot3.key)
+        //console.log(snapshot3.key.includes("what"));
+        //console.log(snapshot3.key.lastIndexOf("staff"));
+        
+      })
+      
+    }, 
+      function (errorObject){
+        console.log("the read failed: " + errorObject.code)
+      });
+
+*/
+
     // To get the data from firebase. will get all the data from 'ref', as initilized 2 lines up
     ref.on("value", function(snapshot)
     { //console.log(snapshot.val()); 
-      temp = snapshot.val();  }, 
+      temp = snapshot.val();  
+      
+    }, 
       function (errorObject){
         console.log("the read failed: " + errorObject.code)
       });
