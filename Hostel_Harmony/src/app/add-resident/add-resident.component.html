@@ -47,15 +47,15 @@
           <h4>איש קשר {{i+1}}</h4>
           <div class="col-sm-4">
             <label [attr.for]="'name'+i">שם</label>
-            <input type="text" class="form-control" [attr.id]="'name'+i" formControlName="name"  >
+            <input type="text" class="form-control" [attr.id]="'name'+i" formControlName="name" [(ngModel)]="model.contacts[i].name" name="name" >
           </div>
           <div class="col-sm-3">
             <label [attr.for]="'phone'+i">טלפון</label>
-            <input type="phone" pattern="0[2-9]\d\d\d\d\d\d\d(\d)?" class="form-control" [attr.id]="'phone'+i" formControlName="phone" >
+            <input type="phone" pattern="0[2-9]\d\d\d\d\d\d\d(\d)?" class="form-control" [attr.id]="'phone'+i" formControlName="phone" [(ngModel)]="model.contacts[i].phone" name="phone" >
           </div>
           <div class="col-sm-3">
             <label [attr.for]="'rel'+i">קירבה</label>
-            <input type="text" class="form-control" [attr.id]="'rel'+i" formControlName="rel" >
+            <input type="text" class="form-control" [attr.id]="'rel'+i" formControlName="rel" [(ngModel)]="model.contacts[i].rel" name="rel">
           </div>
         </div>
       </fieldset>
