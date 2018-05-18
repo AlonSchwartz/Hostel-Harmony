@@ -51,5 +51,9 @@ export class CalendarComponent implements OnInit {
     console.log("settime = ");
     console.log(eve.settime);
   }
-  
+/*
+  backToWeekView() {
+   this.view = 'week';
+  }
+  */
 }
