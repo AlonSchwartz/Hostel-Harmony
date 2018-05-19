@@ -5,7 +5,7 @@ import {  ChangeDetectionStrategy } from '@angular/core';
 import {  CalendarMonthViewDay } from 'angular-calendar';
 import { isSameMonth, isSameDay } from 'ngx-bootstrap/chronos/utils/date-getters';
 import { CustomEventTitleFormatter } from '../provider/custom-event-title-formatter.provider';
-import { CustomDateFormatter } from '../provider/custom-date-formatter.provider.ts';
+import { CustomDateFormatter } from '../provider/custom-date-formatter.provider';
 
 import { EventComponent } from '../../event/event.component';
 import {Event} from '../../models/event.model';
