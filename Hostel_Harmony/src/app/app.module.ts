@@ -28,9 +28,10 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/he';
 
-
-
+registerLocaleData(localeFr);
 @NgModule({
   declarations: [
     AppComponent,
