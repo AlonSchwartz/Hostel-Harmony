@@ -47,8 +47,7 @@ export class AddResidentComponent implements OnInit {
         [this.buildItem(''), this.buildItem('')])
     })
   }
-
-
+  
   public buildItem(val: string) {
     return new FormGroup({
       rel:new FormControl(val),

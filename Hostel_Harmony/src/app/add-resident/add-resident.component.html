@@ -57,6 +57,10 @@
             <label [attr.for]="'rel'+i">קירבה</label>
             <input type="text" class="form-control" [attr.id]="'rel'+i" formControlName="rel" [(ngModel)]="model.contacts[i].rel" name="rel">
           </div>
+          <div class="col-sm-1 py-1">
+            <button type="button" class="btn"
+                    (click)="myForm.get('items').removeAt(i);model.contacts.splice(i,1)">הסר</button>
+          </div>
         </div>
       </fieldset>
   <div class="form-group row">

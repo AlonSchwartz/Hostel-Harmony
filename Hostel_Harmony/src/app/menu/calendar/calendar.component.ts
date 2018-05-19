@@ -48,9 +48,7 @@ export class CalendarComponent implements OnInit {
 
   weekStartsOn: number = DAYS_OF_WEEK.SUNDAY;
 
-<<<<<<< HEAD:Hostel_Harmony/src/app/calendar/calendar.component.ts
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
-=======
   
   addEvent(eve: Event){
 
@@ -68,5 +66,4 @@ export class CalendarComponent implements OnInit {
    this.view = 'week';
   }
   */
->>>>>>> 4c582253160f3002fb84efa13367f0c523facb1d:Hostel_Harmony/src/app/menu/calendar/calendar.component.ts
 }
