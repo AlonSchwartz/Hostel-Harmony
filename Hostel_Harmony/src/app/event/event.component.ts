@@ -8,7 +8,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Event} from '../models/event.model';
 import {NgModel} from '@angular/forms';
-import {NameSelectService} from '../service/nameSelect/name-select.service';
+import {NameSelectService} from '../services/nameSelect/name-select.service';
+import { supportsPassiveEventListeners } from '@angular/cdk/platform';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-event',
@@ -29,7 +31,7 @@ export class EventComponent implements OnInit {
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model); }
   
-  constructor( private nameSel: NameSelectService) {
+  constructor( private nameSel: NameSelectService, private userService: UserService) {
     this.submitted = false;
     this.model = new Event(
       {date:null,start:null,end:null},
@@ -42,9 +44,10 @@ export class EventComponent implements OnInit {
     this.nameSel.cm.subscribe(message => this.message = message);
   }
     
-  subEvent(obj:object) {
+  subEvent(obj: Event) {
     this.submitted = true;/*do something*/
     alert(this.submitted);
-    console.log(obj);
+   // console.log(obj);
+    this.userService.passEvent(this.model);
   }
 }

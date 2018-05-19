@@ -1,0 +1,25 @@
+<h2 [hidden] = "name=='יומנים'"> היומן של {{name}}</h2>
+<div id="calendar">
+  <!-- 
+  <div id = "backToWeek">
+    <button class="BTNbackToWeek" (click)="backToWeekView()">חזרה לתצוגה שבועית</button>
+  </div>
+  -->
+  
+  <div [ngSwitch]="view">
+    <mwl-calendar-week-view
+    *ngSwitchCase="'week'"
+    [viewDate]="viewDate"
+    [events]="events"
+    (dayHeaderClicked)="viewDate = $event.day.date; view = 'day'">
+  </mwl-calendar-week-view>
+  <mwl-calendar-day-view
+  *ngSwitchCase="'day'"
+  [viewDate]="viewDate"
+  [events]="events"
+  [hourSegments]=1
+  [hourSegmentTemplate]="hourSegmentTemplate"
+  [dayStartHour]="6">
+</mwl-calendar-day-view>
+</div>
+</div>

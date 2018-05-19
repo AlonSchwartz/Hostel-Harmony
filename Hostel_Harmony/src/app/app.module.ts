@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
 import { MatNativeDateModule } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { NameSelectService } from './service/nameSelect/name-select.service';
+import { NameSelectService } from './services/nameSelect/name-select.service';
 import { CalendarModule } from 'angular-calendar';
 import { BsDropdownModule } from 'ngx-bootstrap';
 
@@ -15,7 +15,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MenuComponent } from './menu/menu.component';
-import { CalendarComponent } from './calendar/calendar.component';
+import { CalendarComponent } from './menu/calendar/calendar.component';
 import { AddResidentComponent } from './add-resident/add-resident.component';
 import { AddStaffComponent } from './add-staff/add-staff.component';
 import { EventComponent } from './event/event.component';
@@ -61,12 +61,15 @@ registerLocaleData(localeFr);
     CalendarModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   providers: [
     NameSelectService,
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'il'},
-    UserService
+    UserService,
+    AuthService,
+    CalendarComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -1,27 +1,29 @@
 
-   
+
 <div id="login">
+    
     <div class="container">
-            <h1 class="welcome text-center "></h1>
+        <h1 class="welcome text-center "></h1>
         <div class="card card-container">
-                <div class="row">
-                    <!--<div class="col"><div class="item" style="background-image: url('../appPic/logo.jpg')"></div></div>-->
-                   
-                </div>
+            <div class="row">
+                <div class="col"><div class="item"> <img src="../../assets/appPic/logo.jpg" style="border: none; width: 100%"></div>
+            </div>
+        </div>
         <hr>
-            <form class="form-signin">
-                <span id="reauth-email" class="reauth-email"></span>
-                <p class="input_title">Email</p>
-                <input type="text" id="inputEmail" class="login_box" placeholder="user01@IceCode.com" required autofocus/>
-                <p class="input_title">Password</p>
-                <input type="password" id="inputPassword" class="login_box" placeholder="******" required>
-                <div id="remember" class="checkbox">
-                    <label>
-                        
-                    </label>
-                </div>
-                <button class="btn btn-lg btn-primary" type="submit" routerLink="/menu">Login</button>
-            </form><!-- /form -->
-        </div><!-- /card-container -->
-    </div><!-- /container -->
+        <form class="form-signin">
+            <span id="reauth-email" class="reauth-email"></span>
+            <p class="input_title">Email</p>
+            <input type="text" id="inputEmail" class="login_box" placeholder="user01@IceCode.com" [(ngModel)]="email" name="email" required autofocus/>
+            <p class="input_title">Password</p>
+            <input type="password" id="inputPassword" class="login_box" placeholder="******" [(ngModel)]="pass" name="pass" required>
+            <div id="remember" class="checkbox">
+                <label>
+                    
+                </label>
+            </div>
+            <button (click)="login()" class="btn btn-lg btn-primary" type="submit">Login</button>
+        </form><!-- /form -->
+    </div><!-- /card-container -->
+</div><!-- /container -->
 </div>
+

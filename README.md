@@ -17,14 +17,12 @@ Please visit our wiki for furthur project info:
 
 ### [Team Page](../../wiki/Team)
 
-[Project Management Board](https://github.com/elchi28/Hostel-Harmony/projects/1)
-### Project Documents
+### [Project Management Board](https://github.com/elchi28/Hostel-Harmony/projects/1)
+## Project Documents
 
 - [Project Inception](../../wiki/inception---planning)
 - [Software Requirements Specification](../../wiki/srs)
 - [Software Design Specification](../../wiki/sds)
-
-~~- [Project Idea](docs/idea.pdf) ([Presentation](docs/idea-slides.pdf))~~
 
 ### Iteration Pages
 - [Iteration 0 - ZFR](../../wiki/iter0-zfr)
