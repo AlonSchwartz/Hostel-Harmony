@@ -32,14 +32,12 @@ export class AddResidentComponent implements OnInit {
       null, 
       null,
       null,
+      null,
       false,
       [this.buildItem(null).value,this.buildItem(null).value,],
       {info:null,phone:null,location:null},
-      {psych:null,gp:null}
+      {psych:null,gp:null},
     );
-    //this.model.contacts=this.buildItem('asd').get('rel').value;
-    console.log(this.buildItem('asd').get('rel').value);
-    // console.log(this.myForm.controls.items );
   }
   ngOnInit() {
     this.myForm = this.fb.group({

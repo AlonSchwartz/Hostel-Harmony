@@ -30,8 +30,10 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthService } from './services/auth/auth.service';
 import { environment } from '../environments/environment';
+import { ColorPickerModule } from 'ngx-color-picker';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/he';
+import { EvaluationFormComponent } from './menu/evaluation-form/evaluation-form.component';
 
 registerLocaleData(localeFr);
 @NgModule({
@@ -43,10 +45,12 @@ registerLocaleData(localeFr);
     AddResidentComponent,
     AddStaffComponent,
     EventComponent,
-    TestingComponent
+    TestingComponent,
+    EvaluationFormComponent
   ],
   imports: [
     MatSelectModule,
+    ColorPickerModule,
     OwlDateTimeModule,
     MatCheckboxModule,
     OwlNativeDateTimeModule,

@@ -10,9 +10,7 @@ label {
 input {
     direction: rtl;
 }
-#td{
-    float: right;
-}
+
  .form-group{
     text-align: right;
     width: 100%;
@@ -20,8 +18,4 @@ input {
 .inner-td{
     direction: rtl;
     margin-left: 75%;
-}
-#td input{
-    width: 100%;
-    display:block;
 }
