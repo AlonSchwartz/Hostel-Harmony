@@ -34,6 +34,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/he';
 import { EvaluationFormComponent } from './menu/evaluation-form/evaluation-form.component';
+import { ViewComponent } from './menu/view/view.component';
+import { FilesComponent } from './menu/files/files.component';
 
 registerLocaleData(localeFr);
 @NgModule({
@@ -46,7 +48,9 @@ registerLocaleData(localeFr);
     AddStaffComponent,
     EventComponent,
     TestingComponent,
-    EvaluationFormComponent
+    EvaluationFormComponent,
+    ViewComponent,
+    FilesComponent
   ],
   imports: [
     MatSelectModule,
