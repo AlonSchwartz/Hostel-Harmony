@@ -15,7 +15,19 @@
                 <nav id="nev" class=" nav nav-pills flex-column flex-sm-row p-2 mb-2 bg-primary text-white font-weight-bold">
                     <a class="flex-sm-fill text-sm-center nav-link text-white" href="/add-staff">הוסף איש צוות</a>
                     <a class="flex-sm-fill text-sm-center nav-link text-white" routerLink="/add-resident"> הוסף דייר</a>
-                    <div class="btn-group flex-sm-fill text-sm-center nav-link text-white" dropdown>
+                    <div  class="btn-group flex-sm-fill text-sm-center nav-link text-white" dropdown>
+                        
+                        <select style="font-size: 20px" class="btn btn-primary dropdown-toggle font-weight-bold " title="עריכה" #edit  (change)="sendVal(edit.value);" >
+                            <option   disabled hidden >עריכה</option>
+                            <optgroup label="איש צוות">
+                                <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
+                            </optgroup>
+                            <optgroup label="דיירים">
+                                <option  [value]="user"  *ngFor = "let user of residents" >{{user}}</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="btn-group flex-sm-fill text-sm-center nav-link text-white" dropdown >
                         <select style="font-size: 20px" class="btn btn-primary dropdown-toggle font-weight-bold" title="קבע אירוע" #event (change)="navigateTo('/event');sendVal(event.value);" >
                             <option selected disabled hidden>הוסף אירוע</option>
                             <optgroup label="איש צוות">
@@ -44,6 +56,9 @@
             </div> 
         </div>
         <app-calendar [name]="diary.value"></app-calendar>
+        <app-evaluation-form *ngIf="diary.value!='יומנים'" [name]="diary.value"></app-evaluation-form>
+        <app-view *ngIf="diary.value!='יומנים'" [name]="diary.value"></app-view>
+        <app-files *ngIf="diary.value!='יומנים'"></app-files>
     </div>
 
 </div>
