@@ -2,26 +2,54 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { User } from '@firebase/auth-types';
-
-//import { Observable } from 'rxjs/Observable';
+import { Http,Headers,Response,RequestOptions} from '@angular/http';
+import {Observable }  from 'rxjs/Rx';
+import { CanActivateRouteGuard } from './can-activate-route.guard';
 
 @Injectable()
-export class AuthService {
-  
-  private _user: User
+export class AuthService{
+
+ private isUserLoggedIn;
+public username;
+
+/*
+setUserLoggedIn(){
+  this.isUserLoggedIn=true;
+  this.username='';
+}
+
+getUserLoggedIn(){
+  return this.isUserLoggedIn;
+}
+*/
+  private _user:User
   private _userData: any;
+
+
+
+//public redirectUrl:string;
   
   
   //user: Observable<firebase.User>;
-  
+ 
   
   constructor(public firebaseAuth: AngularFireAuth) { 
     //this.firebaseAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     //    this.firebaseAuth.auth.signInAnonymously();
+    //this.isUserLoggedIn = false;
+
     console.log("I'm in auth service");
-    
+ 
+
     // this.user = firebaseAuth.authState;
   }
+
+
+ // public isLoggedin():Observable<boolean>{
+ //   return this._http.get(process.env.api_url +'/api/login')
+   // .map((res:Response)=>res)
+    //.catch((error:any )=>Observable.throw(Error|| 'Server Error'))
+//}
   
   public async loginWithGoogle() {
     //let user = await this.firebaseAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
@@ -45,8 +73,8 @@ export class AuthService {
     
     let user = await this.firebaseAuth.auth.signInWithEmailAndPassword(email, pass)
     this._user = this.firebaseAuth.auth.currentUser
-    console.log("-----\n ");
-    //console.log(user);
+    console.log("successfully\n ");
+    console.log(user);
   }
   
   public async signupWithEmailAndPass(email: string, pass: string) {

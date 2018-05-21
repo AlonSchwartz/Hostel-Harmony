@@ -9,8 +9,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NameSelectService } from './services/nameSelect/name-select.service';
 import { CalendarModule } from 'angular-calendar';
 import { BsDropdownModule } from 'ngx-bootstrap';
+import { CanActivateRouteGuard } from './services/auth/can-activate-route.guard';
+import { AppRoutingModule, routes } from './app.router';
 
-import { appRoutes } from './app.router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -29,6 +30,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthService } from './services/auth/auth.service';
+import { HttpModule } from '@angular/http';
 import { environment } from '../environments/environment';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { registerLocaleData } from '@angular/common';
@@ -38,6 +40,7 @@ import { ViewComponent } from './menu/view/view.component';
 import { FilesComponent } from './menu/files/files.component';
 
 registerLocaleData(localeFr);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +55,7 @@ registerLocaleData(localeFr);
     ViewComponent,
     FilesComponent
   ],
-  imports: [
+  imports: [BrowserModule,FormsModule,HttpModule,
     MatSelectModule,
     ColorPickerModule,
     OwlDateTimeModule,
@@ -67,20 +70,21 @@ registerLocaleData(localeFr);
     FormsModule,
     BsDropdownModule.forRoot(),
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(routes),
     CalendarModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AppRoutingModule
   ],
   providers: [
     NameSelectService,
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'il'},
     UserService,
     AuthService,
-    CalendarComponent
-  ],
+    CalendarComponent,
+    CanActivateRouteGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
