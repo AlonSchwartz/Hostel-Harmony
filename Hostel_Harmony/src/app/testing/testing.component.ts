@@ -30,7 +30,7 @@ export class TestingComponent implements OnInit {
     
   }
   
-  isLoggedIn(){
+  getUserLoggedIn(){
     var answer = this.authService.isLoggedIn;
     alert(answer);
   }
