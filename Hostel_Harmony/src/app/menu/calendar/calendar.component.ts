@@ -1,10 +1,12 @@
 import { Component, OnInit,Input, ViewChild, TemplateRef } from '@angular/core';
 //import { CalendarEvent } from 'calendar-utils';
-import { CalendarEvent, CalendarEventTitleFormatter } from 'angular-calendar';
+import { CalendarEvent, CalendarEventTitleFormatter ,CalendarDateFormatter,DAYS_OF_WEEK} from 'angular-calendar';
 import {  ChangeDetectionStrategy } from '@angular/core';
 import {  CalendarMonthViewDay } from 'angular-calendar';
 import { isSameMonth, isSameDay } from 'ngx-bootstrap/chronos/utils/date-getters';
-import { CustomEventTitleFormatter } from '../../provider/custom-event-title-formatter.provider';
+import { CustomEventTitleFormatter } from '../provider/custom-event-title-formatter.provider';
+import { CustomDateFormatter } from '../provider/custom-date-formatter.provider';
+
 import { EventComponent } from '../../event/event.component';
 import {Event} from '../../models/event.model';
 
@@ -18,8 +20,11 @@ import {Event} from '../../models/event.model';
     {
       provide: CalendarEventTitleFormatter,
       useClass: CustomEventTitleFormatter
+    },
+    {
+      provide: CalendarDateFormatter,
+      useClass: CustomDateFormatter
     }
-    
   ]
 })
 export class CalendarComponent implements OnInit {
@@ -38,7 +43,12 @@ export class CalendarComponent implements OnInit {
       title: 'test event',
     }
   ];
+  locale: string = 'he';
+ 
 
+  weekStartsOn: number = DAYS_OF_WEEK.SUNDAY;
+
+  weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
   
   addEvent(eve: Event){
 

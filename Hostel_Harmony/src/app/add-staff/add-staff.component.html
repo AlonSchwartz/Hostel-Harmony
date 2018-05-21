@@ -13,25 +13,23 @@
     </div>
 
     <div class="form-group">
-      <label for="phoneNumber">טלפון</label>
-      
-      <input type="phone" pattern="[0-9]{10}" class="form-control" id="phoneNumber" [(ngModel)]="model.phoneNumber" name="phoneNumber" required>
-      <mat-error *ngIf="!staffForm.valid" >הכנס מספר טלפון*</mat-error>
+    
+    <mat-form-field >
+        
+        <input matInput placeholder="הכנס מספר טלפון" [formControl]="phoneNumber" id="phoneNumber" [(ngModel)]="model.phoneNumber" name="phoneNumber">
+        <mat-error *ngIf="phoneNumber.invalid" >{{getPhoneErrorMessage()}}</mat-error>
+      </mat-form-field>
     </div>
 
     <div class="form-group">
-        <label for="email">E-MAIL</label>
         <mat-form-field>
             <input matInput placeholder="Enter your email" [formControl]="email" id="email" [(ngModel)]="model.email" name="email">
-            <mat-error *ngIf="email.invalid" >{{getErrorMessage()}}</mat-error>
+            <mat-error *ngIf="email.invalid" >{{getEmailErrorMessage()}}</mat-error>
           </mat-form-field>
-    </div>
-
+    </div> 
     <div class="form-group">
-        <label for="birthday">תאריך לידה</label> 
       <mat-form-field>
-          
-            <input matInput [matDatepicker]="picker" placeholder="בחר תאריך" id="birthday" [(ngModel)]="model.birthday" name="birthday"   required>
+            <input matInput [matDatepicker]="picker" placeholder="בחר תאריך לידה" id="birthday" [(ngModel)]="model.birthday" name="birthday"   required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -42,7 +40,7 @@
       <input type="text" class="form-control" id="role" [(ngModel)]="model.role" name="role">
     </div>
 
-    <button type="submit" class="btn btn-success btn-block" [disabled]="!staffForm.valid || !email.valid">Submit</button>
-    <button type="button" class="btn btn-success btn-block" routerLink="/menu">Return</button>
+    <button type="submit" class="btn btn-success btn-block" [disabled]="!staffForm.valid || !email.valid ||!phoneNumber.valid">הוסף איש צוות</button>
+    <button type="button" class="btn btn-success btn-block" routerLink="/menu">חזור לעמוד הראשי</button>
   </form>
 </div>

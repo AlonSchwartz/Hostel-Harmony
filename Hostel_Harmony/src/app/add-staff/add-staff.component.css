@@ -12,7 +12,6 @@ mat-form-field.input{
     width: 100%;
 }
 mat-form-field{
-    width: 50%;
-    display:block;
+    display:-webkit-inline-box;
     text-align: inherit;
 }

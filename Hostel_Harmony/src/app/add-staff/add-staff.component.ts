@@ -19,11 +19,16 @@ import {FormControl, Validators} from '@angular/forms';
 export class AddStaffComponent implements OnInit {
 
   email = new FormControl('', [Validators.required, Validators.email]);
-  
-  getErrorMessage() {
-    return this.email.hasError('required') ? 'You must enter a value' :
-        this.email.hasError('email') ? 'Not a valid email' :
+  phoneNumber = new FormControl(null, [Validators.required, Validators.pattern("[0-9]{10}")]);
+  getEmailErrorMessage() {
+    return this.email.hasError('required') ? 'הכנס כתובת אימייל' :
+        this.email.hasError('email') ? 'אינה כתובת אימייל' :
             '';
+  }
+  getPhoneErrorMessage(){
+    return this.phoneNumber.hasError('required') ? 'הכנס מספר טלפון' :
+    this.phoneNumber.hasError('pattern') ? 'מספר שגוי' :
+        '';
   }
 
   private model: staff ;

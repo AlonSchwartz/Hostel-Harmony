@@ -28,11 +28,16 @@ import { UserService } from './services/user/user.service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthService } from './services/auth/auth.service';
 import { HttpModule } from '@angular/http';
+import { environment } from '../environments/environment';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/he';
+import { EvaluationFormComponent } from './menu/evaluation-form/evaluation-form.component';
 
+registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
@@ -43,10 +48,12 @@ import { HttpModule } from '@angular/http';
     AddResidentComponent,
     AddStaffComponent,
     EventComponent,
-    TestingComponent
+    TestingComponent,
+    EvaluationFormComponent
   ],
   imports: [BrowserModule,FormsModule,HttpModule,
     MatSelectModule,
+    ColorPickerModule,
     OwlDateTimeModule,
     MatCheckboxModule,
     OwlNativeDateTimeModule,
