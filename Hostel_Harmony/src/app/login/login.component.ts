@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.email=null;
     this.pass=null;
-    console.log(this.authService.isLoggedIn);
     if (this.authService.isLoggedIn){
       this.router.navigate(['/menu']);
       console.log("needs to nav to menu");
