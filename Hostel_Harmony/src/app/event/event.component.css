@@ -7,7 +7,7 @@ h1{
 label {
     float:right;
 }
-input {
+input,textarea {
     direction: rtl;
 }
 

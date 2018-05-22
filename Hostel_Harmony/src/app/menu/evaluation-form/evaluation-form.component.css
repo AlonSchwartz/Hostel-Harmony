@@ -1,0 +1,20 @@
+
+.container{
+    background: gray;
+}
+label {
+    /* float:right; */
+    direction: rtl;
+}
+input,h1,h2 {
+    text-align: right;
+    direction: rtl;
+}
+input[type="text"],textarea[type="text"]
+{
+    font-size:14px;
+}
+.form-group{
+    text-align: right;
+    width: 100%;
+}
