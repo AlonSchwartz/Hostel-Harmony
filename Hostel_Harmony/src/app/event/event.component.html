@@ -7,35 +7,49 @@
   
   
   <form (ngSubmit)="subEvent(eventForm.value)" #eventForm="ngForm">
-      <div class="form-group" id ="td">
-        <div class="inner-td">
+      <div class="form-group row" style="direction: rtl">
+        <div class="col-sm-4">
           <label for ="date">
             בחר תאריך</label>
-            <input [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" required [(ngModel)]="model.settime.date" name="date">
+            <input placeholder="בחר תאריך..." [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" required [(ngModel)]="model.settime.date" name="date">
             <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
           </div>
-            <div class="inner-td">
+            <div class="col-sm-4">
           <label for="start">
             שעת התחלה</label>
-            <input [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4" required [(ngModel)]="model.settime.start" name="start">
+            <input placeholder="בחר שעה..." [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4" required [(ngModel)]="model.settime.start" name="start">
             <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
           </div>
-            <div class="inner-td">
+            <div class="col-sm-4">
           <label for ="end">
             שעת סיום</label>
-            <input [owlDateTimeTrigger]="dt5" [owlDateTime]="dt5" required [(ngModel)]="model.settime.end" name="end">
+            <input placeholder="בחר שעה..." [owlDateTimeTrigger]="dt5" [owlDateTime]="dt5" required [(ngModel)]="model.settime.end" name="end">
             <owl-date-time [pickerType]="'timer'" #dt5></owl-date-time>
           </div>
       </div>  
           
-    <div class="form-group">
+    <div class="form-group" >
         <mat-form-field>
             <mat-select  placeholder="סוג פעילות"  [(ngModel)]="model.activity" name="activity">
-              <mat-option *ngFor="let type of types" [value]="type.value">
+              <mat-option [style.background]="type.color" *ngFor="let type of types" [value]="type.value">
                 {{ type.viewValue }}
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <div class="form-group row" style="direction: rtl" >
+            <div class="col-sm-2 col-sm-offset-10">
+              <button type="button" class="btn btn-primary"
+                  (click)="addActivity(customActivity,color)">להוספת פעילות</button>
+            </div>
+            <div class="col-sm-1">
+                  <label for="color" >בחר צבע</label>
+            <input [(colorPicker)]="color" [style.background]="color" [cpPosition]="'bottom'" class="form-control" />
+            </div>
+            <div class="col-sm-4 ">
+              <label for="describe" >סוג פעילות</label>
+              <input type="text" class="form-control" id="describe" [(ngModel)]="customActivity" name ="cust" >
+            </div>
+      </div>
     </div>  
     <div class="form-group">
         <mat-checkbox  [(ngModel)]="model.asign" name ="asign">ליווי</mat-checkbox>
@@ -45,11 +59,15 @@
 
     <div class="form-group" >
       <label for="describe" >תיאור</label>
-      <input type="text" class="form-control" id="describe" [(ngModel)]="model.describe" name="describe">
+      <textarea type="text" class="form-control" id="describe" [(ngModel)]="model.describe" name="describe"></textarea>
     </div>
-
-
-    <button  type="submit" class="btn btn-success btn-block" [disabled]="!eventForm.valid">Submit</button>
-    <button type="button" class="btn btn-success btn-block" routerLink="/menu">Return</button>
+    <div class="form-group" >
+      <div class="col-sm-2 col-sm-offset-10">
+        <label for="issuer" >שם ממלא הטופס</label>
+        <input type="text" class="form-control col" id="issuer" required [(ngModel)]="model.issuer" name="issuer">
+      </div>
+    </div>
+    <button  type="submit" class="btn btn-success btn-block" [disabled]="!eventForm.valid">הזן אירוע</button>
+    <button type="button" class="btn btn-success btn-block" routerLink="/menu">חזור לעמוד הראשי</button>
   </form>
 </div>

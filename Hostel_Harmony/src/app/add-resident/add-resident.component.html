@@ -18,24 +18,26 @@
     </div>
 
     <div class="form-group">
-        <label for="age">תאריך לידה</label> 
       <mat-form-field>  
-            <input matInput [matDatepicker]="picker1" placeholder="בחר תאריך" id="age" required  [(ngModel)]="model.birthday" name="birthday">
+            <input matInput [matDatepicker]="picker1" placeholder="בחר תאריך לידה" id="age" required  [(ngModel)]="model.birthday" name="birthday">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
       </mat-form-field>
     </div>
     <div class="form-group">
-      <label for="age">תאריך קליטה</label> 
     <mat-form-field>
-          <input matInput [matDatepicker]="picker2" placeholder="בחר תאריך" id="since" required  [(ngModel)]="model.memberSince" name="memberSince">
+          <input matInput [matDatepicker]="picker2" placeholder="בחר תאריך קליטה" id="since" required  [(ngModel)]="model.memberSince" name="memberSince">
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
   </div>
+  <div class="form-group">
+    <label for="caretaker">מלווה</label>
+    <input type="text" class="form-control" id="caretaker" required [(ngModel)]="model.caretaker" name="caretaker">
+  </div>
     <div class="form-group">
-      <label for="assigned">מתאם טיפול</label>
-      <input type="text" class="form-control" id="assigned" required [(ngModel)]="model.caretaker" name="caretaker">
+      <label for="metaem">מתאם טיפול</label>
+      <input type="text" class="form-control" id="metaem" required [(ngModel)]="model.metaem" name="metaem">
     </div>
     <hr>
     <h4>אנשי קשר</h4>
@@ -57,6 +59,10 @@
             <label [attr.for]="'rel'+i">קירבה</label>
             <input type="text" class="form-control" [attr.id]="'rel'+i" formControlName="rel" [(ngModel)]="model.contacts[i].rel" name="rel">
           </div>
+          <div class="col-sm-1 py-1">
+            <button type="button" class="btn"
+                    (click)="myForm.get('items').removeAt(i);model.contacts.splice(i,1)">הסר</button>
+          </div>
         </div>
       </fieldset>
   <div class="form-group row">
@@ -66,17 +72,6 @@
     </div>
   </div>
 </div>
-   <!-- <div class="form-group row" [formGroup]="myForm" >
-      <div class="form-group">
-       <label for="emergencyn">שם</label>
-       <input type="text" class="form-control" id="emergencyn"  [(ngModel)]="model.contacts.name" name="name">
-      </div>
-     
-     <div class="form-group">
-       <label for="emergencyp">טלפון</label>
-       <input type="phone" pattern="[0-9]{10}" class="form-control" id="emergencyp"  [(ngModel)]="model.contacts.phone" name="emergencyp">
-     </div>
-  </div>-->
     <hr>
     <h4>עבודה</h4>
     <div class="form-group">
@@ -110,8 +105,8 @@
       <input type="text" class="form-control" id="doctorgp"  [(ngModel)]="model.doctors.gp" name="doctorgp">
     </div>
   
-    <button type="submit" class="btn btn-success btn-block" [disabled]="!resForm.valid ">Submit</button>
-    <button type="button" class="btn btn-success btn-block" routerLink="/menu">Return</button>
+    <button type="submit" class="btn btn-success btn-block" [disabled]="!resForm.valid ">הוסף דייר</button>
+    <button type="button" class="btn btn-success btn-block" routerLink="/menu">חזור לעמוד הראשי</button>
 
   </form>
 </div>

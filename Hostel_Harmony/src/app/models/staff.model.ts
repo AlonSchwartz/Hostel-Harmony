@@ -1,24 +1,3 @@
-import { person } from "./person.model";
-
-/*
-export class staff extends person {
-    email: string;
-    role: string;
-    
-    constructor(values:ngModel){ // values should be from the type of the forms input.
-        super();
-        this.birthday = values.birthday;
-        this.email = values.email;
-        //etc...
-    };
-    
-}
-
-
-*/
-
-
-// Like option #2 in resdient
 export class staff {
     
     constructor(

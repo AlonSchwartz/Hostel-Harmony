@@ -16,6 +16,8 @@ import { Event } from '../../models/event.model';
 @Injectable()
 export class UserService  {
   
+
+
   staffUsers: staff[] = [];
   residentsUsers: resident[] = []
   
@@ -29,6 +31,7 @@ export class UserService  {
   //constructor(private afs: AngularFirestore) { 
   constructor(private afs: AngularFireDatabase, private calendar: CalendarComponent) { 
     const settings = { timestampsInSnapshots: true };
+    
     //afs.firestore.settings(settings);
     
     // According to AngularFireStorm

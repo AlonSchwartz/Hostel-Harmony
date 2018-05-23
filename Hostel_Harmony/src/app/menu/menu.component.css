@@ -1,4 +1,5 @@
 
+
 #head{
     margin-bottom: 20px;
 }
@@ -17,6 +18,8 @@
     
 }
 select{
+    padding-top:0px;
+    margin-top:0px;
     direction: rtl;
     background-color: darkgreen;
     border: none;

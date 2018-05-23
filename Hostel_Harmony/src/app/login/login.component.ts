@@ -27,10 +27,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.email=null;
     this.pass=null;
-    /** Caused a crash in routing! */
-  //   this.router.resetConfig([
-      
-  //   ])
+    if (this.authService.isLoggedIn){
+      this.router.navigate(['/menu']);
+      console.log("needs to nav to menu");
+    }
    }
   
 }
