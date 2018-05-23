@@ -6,7 +6,6 @@ import {  CalendarMonthViewDay } from 'angular-calendar';
 import { isSameMonth, isSameDay } from 'ngx-bootstrap/chronos/utils/date-getters';
 import { CustomEventTitleFormatter } from '../provider/custom-event-title-formatter.provider';
 import { CustomDateFormatter } from '../provider/custom-date-formatter.provider';
-
 import { EventComponent } from '../../event/event.component';
 import {Event} from '../../models/event.model';
 
@@ -45,13 +44,11 @@ export class CalendarComponent implements OnInit {
   ];
   locale: string = 'he';
  
-
   weekStartsOn: number = DAYS_OF_WEEK.SUNDAY;
 
-<<<<<<< HEAD:Hostel_Harmony/src/app/calendar/calendar.component.ts
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
-=======
-  
+
+
   addEvent(eve: Event){
 
     alert("I'm in calendar and i got your event!");
@@ -63,10 +60,9 @@ export class CalendarComponent implements OnInit {
     console.log("settime = ");
     console.log(eve.settime);
   }
-/*
+
   backToWeekView() {
    this.view = 'week';
   }
-  */
->>>>>>> 4c582253160f3002fb84efa13367f0c523facb1d:Hostel_Harmony/src/app/menu/calendar/calendar.component.ts
+  
 }

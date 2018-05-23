@@ -30,6 +30,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/he';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AuthService } from './services/auth/auth.service';
 
 registerLocaleData(localeFr);
 @NgModule({

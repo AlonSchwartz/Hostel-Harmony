@@ -1,49 +1,40 @@
 <div  id="menu">
-    <div class='container'>
-        <div id="all" class='col'>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="text-right">
-                        <button (click)="logout()" type="button" class="btn pull-left btn-lg" >התנתק</button>
-                    </div>
+    <div id="bar">
+        <nav id="nev" class=" nav nav-pills d-flex flex-row-reverse p-2 mb-2 text-white font-weight-bold">
+                <a class=" text-sm-center nav-link active text-white" routerLink="/menu">בית</a>  
+                <div class="btn-group text-sm-center nav-link text-white" dropdown>
+                    <select style="font-size: 20px" class="text-white dropdown-toggle font-weight-bold text-sm-center " title="יומנים" #diary  (change)="sendVal(diary.value);" >
+                        <option   disabled hidden >יומנים</option>
+                        <optgroup label="איש צוות">
+                            <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
+                        </optgroup>
+                        <optgroup label="דיירים">
+                            <option  [value]="user"  *ngFor = "let user of residents" >{{user}}</option>
+                        </optgroup>
+                    </select>
                 </div>
-            </div>
-            <div class="page-header font-weight-bold text-right" id="head">
-                <h1>,שלום איש צוות</h1>
-            </div>
-            <div id="bar">
-                <nav id="nev" class=" nav nav-pills flex-column flex-sm-row p-2 mb-2 bg-primary text-white font-weight-bold">
-                    <a class="flex-sm-fill text-sm-center nav-link text-white" href="/add-staff">הוסף איש צוות</a>
-                    <a class="flex-sm-fill text-sm-center nav-link text-white" routerLink="/add-resident"> הוסף דייר</a>
-                    <div class="btn-group flex-sm-fill text-sm-center nav-link text-white" dropdown>
-                        <select style="font-size: 20px" class="btn btn-primary dropdown-toggle font-weight-bold" title="קבע אירוע" #event (change)="navigateTo('/event');sendVal(event.value);" >
-                            <option selected disabled hidden>הוסף אירוע</option>
-                            <optgroup label="איש צוות">
-                                <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
-                            </optgroup>
-                            <optgroup label="דיירים">
-                                <option  [value]="user" *ngFor = "let user of residents" >{{user}}</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    <div  class="btn-group flex-sm-fill text-sm-center nav-link text-white" dropdown>
-
-                            <select style="font-size: 20px" class="btn btn-primary dropdown-toggle font-weight-bold " title="יומנים" #diary  (change)="sendVal(diary.value);" >
-                                <option   disabled hidden >יומנים</option>
-                                <optgroup label="איש צוות">
-
-                                <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
-                            </optgroup>
-                            <optgroup label="דיירים">
-                                <option  [value]="user"  *ngFor = "let user of residents" >{{user}}</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    <a class="flex-sm-fill text-sm-center nav-link active text-white" routerLink="/menu">בית</a>  
-                </nav>  
-            </div> 
-        </div>
+                <div class="btn-group nav-link text-white" dropdown>
+                    <select style="font-size: 20px" class="dropdown-toggle font-weight-bold text-white" title="קבע אירוע" #event (change)="navigateTo('/event');sendVal(event.value);" >
+                        <option selected disabled hidden>הוסף אירוע</option>
+                        <optgroup label="איש צוות">
+                            <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
+                        </optgroup>
+                        <optgroup label="דיירים">
+                            <option  [value]="user" *ngFor = "let user of residents" >{{user}}</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <a class="nav-link text-white" href="/add-staff">הוסף איש צוות</a>
+                <a class="nav-link text-white" routerLink="/add-resident"> הוסף דייר</a>
+                <div class="d-flex flex-row">
+                        <button (click)="logout()" type="button" class="btn pull-left btn-lg" >התנתק</button>
+                </div> 
+        </nav>  
+    </div> 
+    <div class="page-header font-weight-bold text-right" id="head">
+        <h1>,שלום איש צוות</h1>
+    </div>   
+    <div class='container'>
         <app-calendar [name]="diary.value"></app-calendar>
     </div>
-
 </div>
