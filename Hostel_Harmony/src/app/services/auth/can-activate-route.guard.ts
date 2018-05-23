@@ -24,7 +24,7 @@ export class CanActivateRouteGuard{
     }
     this.authService.redirectUrl = state.url;    
     console.log("You're not logged in, so you're going to Login page!");
-    this.router.navigateByUrl('login')
+    //this.router.navigateByUrl('login')
     return false;
     
   }
