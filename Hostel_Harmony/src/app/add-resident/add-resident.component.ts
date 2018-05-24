@@ -6,6 +6,7 @@
 import { Component, OnInit } from '@angular/core';
 import {resident} from '../models/resident.model';
 import {NgModel,FormGroup,FormArray,FormBuilder ,FormControl, Validators } from '@angular/forms';
+import { UserService } from '../services/user/user.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class AddResidentComponent implements OnInit {
   // TODO: Remove this when we're done--->testing purposes
   get diagnostic() { return JSON.stringify(this.model); }
 
-  constructor(private fb:FormBuilder ) {
+  constructor(private fb:FormBuilder, private userService: UserService ) {
     this.submitted = false;
     this.model = new resident(
       null, 
@@ -53,10 +54,11 @@ export class AddResidentComponent implements OnInit {
       phone: new FormControl(null),
     })
   }
-  subResident(obj:object) {
+  subResident(obj:resident) {
     this.submitted = true;/*do something*/
     alert(this.submitted);
     console.log(obj);
+    this.userService.addNewResident(obj);
   }
  
 
