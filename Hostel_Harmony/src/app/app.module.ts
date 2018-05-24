@@ -38,6 +38,9 @@ import localeFr from '@angular/common/locales/he';
 import { EvaluationFormComponent } from './menu/evaluation-form/evaluation-form.component';
 import { ViewComponent } from './menu/view/view.component';
 import { FilesComponent } from './menu/files/files.component';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+
+
 
 registerLocaleData(localeFr);
 
@@ -76,7 +79,9 @@ registerLocaleData(localeFr);
     AngularFirestoreModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpModule,
+    HttpClientModule
   ],
   providers: [
     NameSelectService,
@@ -84,6 +89,8 @@ registerLocaleData(localeFr);
     UserService,
     AuthService,
     CalendarComponent,
+    HttpModule,
+    HttpClientModule,
     CanActivateRouteGuard],
   bootstrap: [AppComponent]
 })

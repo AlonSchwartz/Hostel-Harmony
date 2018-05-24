@@ -1,3 +1,6 @@
+import { Event } from '../models/event.model';
+
+
 export class staff {
     
     constructor(
@@ -8,8 +11,11 @@ export class staff {
         public birthday: string, // full birthday, like dd/mm/yyyy
         public calendarID: number = -1, // for future purpose. It needs to link to the user's calendar JSON file somehow (by index/server... TBD)
         public email: string,
-        public role: string
-        
+        public role: string,
+        public className: string = "staff",
+        public events?: Event[]
     )
     {};
+    
+  
 }

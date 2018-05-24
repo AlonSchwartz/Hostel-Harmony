@@ -4,18 +4,23 @@ import { resident } from '../models/resident.model';
 import { staff } from '../models/staff.model';
 import { UserService } from '../services/user/user.service';
 import { AuthService } from '../services/auth/auth.service';
+import { HttpClientModule } from '@angular/common/http'; import { HttpModule, Response } from '@angular/http';
+
 
 @Component({
   selector: 'app-testing',
   templateUrl: './testing.component.html',
   styleUrls: ['./testing.component.css']
 })
+
 export class TestingComponent implements OnInit {
   
   constructor(private userService: UserService, private authService: AuthService) { }
   bla: test;
   resident: resident;
   staff: staff;
+  staffUsers: staff[] = []
+  
   
   ngOnInit() {
     
@@ -35,6 +40,25 @@ export class TestingComponent implements OnInit {
     alert(answer);
   }
   
+  storeAtFirebase(){
+    
+    this.userService.storeAtFirestorme();
+  }
+  
+  getDataFromFirestome(){
+    
+    this.userService.getStaffNames();
+   // this.userService.getDataFromFirestome();
+    //this.userService.getResidents();
+    //this.userService.setMetaData();
+    
+  }
+  
+  passTest(){
+    
+    this.userService.updateStaff(this.staff);
+    
+  }
 }
 
 
