@@ -114,16 +114,18 @@ export class UserService  {
   
   // There is probally a bug - first run of this function returns undefined in some cases. needs to check more...
   getStaffNames(){
+    this.staffNames = [];
+
     this.staffCollection.valueChanges().subscribe(collection =>  {
-      this.staffNames = [];
       for (var i = 0; i < collection.length ; i++){
         this.staffNames[i] = collection[i].firstName + " " + collection[i].lastName;
       }
-      
-      // console.log(this.staffNames);
+     // console.log(this.staffNames);
     }
   )
-  return this.staffNames;
+  //console.log(this.staffNames);
+
+  return this.staffNames; 
 }
 
 // Will be changed later to work based on Unique ID
