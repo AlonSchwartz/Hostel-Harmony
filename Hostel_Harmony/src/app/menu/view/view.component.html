@@ -1,1 +1,79 @@
-<h2>{{name}} Here you can view profile</h2>
+<div class="container">
+    <div [hidden]="!submitted">
+        <h2>איש צוות {{name}}</h2>
+        <div class="row">
+        <div class="col-xs-3">שם+משפחה: </div>
+        <div class="col-xs-9  pull-right">{{ vstaff.firstName }} {{ vstaff.lastName }}</div>
+        </div>
+        <div class="row">
+        <div class="col-xs-3">מספר טלפון:</div>
+        <div class="col-xs-9 pull-right">{{ vstaff.phoneNumber }}</div>
+        </div>
+        <div class="row">
+        <div class="col-xs-3">דואר אלקטרוני:</div>
+        <div class="col-xs-9 pull-right">{{ vstaff.email }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">גיל:</div>
+            <div class="col-xs-9 pull-right">{{ vstaff.birthday }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">תפקיד:</div>
+            <div class="col-xs-9 pull-right">{{ vstaff.role }}</div>
+        </div>
+        <br>
+        <button class="btn btn-primary" (click)="submitted=false">ערוך</button>
+    </div>
+    <div [hidden]="submitted">
+            <h2>דייר {{name}}</h2>
+            <div class="row">
+            <div class="col-xs-3">שם+משפחה: </div>
+            <div class="col-xs-9  pull-left">{{ vresident.firstName }} {{ vresident.lastName }}</div>
+            </div>
+            <div class="row">
+            <div class="col-xs-3">מספר טלפון:</div>
+            <div class="col-xs-9 pull-left">{{ vresident.phoneNumber }}</div>
+            </div>
+            <div class="row">
+            <div class="col-xs-3">מלווה:</div>
+            <div class="col-xs-9 pull-left">{{ vresident.caretaker }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">גיל:</div>
+                <div class="col-xs-9 pull-left">{{ vresident.birthday }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">מתאם טיפול:</div>
+                <div class="col-xs-9 pull-left">{{ vresident.metaem }}</div>
+            </div>
+            <div class="row">
+                    <div class="col-xs-3">תאריך כניסה:</div>
+                    <div class="col-xs-9 pull-left">{{ vresident.memberSince }}</div>
+            </div>
+            <hr>
+            <div class="row">
+                    <div class="col-xs-1">עבודה:</div>
+                    <div class="col-xs-4 pull-right">פרטים:
+                    {{ vresident.work.info }}</div>
+                    <div class="col-xs-3 pull-right">מס טלפון:
+                    {{ vresident.work.phone }}</div>
+                    <div class="col-xs-4 pull-right">מיקום:
+                    {{ vresident.work.location }}</div>
+            </div>
+            <hr>
+            <div class="row">
+                    <div class="col-xs-1">רופאים:</div>
+                    <div class="col-xs-5 pull-right">פסיכיאטר: {{ vresident.doctors.psych }}</div>
+                    <div class="col-xs-5 pull-right">רופא משפחה:{{ vresident.doctors.gp }}</div>
+            </div>
+            <hr>
+            <div class="row" *ngFor="let item of vresident.contacts; let i=index" >
+                    <div class="col-xs-1">אנשי קשר:</div>
+                    <div class="col-xs-4 pull-right">שם:  {{ vresident.contacts[i].name }}</div>
+                    <div class="col-xs-4 pull-right">קירבה:  {{ vresident.contacts[i].rel }}</div>
+                    <div class="col-xs-3 pull-right">פרטי התקשרות:  {{ vresident.contacts[i].phone }}</div>
+            </div>
+            <br>
+            <button class="btn btn-primary" (click)="submitted=false">ערוך</button>
+        </div>
+</div>

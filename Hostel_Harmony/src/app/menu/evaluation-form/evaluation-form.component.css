@@ -1,6 +1,10 @@
 
 .container{
-    background: gray;
+    background: rgba(34,34,34,0.75);
+    border-radius: 15px;
+    color:white;
+    direction: rtl;
+    text-align: right;
 }
 label {
     /* float:right; */

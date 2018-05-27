@@ -1,5 +1,6 @@
-<h2>טופס הערכה עבור: {{name}}</h2>
+
 <div class="container">
+        <h2>טופס הערכה עבור: {{name}}</h2>
     {{diagnostic}}
     <h1>מטרות ויעדי התוכנית השיקומית</h1>
     <hr>
@@ -10,21 +11,21 @@
         <input type="text" class="form-control" id="mainGoal" required [(ngModel)]="model.mainGoal" name="mainGoal">
       </div>
       <hr>
-      <h2>מטרות לטווח קצר ויעדים להשגת המטרה:</h2>
-      <hr>
-      <div [formGroup]="myForm" >
-        <fieldset formArrayName="semiGoal" >
-                <div class="form-group row" style ="direction: rtl"
+
+      <div [formGroup]="myForm" class="form-group">
+        <fieldset formArrayName="semiGoal"  >
+                <div class="form-group" 
                 *ngFor="let item of myForm.get('semiGoal').controls; let i=index"
                 [formGroup]="item">
+                <h2>מטרות לטווח קצר ויעדים להשגת המטרה:</h2>
                 <h4>{{i+1}}:</h4>
                 <div class="form-group">
                     <label [attr.for]="'goal'+i">מטרה</label>
                     <input [attr.id]="'goal'+i" formControlName="goal" type="text" class="form-control" id="goal" required [(ngModel)]="model.semiGoal[i].goal" name="goal">
                 </div>
     <hr>
-        <fieldset formArrayName="acts" class="form-group row" >
-                <div class="form-group row" style ="direction: rtl"
+        <fieldset formArrayName="acts" class="form-group">
+                <div class="form-group" 
                     *ngFor="let item of myForm.get('semiGoal').at(i).get('acts').controls; let j=index"
                     [formGroup]="item">
                 <h4>{{j+1}}:</h4>
@@ -36,21 +37,31 @@
                 <label [attr.for]="'caretaker'+j">יום ושעה + מלווה</label>
                 <input [attr.id]="'caretaker'+j" formControlName="caretaker" type="text" class="form-control" id="caretaker" [(ngModel)]="model.semiGoal[i].acts[j].caretaker" name="caretaker">
                  </div>
+                 <div class="col-sm-1 py-1">
+                        <button type="button" class="btn" style="color:black"
+                                (click)="myForm.get('semiGoal').at(i).get('acts').removeAt(j);model.semiGoal[i].acts.splice(j,1)">הסר</button>
+                </div> 
                 </div>
                 <button type="button" class="btn btn-primary"
-                (click)="myForm.get('semiGoal').at(i).get('acts').push(buildActs('')); model.semiGoal[i].acts.push(this.buildActs(null).value)">לחץ להוספה</button>  
+                (click)="myForm.get('semiGoal').at(i).get('acts').push(buildActs('')); model.semiGoal[i].acts.push(this.buildActs(null).value)">לחץ להוספה</button> 
+                
         </fieldset>
-<!-- add buttons to expand array?-->
         <hr>
         <div class="form-group">
             <label [attr.for]="'how'+i">איך נדע שהמטרה הושגה? (מבחן התוצאה/גילה יוזמה בתחום ללא תזכורת וכו'</label>
             <input [attr.id]="'how'+i" formControlName="how" type="text" class="form-control" id="caretaker" [(ngModel)]="model.semiGoal[i].how" name="how">
         </div>
+        <div class="col-sm-1 py-1">
+                <button type="button" class="btn" style="color:black"
+                        (click)="myForm.get('semiGoal').removeAt(i);model.semiGoal.splice(i,1)">הסר</button>
+        </div>
+        <button type="button" class="btn btn-primary"
+        (click)="myForm.get('semiGoal').push(buildSemiGoal('')); model.semiGoal.push(this.buildSemiGoal(null).value)">לחץ להוספה</button>
+         
     </div>
     </fieldset>
 </div>
-    <button type="button" class="btn btn-primary"
-    (click)="myForm.get('semiGoal').push(buildSemiGoal('')); model.semiGoal.push(this.buildSemiGoal(null).value)">לחץ להוספה</button>
+
     <hr>  
     <button type="submit" class="btn btn-success" [disabled]="!evalForm.valid ">שמור</button>
     </form>

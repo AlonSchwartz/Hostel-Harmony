@@ -48,8 +48,8 @@
     </div>   
     <div class='container'>
         <app-calendar [name]="diary.value"></app-calendar>
-        <app-evaluation-form *ngIf="diary.value!='יומנים'" [name]="diary.value"></app-evaluation-form>
         <app-view *ngIf="diary.value!='יומנים'" [name]="diary.value"></app-view>
+        <app-evaluation-form *ngIf="diary.value!='יומנים'" [name]="diary.value"></app-evaluation-form>
         <app-files *ngIf="diary.value!='יומנים'"></app-files>
     </div>
 </div>
