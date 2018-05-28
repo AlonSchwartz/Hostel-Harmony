@@ -19,9 +19,9 @@ export class EvaluationFormComponent implements OnInit {
   constructor(private fb:FormBuilder ) {
     this.submitted = false;
     this.model = new EvalForm(
-      null, 
-      null,
-      [this.buildSemiGoal(null).value]
+      '', 
+      '',
+      [this.buildSemiGoal('').value]
     );
   }
   ngOnInit() {
@@ -51,6 +51,7 @@ export class EvaluationFormComponent implements OnInit {
     this.submitted = true;/*do something*/
     alert(this.submitted);
     console.log(obj);
+    //add to database!
   }
 
 }

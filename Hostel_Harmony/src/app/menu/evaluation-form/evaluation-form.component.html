@@ -43,7 +43,7 @@
                 </div> 
                 </div>
                 <button type="button" class="btn btn-primary"
-                (click)="myForm.get('semiGoal').at(i).get('acts').push(buildActs('')); model.semiGoal[i].acts.push(this.buildActs(null).value)">לחץ להוספה</button> 
+                (click)="myForm.get('semiGoal').at(i).get('acts').push(buildActs('')); model.semiGoal[i].acts.push(this.buildActs('').value)">לחץ להוספה</button> 
                 
         </fieldset>
         <hr>
@@ -56,7 +56,7 @@
                         (click)="myForm.get('semiGoal').removeAt(i);model.semiGoal.splice(i,1)">הסר</button>
         </div>
         <button type="button" class="btn btn-primary"
-        (click)="myForm.get('semiGoal').push(buildSemiGoal('')); model.semiGoal.push(this.buildSemiGoal(null).value)">לחץ להוספה</button>
+        (click)="myForm.get('semiGoal').push(buildSemiGoal('')); model.semiGoal.push(this.buildSemiGoal('').value)">לחץ להוספה</button>
          
     </div>
     </fieldset>

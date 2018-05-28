@@ -7,6 +7,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import {staff} from '../models/staff.model'
+import { Router ,RouterEvent} from '@angular/router';
 import {NgModel} from '@angular/forms';
 import {FormControl, Validators} from '@angular/forms';
 import { UserService } from '../services/user/user.service';
@@ -37,17 +38,17 @@ export class AddStaffComponent implements OnInit {
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model); }
   
-  constructor(private userService: UserService ) {
+  constructor(private userService: UserService, public router: Router ) {
     this.submitted = false;
     this.model = new staff(
-      null, 
-      null,
-      null,
+      '', 
+      '',
+      0,
       true,
-      null,
-      null,
-      null,
-      null,
+      '',
+      0,
+      '',
+      '',
       "staff",
       []
     );
@@ -58,9 +59,10 @@ export class AddStaffComponent implements OnInit {
   
   subStaff(staffMember:staff) {
     this.submitted = true;/*do something*/
-    alert(this.submitted);
+    //alert(this.submitted);
     
-    this.userService.addNewStaff(staffMember);
+    this.userService.addNewStaff(this.model);
+    this.router.navigateByUrl('menu');
     //this.userService.addToDatabase(staffMember);
   }
 }
