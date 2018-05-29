@@ -43,15 +43,20 @@ export class TestingComponent implements OnInit {
   storeAtFirebase(){
     
     this.userService.storeAtFirestorme();
- 
+    
   }
   
   getDataFromFirestome(){
-    console.log(this.userService.getStaffNames());
-   // this.userService.getDataFromFirestome();
+    //log(this.userService.getStaffNames());
+    // this.userService.getDataFromFirestome();
     //this.userService.getResidents();
+    //console.log(this.userService.setMetaData());
+    //console.log(this.userService.getStaff());
+    //console.log(this.userService.getResidents());
+    //console.log(this.userService.check());
+   // this.userService.updateListing("52");   
     //this.userService.setMetaData();
-    
+this.userService.getResidentsNames();
   }
   
   passTest(){

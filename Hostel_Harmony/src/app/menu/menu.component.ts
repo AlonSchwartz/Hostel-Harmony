@@ -15,8 +15,11 @@ export class MenuComponent implements OnInit {
   constructor(private router: Router,private data:NameSelectService, private authService: AuthService, private userService: UserService) { }
   name:string;
   current = new Date()
-  staff:string[]= this.userService.getStaffNames();
+  //staff:string[]= this.userService.getStaffNames();
+  staff:string[]= [''];
   residents:string[]=['דייר 1','דייר 2','דייר 3','דייר 4','דייר 5'];
+  
+  residentNames: string[][] = [[""],["",""]];
   navigateTo(value) {
     if (value) {
       this.router.navigate([value]);
@@ -25,7 +28,6 @@ export class MenuComponent implements OnInit {
   }
   ngOnInit() {
     this.data.cm.subscribe(message =>this.name=message);
-
   }
   sendVal(selval:string){
     this.data.changeMessage(selval);

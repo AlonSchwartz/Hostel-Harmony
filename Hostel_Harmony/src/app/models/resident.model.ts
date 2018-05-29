@@ -1,3 +1,5 @@
+import { EvalForm } from "./eval-form.model";
+
 export class resident {
     
     constructor(
@@ -16,7 +18,8 @@ export class resident {
         public contacts: {rel:string,name:string,phone:number}[],
         public work: {info:string,phone:number,location:string}, // only if hasWork is TRUE
         public doctors: {psych:string, gp:string}, // family doctor and 2nd doctor
-        public className: string = "resident"
+        public className: string = "resident",
+        public evals?: EvalForm[]
 
     ){};
     
