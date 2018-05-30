@@ -26,7 +26,7 @@ Please visit our wiki for furthur project info:
 
 ### Iteration Pages
 - [Iteration 0 - ZFR](../../wiki/iter0-zfr)
-- [Iteration 1 - MVP](https://github.com/elchi28/Hostel-Harmony/wiki/Iter1-MVP)
+- [Iteration 1 - Initialize website - MVP](https://github.com/elchi28/Hostel-Harmony/wiki/Iter1---Initialize-website---MVP)
 - [Iteration 2 - Integration](https://github.com/elchi28/Hostel-Harmony/wiki/Iter2--Integartion)
 - [Iteration 3 - Xtra Features](https://github.com/elchi28/Hostel-Harmony/wiki/Iter3-Extra-Features)
 
