@@ -1,26 +1,10 @@
 <div  id="menu">
     <div id="bar">
-        <nav id="nev" class=" nav nav-pills d-flex flex-row-reverse p-2 mb-2 text-white font-weight-bold">
-                <a class="nav-link text-white" routerLink="/menu">בית</a>  
-                <div  class="btn-group nav-link text-white" dropdown>
-<<<<<<< HEAD
-                        <select style="font-size: 20px" class="btn dropdown-toggle font-weight-bold " title="עריכה" #edit  (change)="sendVal(edit.value);" >
-=======
-                        
-                        <select style="font-size: 20px" class="text-white dropdown-toggle font-weight-bold text-sm-center" title="עריכה" #edit  (change)="sendVal(edit.value);" >
->>>>>>> 67e93556f7cba38511ff63bc0aeb32039b4db222
-                            <option   disabled hidden >עריכה</option>
-                            <optgroup label="איש צוות">
-                                <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
-                            </optgroup>
-                            <optgroup label="דיירים">
-                                <option  [value]="user"  *ngFor = "let user of residents" >{{user}}</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                <div class="btn-group nav-link text-white" dropdown>
-                    <select style="font-size: 20px" class="text-white dropdown-toggle font-weight-bold text-sm-center" title="יומנים" #diary  (change)="sendVal(diary.value);" >
-                        <option   disabled hidden >יומנים</option>
+        <nav id="nev" class=" nav d-flex flex-row-reverse p-2 mb-2 text-white font-weight-bold">
+            <a class="nav-link text-white" routerLink="/menu">בית</a>  
+            <div  class="btn-group nav-link text-white" dropdown>
+                    <select style="font-size: 20px" class="text-white dropdown-toggle font-weight-bold text-sm-center" title="עריכה" #edit  (change)="sendVal(edit.value);" >
+                        <option   disabled hidden >עריכה</option>
                         <optgroup label="איש צוות">
                             <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
                         </optgroup>
@@ -29,23 +13,35 @@
                         </optgroup>
                     </select>
                 </div>
-                <div class="btn-group nav-link text-white" dropdown>
-                    <select style="font-size: 20px" class="dropdown-toggle font-weight-bold text-white" title="קבע אירוע" #event (change)="navigateTo('/event');sendVal(event.value);" >
-                        <option selected disabled hidden>הוסף אירוע</option>
-                        <optgroup label="איש צוות">
-                            <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
-                        </optgroup>
-                        <optgroup label="דיירים">
-                            <option  [value]="user" *ngFor = "let user of residents" >{{user}}</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <a class="nav-link text-white" href="/add-staff">הוסף איש צוות</a>
-                <a class="nav-link text-white" routerLink="/add-resident"> הוסף דייר</a>
-                <div class="d-flex flex-row">
-                        <button (click)="logout()" type="button" class="btn pull-left btn-lg" >התנתק</button>
-                </div> 
-        </nav>  
+            <div class="btn-group nav-link text-white" dropdown>
+                <select style="font-size: 20px" class="text-white dropdown-toggle font-weight-bold text-sm-center" title="יומנים" #diary  (change)="sendVal(diary.value);" >
+                    <option   disabled hidden >יומנים</option>
+                    <optgroup label="איש צוות">
+                        <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
+                    </optgroup>
+                    <optgroup label="דיירים">
+                        <option  [value]="user"  *ngFor = "let user of residents" >{{user}}</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="btn-group nav-link text-white" dropdown>
+                <select style="font-size: 20px" class="dropdown-toggle font-weight-bold text-white" title="קבע אירוע" #event (change)="navigateTo('/event');sendVal(event.value);" >
+                    <option selected disabled hidden>הוסף אירוע</option>
+                    <optgroup label="איש צוות">
+                        <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
+                    </optgroup>
+                    <optgroup label="דיירים">
+                        <option  [value]="user" *ngFor = "let user of residents" >{{user}}</option>
+                    </optgroup>
+                </select>
+            </div>
+            <a class="nav-link text-white" href="/add-staff">הוסף איש צוות</a>
+            <a class="nav-link text-white" routerLink="/add-resident"> הוסף דייר</a>
+            <div class="nav-link pull-left">
+                <button (click)="logout()" type="button" class="btn pull-left btn-lg" >התנתק</button>
+            </div>  
+        </nav> 
+         
     </div> 
     <div class="page-header font-weight-bold text-right" id="head">
         <h1>,שלום איש צוות</h1>
@@ -56,4 +52,5 @@
         <app-evaluation-form *ngIf="diary.value!='יומנים'" [name]="diary.value"></app-evaluation-form>
         <app-files *ngIf="diary.value!='יומנים'"></app-files>
     </div>
+    
 </div>
