@@ -3,12 +3,8 @@
         <nav id="nev" class=" nav nav-pills d-flex flex-row-reverse p-2 mb-2 text-white font-weight-bold">
                 <a class="nav-link text-white" routerLink="/menu">בית</a>  
                 <div  class="btn-group nav-link text-white" dropdown>
-<<<<<<< HEAD
-                        <select style="font-size: 20px" class="btn dropdown-toggle font-weight-bold " title="עריכה" #edit  (change)="sendVal(edit.value);" >
-=======
                         
                         <select style="font-size: 20px" class="text-white dropdown-toggle font-weight-bold text-sm-center" title="עריכה" #edit  (change)="sendVal(edit.value);" >
->>>>>>> 67e93556f7cba38511ff63bc0aeb32039b4db222
                             <option   disabled hidden >עריכה</option>
                             <optgroup label="איש צוות">
                                 <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
