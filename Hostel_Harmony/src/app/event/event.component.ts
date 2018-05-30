@@ -38,7 +38,7 @@ export class EventComponent implements OnInit {
     this.submitted = false;
     this.customActivity=null;
     this.model = new Event(
-      {date:0,start:0,end:0},
+      {date:'',start:'',end:''},
       false, 
       '',
       '',
