@@ -15,11 +15,11 @@ export class MenuComponent implements OnInit {
   constructor(private router: Router,private data:NameSelectService, private authService: AuthService, private userService: UserService) { }
   name:string;
   current = new Date()
-  //staff:string[]= this.userService.getStaffNames();
-  staff:string[]= [''];
-  residents:string[]=['דייר 1','דייר 2','דייר 3','דייר 4','דייר 5'];
+  staff:string[][]= this.userService.getStaffNames();
+  //staff:string[]= [''];
+  residents:string[][]=this.userService.getResidentsNames();//['דייר 1','דייר 2','דייר 3','דייר 4','דייר 5'];
   
-  residentNames: string[][] = [[""],["",""]];
+  //residentNames: string[][] = this.userService.getStaffNames();
   navigateTo(value) {
     if (value) {
       this.router.navigate([value]);
