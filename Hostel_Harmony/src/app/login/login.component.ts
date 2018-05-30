@@ -12,19 +12,18 @@ import { AuthService } from '../services/auth/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  
+
   email:string;
   pass:string;
   
   constructor(public authService: AuthService, public router: Router) { }
   
-  async login(){
-    await this.authService.loginWithEmailAndPassword(this.email, this.pass)
-    this.router.navigateByUrl('menu');
-    
+  async login(){  
+    await this.authService.loginWithEmailAndPassword(this.email,this.pass).then((res)=>{this.router.navigateByUrl('menu');}).catch((err)=>alert("שגיאה,נסה שם משתמש אחר"));
+      
   }
   
-  ngOnInit() {
+  ngOnInit() {    
     this.email=null;
     this.pass=null;
     if (this.authService.isLoggedIn){
@@ -32,5 +31,6 @@ export class LoginComponent implements OnInit {
       console.log("needs to nav to menu");
     }
    }
-  
+   
 }
+
