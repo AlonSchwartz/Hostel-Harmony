@@ -13,7 +13,7 @@ h2{
 /* Same style as the menu bar*/
 
 .BTNbackToWeek{
-    background-color: #007bff; 
+    background-color:darkgreen; 
     border: none;
     color: white;
     text-align: center;
@@ -23,3 +23,20 @@ h2{
     font-weight: 500!important;
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 }
+#nextbar{
+    background-color: darkgreen;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-right: 5px;
+}
+h3 {
+    margin-top: 10px;
+    font-size: 35px;
+  }
+  
+  pre {
+    
+    padding: 15px;
+  }
+
+

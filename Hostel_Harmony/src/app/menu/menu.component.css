@@ -24,3 +24,7 @@ select{
     background-color: darkgreen;
     border: none;
 }
+#logout
+{
+   padding-right: 150px;
+}
