@@ -5,7 +5,9 @@
 
 import { Component, OnInit } from '@angular/core';
 import {resident} from '../models/resident.model';
+import { Router ,RouterEvent} from '@angular/router';
 import {NgModel,FormGroup,FormArray,FormBuilder ,FormControl, Validators } from '@angular/forms';
+import { UserService } from '../services/user/user.service';
 
 
 @Component({
@@ -21,22 +23,22 @@ export class AddResidentComponent implements OnInit {
   // TODO: Remove this when we're done--->testing purposes
   get diagnostic() { return JSON.stringify(this.model); }
 
-  constructor(private fb:FormBuilder ) {
+  constructor(private fb:FormBuilder, private userService: UserService, public router: Router ) {
     this.submitted = false;
     this.model = new resident(
-      null, 
-      null,
-      null,
+      '', 
+      '',
+      0,
       true,
-      null,
-      null, 
-      null,
-      null,
-      null,
+      '',
+      0, 
+      '',
+      '',
+      '',
       false,
-      [this.buildItem(null).value,this.buildItem(null).value,],
-      {info:null,phone:null,location:null},
-      {psych:null,gp:null},
+      [this.buildItem('').value,this.buildItem('').value,],
+      {info:'',phone:0,location:''},
+      {psych:'',gp:''},
     );
   }
   ngOnInit() {
@@ -50,13 +52,15 @@ export class AddResidentComponent implements OnInit {
     return new FormGroup({
       rel:new FormControl(val),
       name: new FormControl(val),
-      phone: new FormControl(null),
+      phone: new FormControl(0),
     })
   }
-  subResident(obj:object) {
+  subResident(obj:resident) {
     this.submitted = true;/*do something*/
-    alert(this.submitted);
-    console.log(obj);
+    //alert(this.submitted);
+    //console.log(obj);
+    this.userService.addNewResident(this.model);
+    this.router.navigateByUrl('menu');
   }
  
 

@@ -27,16 +27,27 @@ import {Event} from '../../models/event.model';
   ]
 })
 export class CalendarComponent implements OnInit {
-  constructor( ){}
+  constructor(){
+    
+  }
   @Input()//for getting name wanted
   name:string;
-
+  inpEve:Event=new Event({date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T21:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
+  false, 
+  'General',
+  'Someting to do',
+  'Elchanan' );
   ngOnInit() {
+    //console.log(new Date(this.inpEve.settime.start))
   }
   view: string ='week'
   viewDate: Date = new Date();
-
   events: CalendarEvent[] = [
+     {
+       start: new Date(this.inpEve.settime.start),
+       end:new Date(this.inpEve.settime.end),
+       title: this.inpEve.activity,
+     },
     {
       start: new Date(),
       title: 'test event',

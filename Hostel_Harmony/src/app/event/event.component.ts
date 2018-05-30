@@ -7,6 +7,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import {Event} from '../models/event.model';
+import { Router ,RouterEvent} from '@angular/router';
 import {NgModel} from '@angular/forms';
 import {NameSelectService} from '../services/nameSelect/name-select.service';
 import { supportsPassiveEventListeners } from '@angular/cdk/platform';
@@ -33,15 +34,15 @@ export class EventComponent implements OnInit {
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model); }
   
-  constructor( private nameSel: NameSelectService, private userService: UserService) {
+  constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
     this.submitted = false;
     this.customActivity=null;
     this.model = new Event(
-      {date:null,start:null,end:null},
+      {date:'',start:'',end:''},
       false, 
-      null,
-      null,
-      null 
+      '',
+      '',
+      '' 
     );
   }
   ngOnInit() {
@@ -52,8 +53,9 @@ export class EventComponent implements OnInit {
   }  
   subEvent(obj: Event) {
     this.submitted = true;/*do something*/
-    alert(this.submitted);
+    //alert(this.submitted);
    // console.log(obj);
     this.userService.passEvent(this.model);
+    this.router.navigateByUrl('menu');
   }
 }
