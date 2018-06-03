@@ -41,23 +41,22 @@ export class CalendarComponent implements OnInit {
   @Input()//for getting name wanted
   name:string;
   inpEve:Event=new Event({date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T23:00:00.000Z',end:'2018-05-30T24:00:00.000Z'},
-  
   false, 
   'General',
   'Someting to do',
   'Elchanan' );
-  inpEve1:Event=new Event({date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
-  
-  false, 
-  'General-2',
-  'Someting to do',
-  'Elchanan' );
-  inpEve2:Event=new Event({date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
-  
-  false, 
-  'General-3',
-  'Someting to do',
-  'Elchanan' );
+  inpEve1:Event=new Event(
+    {date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
+    false, 
+    'General-2',
+    'Someting to do',
+    'Elchanan' );
+  inpEve2:Event=new Event(
+    {date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
+    false, 
+    'General-3',
+    'Someting to do',
+    'Elchanan' );
   ngOnInit() {
 	  //this.compareEvents();
 	  this.fixdEvent();
@@ -96,7 +95,7 @@ export class CalendarComponent implements OnInit {
 		byweekday: [RRule.MO]
 	  }
 	}];
-
+  //add a check if event exists
 	updateCalendarEvents(): void {
 		//this.events = [];
   

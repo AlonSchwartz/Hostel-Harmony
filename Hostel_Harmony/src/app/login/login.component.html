@@ -10,17 +10,18 @@
             </div>
         </div>
         <hr>
-        <form class="form-signin">
+        <form class="form-signin" >
             <span id="reauth-email" class="reauth-email"></span>
             <p class="input_title">Email</p>
-            <input type="text" id="inputEmail" class="login_box" placeholder="user01@IceCode.com" [(ngModel)]="email" name="email" required autofocus/>
+            <mat-form-field style = "width: 100%">
+                <input matInput [formControl]="emailErr"   type="email" id="inputEmail" [(ngModel)]="email" name="email" required autofocus/>
+                <mat-error *ngIf="emailErr.invalid" >{{getEmailErrorMessage()}}</mat-error>
+            </mat-form-field>
             <p class="input_title">Password</p>
-            <input type="password" id="inputPassword" class="login_box" placeholder="******" [(ngModel)]="pass" name="pass" required>
-            <div id="remember" class="checkbox">
-                <label>
-                    
-                </label>
-            </div>
+            <mat-form-field style = "width: 100%">
+                <input matInput type="password" id="inputPassword"  [(ngModel)]="pass" name="pass" required>
+                <mat-error *ngIf="wrongPass" >שגיאה,נסה סיסמה אחרת</mat-error>
+            </mat-form-field>
             <button (click)="login()" class="btn btn-lg btn-primary" type="submit">Login</button>
         </form><!-- /form -->
     </div><!-- /card-container -->
