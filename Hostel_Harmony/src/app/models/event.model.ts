@@ -1,4 +1,4 @@
-export class Event{
+export class CalEvent{
     constructor(
         public settime:{date:string,start:string,end:string},
         public asign: boolean, 

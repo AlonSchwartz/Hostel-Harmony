@@ -6,7 +6,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import {Event} from '../models/event.model';
+import {CalEvent} from '../models/event.model';
 import { Router ,RouterEvent} from '@angular/router';
 import {NgModel} from '@angular/forms';
 import {NameSelectService} from '../services/nameSelect/name-select.service';
@@ -22,7 +22,7 @@ import { ActivityTypes } from '../models/activity-types.model'
 // TODO: check required fields
 //       try to extract time or date from ISO format in json - use Date function!
 export class EventComponent implements OnInit {
-  private model: Event ;
+  private model: CalEvent ;
   private submitted: boolean;
   private customActivity:string;
   message:string;
@@ -37,7 +37,7 @@ export class EventComponent implements OnInit {
   constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
     this.submitted = false;
     this.customActivity=null;
-    this.model = new Event(
+    this.model = new CalEvent(
       {date:'',start:'',end:''},
       false, 
       '',
@@ -55,7 +55,7 @@ export class EventComponent implements OnInit {
     this.submitted = true;/*do something*/
     //alert(this.submitted);
    // console.log(obj);
-    this.userService.passEvent(this.model);
+    //this.userService.addEvent("", this.model , "zJ0SMqxj43ZaJgz02NPE");
     this.router.navigateByUrl('menu');
   }
 }

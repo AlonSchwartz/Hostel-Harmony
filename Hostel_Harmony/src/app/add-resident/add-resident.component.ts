@@ -56,10 +56,12 @@ export class AddResidentComponent implements OnInit {
     })
   }
   subResident(obj:resident) {
+    console.log("1");
     this.submitted = true;/*do something*/
     //alert(this.submitted);
-    //console.log(obj);
+    console.log(this.model);
     this.userService.addToDatabase(this.model);
+    console.log("2");
     this.router.navigateByUrl('menu');
   }
  

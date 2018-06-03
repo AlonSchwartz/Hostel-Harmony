@@ -7,7 +7,7 @@ import { isSameMonth, isSameDay } from 'ngx-bootstrap/chronos/utils/date-getters
 import { CustomEventTitleFormatter } from '../provider/custom-event-title-formatter.provider';
 import { CustomDateFormatter } from '../provider/custom-date-formatter.provider';
 import { EventComponent } from '../../event/event.component';
-import {Event} from '../../models/event.model';
+import {CalEvent} from '../../models/event.model';
 import { startOfDay, endOfDay,getMonth,startOfMonth,startOfWeek,endOfMonth,endOfWeek} from 'date-fns';
 import { Subject } from 'rxjs';
 import { start } from 'repl';
@@ -40,18 +40,18 @@ export class CalendarComponent implements OnInit {
   }
   @Input()//for getting name wanted
   name:string;
-  inpEve:Event=new Event({date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T23:00:00.000Z',end:'2018-05-30T24:00:00.000Z'},
+  inpEve:CalEvent=new CalEvent({date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T23:00:00.000Z',end:'2018-05-30T24:00:00.000Z'},
   false, 
   'General',
   'Someting to do',
   'Elchanan' );
-  inpEve1:Event=new Event(
+  inpEve1:CalEvent=new CalEvent(
     {date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
     false, 
     'General-2',
     'Someting to do',
     'Elchanan' );
-  inpEve2:Event=new Event(
+  inpEve2:CalEvent=new CalEvent(
     {date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
     false, 
     'General-3',
@@ -139,7 +139,7 @@ export class CalendarComponent implements OnInit {
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
 
   
-  addEvent(eve: Event){
+  addEvent(eve: CalEvent){
     console.log(this.events);
     alert("I'm in calendar and i got your event!");
     console.log(eve);

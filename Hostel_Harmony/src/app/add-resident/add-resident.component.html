@@ -85,7 +85,7 @@
 
     <div class="form-group">
       <label for="workp">טלפון</label>
-      <input type="phone" pattern="0[2-9]\d\d\d\d\d\d\d(\d)?" class="form-control" id="workp"  [(ngModel)]="model.work.phone" name="workp">
+      <input type="phone" pattern="(0[2-9]\d\d\d\d\d\d\d(\d)?)|()*" class="form-control" id="workp"  [(ngModel)]="model.work.phone" name="workp">
     </div>
 
     <div class="form-group">

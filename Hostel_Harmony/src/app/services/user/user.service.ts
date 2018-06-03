@@ -8,7 +8,7 @@ import { FirebaseDatabase } from '@firebase/database-types';
 import { AngularFireDatabase, snapshotChanges } from 'angularfire2/database';
 import { EventComponent } from '../../event/event.component';
 import { CalendarComponent } from '../../menu/calendar/calendar.component';
-import { Event } from '../../models/event.model';
+import { CalEvent } from '../../models/event.model';
 import { HttpClient } from '@angular/common/http';
 import { Response } from '@angular/http';
 import 'rxjs/Rx';
@@ -26,7 +26,7 @@ export class UserService  {
   resident: resident = null;
   staffNames: string[][] = [[""],["",""]];
   residentNames: string[][] = [[""],["",""]];
-
+  
   private testArray: test 
   testing: test[] = []
   be: test;
@@ -40,10 +40,12 @@ export class UserService  {
   listingDoc: AngularFirestoreDocument<resident>;
   public dcTest;
   res:resident;
-  
+  sta:staff;
+  ev2: CalEvent;
   
   observableUsers: Observable<resident[]>; //A temp variable that returns metadata. used by usersList
-  usersList = [];
+  residentUsersList = []; //To store all residents with ID's
+  staffUsersList = []; //To store all staff with ID's
   
   constructor(private calendar: CalendarComponent, af: AngularFirestore) { 
     
@@ -75,16 +77,18 @@ export class UserService  {
       new staff("Ot","ron2",6535, true, "2/4/6", 2, "ffda", "supervisor"), // According to staff.option #2
     ];
     
+    //  Calling these functions to initilize them
     this.setMetaData();
+    this.setStaffMetaData();
     this.getResidents();
     
     
   }
   
   // To pass event to the calendar
-  public passEvent(eve:Event){
+  public passEvent(eve:CalEvent){
     this.staff2.events.push(eve); // IF THE APP STAYS ON THIS PAGE - THIS FUNCTION WONT WORK PROPERLY. WE NEED TO COPY THE VAR OR NAV TO MENU.
-   
+    
     // console.log(eve);
     // here needs to be some checking... if everything is ok, add to database and then pass it to the calendar.
     this.calendar.addEvent(eve);
@@ -94,18 +98,55 @@ export class UserService  {
   
   // function inactive for now
   addToDatabase(per: resident | staff){
-    
+    console.log("--------")
     if (per.className == "resident"){
-      this.residentsCollection.add(JSON.parse(JSON.stringify(resident)));
+      this.residentsCollection.add(JSON.parse(JSON.stringify(per)));
       console.log("got resident");
     }
     if (per.className == "staff"){
-      this.staffCollection.add(JSON.parse(JSON.stringify(staff)));
+      this.staffCollection.add(JSON.parse(JSON.stringify(per)));
       console.log("got staff");
       
     }
   }
   
+  // Needs testing
+  addEvent(per: resident | staff, event: CalEvent, id: string ){
+    this.setMetaData();
+    
+    if (per.className == "resident"){
+      
+      this.getResidents();
+      this.res = this.residentsUsers[0];   
+      if (this.feasibilityCheck()){
+        for (let i = 0; i < this.residentUsersList.length ; i++){        
+          if (this.residentUsersList[i].id == id){
+            console.log("id equals");
+            per.events.push(event);
+            this.residentsCollection.doc(JSON.parse(JSON.stringify(id))).update(JSON.parse(JSON.stringify(per)));
+          }
+        }
+      }
+      
+      
+    }
+    if (per.className == "staff"){
+      this.getStaff();
+      this.sta = this.staffUsers[0];    
+      
+    }
+    
+    
+  }
+  
+  /**
+  * Checks that we can really add this event without any collision
+  */
+  feasibilityCheck(){
+    
+    
+    return true;
+  }
   // addNewResident(resident: resident){
   //   this.residentsCollection.add(JSON.parse(JSON.stringify(resident)));
   // }
@@ -116,104 +157,94 @@ export class UserService  {
   
   
   // updateResident(resident: resident){
-    
+  
   // }
   
   
   // updateStaff(staff: staff){
+  
+  
+  // Will be changed later to work based on Unique ID
+  getStaffProfile(fullName:string){
     
-    
-    
-  // }
-  getResidentsNames(){
-    this.setMetaData();
-    this.residentNames = [];
-    this.residentsCollection.valueChanges().subscribe(collection =>  {
-      for (var i = 0; i < collection.length ; i++){
-       this.residentNames.push([collection[i].firstName + " " + collection[i].lastName, this.usersList[i].id]);
-      }
-    }
-  )
-  //console.log(this.residentNames);
-  //console.log(this.usersList);
-  return this.residentNames; 
-}
-
-
-  
-  // There is probally a bug - first run of this function returns undefined in some cases. needs to check more...
-  getStaffNames(){
-    this.staffNames = [];
-    this.staffCollection.valueChanges().subscribe(collection =>  {
-      for (var i = 0; i < collection.length ; i++){
-       // this.staffNames[i][0] = collection[i].firstName + " " + collection[i].lastName;
-        //this.staffNames[i][1] = "1234";
-        this.staffNames.push([collection[i].firstName + " " + collection[i].lastName, this.usersList[i].id]);
-      }
-    }
-  )
-  //console.log(this.staffNames);
-  return this.staffNames; 
-}
-
-// Will be changed later to work based on Unique ID
-getStaffProfile(fullName:string){
-  
-return null; // profile not found
-}
-
-getResidentProfile(fullName:string){
-  
-  
-}
-
-// For now, get+set metadata is for test collection.
-getMetaData() {
-  this.observableUsers = this.residentsCollection.snapshotChanges().map(actions => { //all the fields, includes unique hashing key
-    return actions.map(a => {
-      const data = a.payload.doc.data() as resident;
-      const id = a.payload.doc.id;
-      return { id, ...data };
-    });
-  })
-  //console.log(this.observableUsers);
-  return this.observableUsers;
-}
-
-setMetaData() {
-  this.getMetaData().subscribe(res => {
-    this.usersList = res;
-  });
-}
-
-// To get all staff collection from firebase
-getStaff(){
-  this.staffCollection.valueChanges().subscribe(collection =>  {
-    this.staffUsers = [];
-    for (var i = 0; i < collection.length ; i++){
-      
-      this.staff2.birthday = collection[i].birthday;
-      this.staff2.calendarID = collection[i].calendarID;
-      this.staff2.email = collection[i].email;
-      this.staff2.firstName = collection[i].firstName;
-      this.staff2.isActive = collection[i].isActive;
-      this.staff2.lastName = collection[i].lastName;
-      this.staff2.phoneNumber = collection[i].phoneNumber;
-      this.staff2.role = collection[i].role;
-      
-      let copy = Object.assign({}, this.staff2); // push delivers by reference, so we need to copy our object first
-      this.staffUsers.push(copy);
-      
-    }    
+    return null; // profile not found
   }
-)
-return this.staff2;
+  
+  getResidentProfile(fullName:string){
+    
+    
+  }
+  
+  // get metadata for residents
+  getMetaData() {
+    this.observableUsers = this.residentsCollection.snapshotChanges().map(actions => { //all the fields, includes unique hashing key
+      return actions.map(a => {
+        const data = a.payload.doc.data() as resident;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      });
+    })
+    //console.log(this.observableUsers);
+    return this.observableUsers;
+  }
+  
+  // set it in residentUsersList
+  setMetaData() {
+    this.getMetaData().subscribe(res2 => {
+      this.residentUsersList = res2;
+    });
+  }
+  
+  // get metadata for staff
+  getStaffMetaData() {
+    this.observableUsers = this.staffCollection.snapshotChanges().map(actions => { //all the fields, includes unique hashing key
+      return actions.map(a => {
+        const data = a.payload.doc.data() as resident;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      });
+    })
+    //console.log(this.observableUsers);
+    return this.observableUsers;
+  }
+  
+  // set it in staffUsersList
+  setStaffMetaData() {
+    this.getStaffMetaData().subscribe(sta2 => {
+      this.staffUsersList = sta2;
+    });
+  }
+  
+  // To get all staff collection from firebase
+  getStaff(){
+    this.setStaffMetaData();
+    this.staffCollection.valueChanges().subscribe(collection =>  {
+      this.staffUsers = [];
+      for (var i = 0; i < collection.length ; i++){
+        
+        this.staff2.birthday = collection[i].birthday;
+        this.staff2.calendarID = collection[i].calendarID;
+        this.staff2.email = collection[i].email;
+        this.staff2.firstName = collection[i].firstName;
+        this.staff2.isActive = collection[i].isActive;
+        this.staff2.lastName = collection[i].lastName;
+        this.staff2.phoneNumber = collection[i].phoneNumber;
+        this.staff2.role = collection[i].role;
+        this.staff2.id = this.staffUsersList[i].id; 
+        let copy = Object.assign({}, this.staff2); // push delivers by reference, so we need to copy our object first
+        this.staffUsers.push(copy);
+      }    
+    }
+  )
+  return this.staffUsers;
 }
 
 // To get all resident collection from firebase
 getResidents(){
+  this.setMetaData();
   this.residentsCollection.valueChanges().subscribe(collection =>  {
     this.residentsUsers = [];
+    
     for (var i = 0; i < collection.length ; i++){
       
       this.resident.birthday = collection[i].birthday;
@@ -229,13 +260,14 @@ getResidents(){
       this.resident.memberSince = collection[i].memberSince;
       this.resident.metaem = collection[i].metaem;
       this.resident.evals = collection[i].evals;
+      this.resident.id = this.residentUsersList[i].id;
       
       let copy = Object.assign({}, this.resident); // push delivers by reference, so we need to copy our object first
       this.residentsUsers.push(copy);
     }    
   }
 )
-return this.resident;
+return this.residentsUsers;
 }
 
 
@@ -297,16 +329,16 @@ check(){
   this.res = this.residentsUsers[0];
   let r:string;
   console.log(this.res);
-  console.log(this.usersList);
+  console.log(this.residentUsersList);
   console.log("=1=1=1=1=1==1")
-  for (let i = 0; i < this.usersList.length ; i++){
-    console.log(this.usersList[i].id);   
+  for (let i = 0; i < this.residentUsersList.length ; i++){
+    console.log(this.residentUsersList[i].id);   
     
-    if (this.usersList[i].caretaker == this.res.caretaker){
+    if (this.residentUsersList[i].caretaker == this.res.caretaker){
       console.log("00000");
-
-      console.log(this.usersList[i].id);
-      r = this.usersList[i].id;
+      
+      console.log(this.residentUsersList[i].id);
+      r = this.residentUsersList[i].id;
       this.res.birthday = "12/2/05";
       console.log("-1-");
       console.log(r);
@@ -315,7 +347,7 @@ check(){
       
     }
   }
-  console.log(this.usersList);   
+  console.log(this.residentUsersList);   
   console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
   this.dcTest.update({calendarID: "24"}); // Will change calendarID to 24
   this.getDataFromFirestome();
@@ -340,7 +372,7 @@ check(){
   //this.residentsCollection.doc("").update(JSON.parse(JSON.stringify(this.res))); // TESTEST
   
   //console.log(this.dcTest);
-  return this.usersList;
+  return this.residentUsersList;
 }
 //**************************** TESTING FUNCTIONS ***************************** //
 

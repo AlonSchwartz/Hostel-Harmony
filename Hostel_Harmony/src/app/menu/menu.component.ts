@@ -4,6 +4,8 @@ import {NameSelectService} from '../services/nameSelect/name-select.service';
 import {NgModel} from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
 import { UserService } from '../services/user/user.service';
+import { staff } from '../models/staff.model';
+import { resident } from '../models/resident.model';
 
 @Component({
   selector: 'app-menu',
@@ -13,26 +15,33 @@ import { UserService } from '../services/user/user.service';
 export class MenuComponent implements OnInit {
   
   constructor(private router: Router,private data:NameSelectService, private authService: AuthService, private userService: UserService) { 
-    
+    this.userService.getStaff(); this.userService.getResidents(); //this.getNames();
   }
   name:string;
   current = new Date()
-  staff:string[];
-  staffName:string[][];//= this.userService.getStaffNames();
-  //staff:string[]= [''];
-  residents:string[];
-  residentName:string[][]=this.userService.getResidentsNames();//['דייר 1','דייר 2','דייר 3','דייר 4','דייר 5'];
+  staff:string[] = [];
+  //staffName:any= this.userService.getStaff();
+  residents:string[] = [];
+  ress:resident[] = [];
+
+  staa: staff[] = [];
+
   getNames(){
-    console.log(this.staffName)
-    for(var i=0;i<this.staffName.length;i++){
-      this.staff[i]=this.staffName[i][0];
-      console.log(this.staff[i])
+    this.staa = this.userService.getStaff();
+    this.ress = this.userService.getResidents();
+    
+    for (var i=0; i<this.staa.length; i++)
+    {
+      this.staff[i] = this.staa[i].firstName + " " + this.staa[i].lastName;
     }
-    for(var i=0;i<this.residentName.length;i++){
-      this.residents[i]=this.residentName[i][0];
+
+    for (var i=0; i<this.ress.length; i++)
+    {
+      this.residents[i] = this.ress[i].firstName + " " + this.ress[i].lastName;
     }
+    
   }
-  //residentNames: string[][] = this.userService.getStaffNames();
+
   navigateTo(value) {
     if (value) {
       this.router.navigate([value]);
@@ -40,9 +49,8 @@ export class MenuComponent implements OnInit {
     return false;
   }
   ngOnInit() {
-    this.staffName= this.userService.getStaffNames();
-    console.log(this.staffName.length)
-    this.getNames();
+    
+    //this.getNames();
     this.data.cm.subscribe(message =>this.name=message);
   }
   sendVal(selval:string){
