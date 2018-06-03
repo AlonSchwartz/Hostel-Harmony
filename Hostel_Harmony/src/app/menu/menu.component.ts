@@ -12,13 +12,26 @@ import { UserService } from '../services/user/user.service';
 })
 export class MenuComponent implements OnInit {
   
-  constructor(private router: Router,private data:NameSelectService, private authService: AuthService, private userService: UserService) { }
+  constructor(private router: Router,private data:NameSelectService, private authService: AuthService, private userService: UserService) { 
+    
+  }
   name:string;
   current = new Date()
-  staff:string[][]= this.userService.getStaffNames();
+  staff:string[];
+  staffName:string[][];//= this.userService.getStaffNames();
   //staff:string[]= [''];
-  residents:string[][]=this.userService.getResidentsNames();//['דייר 1','דייר 2','דייר 3','דייר 4','דייר 5'];
-  
+  residents:string[];
+  residentName:string[][]=this.userService.getResidentsNames();//['דייר 1','דייר 2','דייר 3','דייר 4','דייר 5'];
+  getNames(){
+    console.log(this.staffName)
+    for(var i=0;i<this.staffName.length;i++){
+      this.staff[i]=this.staffName[i][0];
+      console.log(this.staff[i])
+    }
+    for(var i=0;i<this.residentName.length;i++){
+      this.residents[i]=this.residentName[i][0];
+    }
+  }
   //residentNames: string[][] = this.userService.getStaffNames();
   navigateTo(value) {
     if (value) {
@@ -27,6 +40,9 @@ export class MenuComponent implements OnInit {
     return false;
   }
   ngOnInit() {
+    this.staffName= this.userService.getStaffNames();
+    console.log(this.staffName.length)
+    this.getNames();
     this.data.cm.subscribe(message =>this.name=message);
   }
   sendVal(selval:string){

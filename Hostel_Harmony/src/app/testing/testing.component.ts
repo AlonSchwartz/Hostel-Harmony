@@ -61,7 +61,7 @@ this.userService.getResidentsNames();
   
   passTest(){
     
-    this.userService.updateStaff(this.staff);
+    //this.userService.updateStaff(this.staff);
     
   }
 }

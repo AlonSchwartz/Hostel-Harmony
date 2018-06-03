@@ -83,11 +83,8 @@ export class UserService  {
   
   // To pass event to the calendar
   public passEvent(eve:Event){
-    
-    alert("I'm in userService and i got your event!")
-    console.log(this.staff2);
     this.staff2.events.push(eve); // IF THE APP STAYS ON THIS PAGE - THIS FUNCTION WONT WORK PROPERLY. WE NEED TO COPY THE VAR OR NAV TO MENU.
-    console.log(this.staff2);
+   
     // console.log(eve);
     // here needs to be some checking... if everything is ok, add to database and then pass it to the calendar.
     this.calendar.addEvent(eve);
@@ -109,25 +106,25 @@ export class UserService  {
     }
   }
   
-  addNewResident(resident: resident){
-    this.residentsCollection.add(JSON.parse(JSON.stringify(resident)));
-  }
+  // addNewResident(resident: resident){
+  //   this.residentsCollection.add(JSON.parse(JSON.stringify(resident)));
+  // }
   
-  addNewStaff(staff: staff){
-    this.staffCollection.add(JSON.parse(JSON.stringify(staff)));
-  }
+  // addNewStaff(staff: staff){
+  //   this.staffCollection.add(JSON.parse(JSON.stringify(staff)));
+  // }
   
   
-  updateResident(resident: resident){
+  // updateResident(resident: resident){
     
-  }
+  // }
   
   
-  updateStaff(staff: staff){
+  // updateStaff(staff: staff){
     
     
     
-  }
+  // }
   getResidentsNames(){
     this.setMetaData();
     this.residentNames = [];
@@ -151,7 +148,7 @@ export class UserService  {
       for (var i = 0; i < collection.length ; i++){
        // this.staffNames[i][0] = collection[i].firstName + " " + collection[i].lastName;
         //this.staffNames[i][1] = "1234";
-        this.staffNames.push([collection[i].firstName + " " + collection[i].lastName, "1234"]);
+        this.staffNames.push([collection[i].firstName + " " + collection[i].lastName, this.usersList[i].id]);
       }
     }
   )
@@ -161,17 +158,7 @@ export class UserService  {
 
 // Will be changed later to work based on Unique ID
 getStaffProfile(fullName:string){
-  var splittedName = fullName.split(" ", 2)
-  this.staffCollection.valueChanges().subscribe(collection => {
-    for (var i = 0; i < collection.length ; i++)
-    {
-      if ((collection[i].firstName == splittedName[0]) && (collection[i].lastName == splittedName[1])){
-        return collection[i];
-      }
-    }
-  }
   
-)
 return null; // profile not found
 }
 

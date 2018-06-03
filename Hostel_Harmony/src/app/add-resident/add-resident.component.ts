@@ -59,7 +59,7 @@ export class AddResidentComponent implements OnInit {
     this.submitted = true;/*do something*/
     //alert(this.submitted);
     //console.log(obj);
-    this.userService.addNewResident(this.model);
+    this.userService.addToDatabase(this.model);
     this.router.navigateByUrl('menu');
   }
  
