@@ -5,7 +5,7 @@ import { resident } from '../models/resident.model';
 import { staff } from '../models/staff.model';
 import { Router ,RouterEvent} from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
-
+import {FormControl, Validators} from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,11 +15,18 @@ export class LoginComponent implements OnInit {
 
   email:string;
   pass:string;
-  
-  constructor(public authService: AuthService, public router: Router) { }
+
+  wrongPass:boolean;
+  emailErr = new FormControl('', [Validators.required, Validators.email]);
+  getEmailErrorMessage() {
+    return this.emailErr.hasError('required') ? 'הכנס כתובת אימייל' :
+    this.emailErr.hasError('email') ? 'אינה כתובת אימייל' :
+    '';
+  }
+  constructor(public authService: AuthService, public router: Router) {this.wrongPass=true }
   
   async login(){  
-    await this.authService.loginWithEmailAndPassword(this.email,this.pass).then((res)=>{this.router.navigateByUrl('menu');}).catch((err)=>alert("שגיאה,נסה שם משתמש אחר"));
+    await this.authService.loginWithEmailAndPassword(this.email,this.pass).then((res)=>{this.router.navigateByUrl('menu');}).catch((err)=>this.wrongPass=true);
       
   }
   
