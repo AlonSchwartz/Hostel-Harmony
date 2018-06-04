@@ -12,7 +12,7 @@ import { startOfDay, endOfDay,getMonth,startOfMonth,startOfWeek,endOfMonth,endOf
 import { Subject } from 'rxjs';
 import { start } from 'repl';
 import { RRule } from 'rrule';
-
+import {NameSelectService} from '../../services/nameSelect/name-select.service';
 
 
 
@@ -35,11 +35,12 @@ import { RRule } from 'rrule';
   ]
 })
 export class CalendarComponent implements OnInit {
-  constructor(){
-    console.log(this.events);
+  constructor(private nameSel: NameSelectService){
+    // console.log(this.events);
   }
   @Input()//for getting name wanted
   name:string;
+  rcvId:string;
   inpEve:CalEvent=new CalEvent({date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T23:00:00.000Z',end:'2018-05-30T24:00:00.000Z'},
   false, 
   'General',
@@ -58,10 +59,8 @@ export class CalendarComponent implements OnInit {
     'Someting to do',
     'Elchanan' );
   ngOnInit() {
-	  //this.compareEvents();
 	  this.fixdEvent();
 	  this.updateCalendarEvents();
-    //console.log(new Date(this.inpEve.settime.start))
   }
   view: string ='week'
   viewDate: Date = new Date();

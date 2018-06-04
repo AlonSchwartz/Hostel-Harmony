@@ -37,13 +37,13 @@ export class MenuComponent implements OnInit {
     for (var i=0; i<this.staa.length; i++)
     {
       this.staff[i] = this.staa[i].firstName + " " + this.staa[i].lastName;
-      console.log(this.staa[i].id)
+      //console.log(this.staa[i].id+ " staff "+i)
     }
-    console.log("testing id")
+    //console.log("testing id")
     for (var i=0; i<this.ress.length; i++)
     {
       this.residents[i] = this.ress[i].firstName + " " + this.ress[i].lastName;
-      console.log(this.ress[i].id)
+      //console.log(this.ress[i].id+" residnt "+i)
     }
     
   }
@@ -55,12 +55,14 @@ export class MenuComponent implements OnInit {
     return false;
   }
   ngOnInit() {
-    
-    //this.getNames();
-    this.data.cm.subscribe(message =>this.name=message);
+    //this.data.cm.subscribe(message =>this.name=message);
   }
   sendVal(selval:string){
-    this.data.changeMessage(selval);
+    let resId;
+    if((resId=this.userService.getById(selval,this.residents,this.ress))!=null || 
+            (resId=this.userService.getById(selval,this.staff,this.staa))!=null){
+      this.data.changeMessage(resId)
+    }
   }
   
   logout(){

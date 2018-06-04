@@ -13,6 +13,8 @@ import {NameSelectService} from '../services/nameSelect/name-select.service';
 import { supportsPassiveEventListeners } from '@angular/cdk/platform';
 import { UserService } from '../services/user/user.service';
 import { ActivityTypes } from '../models/activity-types.model'
+import { staff } from '../models/staff.model';
+import { resident } from '../models/resident.model';
 
 @Component({
   selector: 'app-event',
@@ -25,7 +27,7 @@ export class EventComponent implements OnInit {
   private model: CalEvent ;
   private submitted: boolean;
   private customActivity:string;
-  message:string;
+  message:staff|resident;
   types :ActivityTypes[]=[
     {value: 'general-0', viewValue: 'כללי',color:'green'},
     {value: 'staff-1', viewValue: 'איש צוות',color: 'blue'},

@@ -30,7 +30,7 @@
                 <select  class="dropdown-toggle font-weight-bold text-white" title="קבע אירוע" #event (change)="navigateTo('/event');sendVal(event.value);" >
                     <option selected disabled hidden>הוסף אירוע</option>
                     <optgroup label="איש צוות">
-                        <option  [value]="user" *ngFor = "let user of staff;let index=i" >{{user}}</option>
+                        <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
                     </optgroup>
                     <optgroup label="דיירים">
                         <option  [value]="user" *ngFor = "let user of residents" >{{user}}</option>

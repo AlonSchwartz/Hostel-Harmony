@@ -270,6 +270,17 @@ getResidents(){
   })}
 )
 }
+/**works only when users are loaded to components */
+public getById(selected:string,names:string[], user:resident[]|staff[]){
+  let id=null;
+  for (var i=0; i<user.length; i++)
+  {
+    if(selected===names[i] ){
+      id=user[i];
+    }
+  }
+  return id;
+}
 
 
 //**************************** TESTING FUNCTIONS ***************************** //
