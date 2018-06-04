@@ -51,7 +51,7 @@ export class TestingComponent implements OnInit {
     // this.userService.getDataFromFirestome();
     //this.userService.getResidents();
     //console.log(this.userService.setMetaData());
-    this.staa =this.userService.getStaff();
+    //this.staa =this.userService.getStaff();
 
     console.log(this.userService.getStaff());
     console.log(this.userService.getResidents());

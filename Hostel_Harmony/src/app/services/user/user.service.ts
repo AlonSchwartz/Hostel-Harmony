@@ -217,57 +217,58 @@ export class UserService  {
   
   // To get all staff collection from firebase
   getStaff(){
-    this.setStaffMetaData();
-    this.staffCollection.valueChanges().subscribe(collection =>  {
-      this.staffUsers = [];
-      for (var i = 0; i < collection.length ; i++){
-        
-        this.staff2.birthday = collection[i].birthday;
-        this.staff2.calendarID = collection[i].calendarID;
-        this.staff2.email = collection[i].email;
-        this.staff2.firstName = collection[i].firstName;
-        this.staff2.isActive = collection[i].isActive;
-        this.staff2.lastName = collection[i].lastName;
-        this.staff2.phoneNumber = collection[i].phoneNumber;
-        this.staff2.role = collection[i].role;
-        this.staff2.id = this.staffUsersList[i].id; 
-        let copy = Object.assign({}, this.staff2); // push delivers by reference, so we need to copy our object first
-        this.staffUsers.push(copy);
-      }    
-    }
-  )
-  return this.staffUsers;
+    //this.setStaffMetaData();
+    return new Promise(resolve=>{
+      this.staffCollection.valueChanges().subscribe(collection =>  {
+        this.staffUsers = [];
+        for (var i = 0; i < collection.length ; i++){
+          
+          this.staff2.birthday = collection[i].birthday;
+          this.staff2.calendarID = collection[i].calendarID;
+          this.staff2.email = collection[i].email;
+          this.staff2.firstName = collection[i].firstName;
+          this.staff2.isActive = collection[i].isActive;
+          this.staff2.lastName = collection[i].lastName;
+          this.staff2.phoneNumber = collection[i].phoneNumber;
+          this.staff2.role = collection[i].role;
+          this.staff2.id = this.staffUsersList[i].id; 
+          let copy = Object.assign({}, this.staff2); // push delivers by reference, so we need to copy our object first
+          this.staffUsers.push(copy);
+        }
+        resolve();    
+      })})
 }
 
 // To get all resident collection from firebase
 getResidents(){
-  this.setMetaData();
-  this.residentsCollection.valueChanges().subscribe(collection =>  {
-    this.residentsUsers = [];
-    
-    for (var i = 0; i < collection.length ; i++){
+  //this.setMetaData();
+  return new Promise(resolve=>{
+    this.residentsCollection.valueChanges().subscribe(collection =>  {
+      this.residentsUsers = [];
       
-      this.resident.birthday = collection[i].birthday;
-      this.resident.calendarID = collection[i].calendarID;
-      this.resident.caretaker = collection[i].caretaker;
-      this.resident.className = collection[i].className;
-      this.resident.contacts = collection[i].contacts;
-      this.resident.doctors = collection[i].doctors;
-      this.resident.firstName = collection[i].firstName;
-      this.resident.hasWork = collection[i].hasWork;
-      this.resident.isActive = collection[i].isActive;
-      this.resident.lastName = collection[i].lastName;
-      this.resident.memberSince = collection[i].memberSince;
-      this.resident.metaem = collection[i].metaem;
-      this.resident.evals = collection[i].evals;
-      this.resident.id = this.residentUsersList[i].id;
-      
-      let copy = Object.assign({}, this.resident); // push delivers by reference, so we need to copy our object first
-      this.residentsUsers.push(copy);
-    }    
-  }
+      for (var i = 0; i < collection.length ; i++){
+        
+        this.resident.birthday = collection[i].birthday;
+        this.resident.calendarID = collection[i].calendarID;
+        this.resident.caretaker = collection[i].caretaker;
+        this.resident.className = collection[i].className;
+        this.resident.contacts = collection[i].contacts;
+        this.resident.doctors = collection[i].doctors;
+        this.resident.firstName = collection[i].firstName;
+        this.resident.hasWork = collection[i].hasWork;
+        this.resident.isActive = collection[i].isActive;
+        this.resident.lastName = collection[i].lastName;
+        this.resident.memberSince = collection[i].memberSince;
+        this.resident.metaem = collection[i].metaem;
+        this.resident.evals = collection[i].evals;
+        this.resident.id = this.residentUsersList[i].id;
+        
+        let copy = Object.assign({}, this.resident); // push delivers by reference, so we need to copy our object first
+        this.residentsUsers.push(copy);
+      }
+      resolve();    
+  })}
 )
-return this.residentsUsers;
 }
 
 

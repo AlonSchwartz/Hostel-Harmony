@@ -15,7 +15,11 @@ import { resident } from '../models/resident.model';
 export class MenuComponent implements OnInit {
   
   constructor(private router: Router,private data:NameSelectService, private authService: AuthService, private userService: UserService) { 
-    this.userService.getStaff(); this.userService.getResidents(); //this.getNames();
+    //this.userService.getStaff(); 
+    userService.getStaff().then(()=>{ 
+      this.getNames() });
+    userService.getResidents().then(()=>{ 
+      this.getNames() }); //this.getNames();
   }
   name:string;
   current = new Date()
@@ -27,17 +31,19 @@ export class MenuComponent implements OnInit {
   staa: staff[] = [];
 
   getNames(){
-    this.staa = this.userService.getStaff();
-    this.ress = this.userService.getResidents();
+    this.staa=this.userService.staffUsers;
+    this.ress = this.userService.residentsUsers;
     
     for (var i=0; i<this.staa.length; i++)
     {
       this.staff[i] = this.staa[i].firstName + " " + this.staa[i].lastName;
+      console.log(this.staa[i].id)
     }
-
+    console.log("testing id")
     for (var i=0; i<this.ress.length; i++)
     {
       this.residents[i] = this.ress[i].firstName + " " + this.ress[i].lastName;
+      console.log(this.ress[i].id)
     }
     
   }
