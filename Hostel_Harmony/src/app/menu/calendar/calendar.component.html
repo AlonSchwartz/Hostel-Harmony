@@ -1,5 +1,5 @@
-<h2 [hidden] = "name=='יומנים'"> היומן של {{name}}</h2>
-<div id="calendar" >
+<h2 [hidden] = "name=='יומנים'" (ngModel)="getUserSelected()"> היומן של {{name}}</h2>
+<div id="calendar"  >
   <div id = "backToWeek">
 		<div  class="row text-center">
 			<div  class="col-md-4"></div>

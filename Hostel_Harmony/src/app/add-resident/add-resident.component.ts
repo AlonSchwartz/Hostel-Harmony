@@ -39,6 +39,9 @@ export class AddResidentComponent implements OnInit {
       [this.buildItem('').value,this.buildItem('').value,],
       {info:'',phone:0,location:''},
       {psych:'',gp:''},
+      "resident",
+      [],
+      []
     );
   }
   ngOnInit() {

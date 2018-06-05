@@ -8,8 +8,8 @@ export class NameSelectService {
   private ms= new BehaviorSubject<resident|staff>(null);
   cm=this.ms.asObservable();
   constructor() { }
-  changeMessage(message: resident|staff){
-    this.ms.next(message);
+  changeMessage(user: resident|staff){
+    this.ms.next(user);
   }
 
 }

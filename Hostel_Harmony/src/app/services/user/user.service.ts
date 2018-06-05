@@ -133,7 +133,15 @@ export class UserService  {
     if (per.className == "staff"){
       this.getStaff();
       this.sta = this.staffUsers[0];    
-      
+      if (this.feasibilityCheck()){
+        for (let i = 0; i < this.staffUsersList.length ; i++){        
+          if (this.staffUsersList[i].id == id){
+            console.log("id equals");
+            per.events.push(event);
+            this.staffCollection.doc(JSON.parse(JSON.stringify(id))).update(JSON.parse(JSON.stringify(per)));
+          }
+        }
+      }
     }
     
     
@@ -271,15 +279,15 @@ getResidents(){
 )
 }
 /**works only when users are loaded to components */
-public getById(selected:string,names:string[], user:resident[]|staff[]){
-  let id=null;
+public getSelectedUser(selected:string,names:string[], user:resident[]|staff[]){
+  let sel=null;
   for (var i=0; i<user.length; i++)
   {
     if(selected===names[i] ){
-      id=user[i];
+      sel=user[i];
     }
   }
-  return id;
+  return sel;
 }
 
 
