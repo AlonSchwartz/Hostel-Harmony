@@ -35,6 +35,7 @@ import {NameSelectService} from '../../services/nameSelect/name-select.service';
   ]
 })
 export class CalendarComponent implements OnInit {
+  
   constructor(private nameSel: NameSelectService){
     // console.log(this.events);
   }
@@ -86,18 +87,24 @@ export class CalendarComponent implements OnInit {
       title: this.inpEve2.activity,
     },
   ];
+
   recurringEvents: RecurringEvent[] = [
 	{
 	  title: 'Recurs on the 5th of each month',
 	  rrule: {
 		freq: RRule.WEEKLY,
-		byweekday: [RRule.MO]
-	  }
+    byweekday: [RRule.MO],
+    },},
+    {	  title: 'Recurs works? Just a test.',
+	  rrule: {
+		freq: RRule.WEEKLY,
+    byweekday: [RRule.SU],
+  }
+
 	}];
   //add a check if event exists
 	updateCalendarEvents(): void {
 		//this.events = [];
-  
 		const startOfPeriod: any = {
 		  month: startOfMonth,
 		  week: startOfWeek,
@@ -115,10 +122,15 @@ export class CalendarComponent implements OnInit {
 			 Object.assign({}, event.rrule, {
 				dtstart: startOfPeriod[this.view](this.viewDate),
 				until: endOfPeriod[this.view](this.viewDate)
-			 })
+})
 		  );
-  
+    
 		  rule.all().forEach(date => {
+        console.log("-----------")
+        console.log(this.events)
+        console.log(this.recurringEvents)
+        console.log("-----------")
+
 			 this.events.push(
 				Object.assign({}, event, {
 				  start: new Date(date)
@@ -188,6 +200,6 @@ interface RecurringEvent {
 	  freq: RRule.Frequency;
 	  bymonth?: number;
 	  bymonthday?: number;
-	  byweekday?: RRule.Weekday[];
+    byweekday?: RRule.Weekday[];
 	};
  }
