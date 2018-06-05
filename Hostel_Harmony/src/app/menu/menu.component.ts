@@ -22,7 +22,8 @@ export class MenuComponent implements OnInit {
       this.getNames() }); //this.getNames();
   }
   name:string;
-  current = new Date()
+  current = new Date();
+  selected:staff|resident;
   staff:string[] = [];
   //staffName:any= this.userService.getStaff();
   residents:string[] = [];
@@ -58,10 +59,10 @@ export class MenuComponent implements OnInit {
     //this.data.cm.subscribe(message =>this.name=message);
   }
   sendVal(selval:string){
-    let resId;
-    if((resId=this.userService.getById(selval,this.residents,this.ress))!=null || 
-            (resId=this.userService.getById(selval,this.staff,this.staa))!=null){
-      this.data.changeMessage(resId)
+    
+    if((this.selected=this.userService.getSelectedUser(selval,this.residents,this.ress))!=null || 
+            (this.selected=this.userService.getSelectedUser(selval,this.staff,this.staa))!=null){
+      this.data.changeMessage(this.selected)
     }
   }
   

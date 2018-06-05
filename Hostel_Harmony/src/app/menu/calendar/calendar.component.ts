@@ -13,6 +13,8 @@ import { Subject } from 'rxjs';
 import { start } from 'repl';
 import { RRule } from 'rrule';
 import {NameSelectService} from '../../services/nameSelect/name-select.service';
+import { staff } from '../../models/staff.model';
+import { resident } from '../../models/resident.model';
 
 
 
@@ -41,12 +43,13 @@ export class CalendarComponent implements OnInit {
   }
   @Input()//for getting name wanted
   name:string;
+  selected:staff|resident;
   rcvId:string;
-  inpEve:CalEvent=new CalEvent({date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T23:00:00.000Z',end:'2018-05-30T24:00:00.000Z'},
+  inpEve:CalEvent=new CalEvent({date:'',start:'',end:''},
   false, 
-  'General',
-  'Someting to do',
-  'Elchanan' );
+  '',
+  '',
+  '' );
   inpEve1:CalEvent=new CalEvent(
     {date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
     false, 
@@ -60,18 +63,23 @@ export class CalendarComponent implements OnInit {
     'Someting to do',
     'Elchanan' );
   ngOnInit() {
-	  this.fixdEvent();
+    
+    
+    this.fixdEvent();
 	  this.updateCalendarEvents();
   }
+/**need to find a way to do this after page initialized and only if name selected */
+  public getUserSelected(){
+    
+    this.nameSel.cm.subscribe(selected => this.selected = selected);
+    console.log(this.selected)
+    this.inpEve=this.selected.events[0];
+  }
+
+
   view: string ='week'
   viewDate: Date = new Date();
   events: CalendarEvent[] = [
-     {
-		start: new Date(this.inpEve.settime.start),
-		end:new Date(this.inpEve.settime.end),
-		title: this.inpEve.activity,
-
-     },
     {
       start: new Date(),
       title: 'test event',

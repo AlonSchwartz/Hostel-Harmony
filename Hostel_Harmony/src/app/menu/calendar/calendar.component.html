@@ -1,12 +1,6 @@
-<h2 [hidden] = "name=='יומנים'"> היומן של {{name}}</h2>
-<div id="calendar" >
-	<div id = "backToWeek">
-		<div  class="row text-center">
-			<div  class="col-md-4"></div>
 			<div class="col-md-4">
 				<h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'he' }}</h3>
 			</div>
-			<div class="col-md-4">
 				<div class="btn-group">
 					<div id="nextbar"
 					class="btn font-weight-bold text-right text-white"

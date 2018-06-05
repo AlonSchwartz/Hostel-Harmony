@@ -27,7 +27,7 @@ export class EventComponent implements OnInit {
   private model: CalEvent ;
   private submitted: boolean;
   private customActivity:string;
-  message:staff|resident;
+  user:staff|resident;
   types :ActivityTypes[]=[
     {value: 'general-0', viewValue: 'כללי',color:'green'},
     {value: 'staff-1', viewValue: 'איש צוות',color: 'blue'},
@@ -48,16 +48,16 @@ export class EventComponent implements OnInit {
     );
   }
   ngOnInit() {
-    this.nameSel.cm.subscribe(message => this.message = message);
+    this.nameSel.cm.subscribe(user => this.user = user);
   }
   addActivity(val:string,color:string){
     this.types.push(new ActivityTypes(val,val,color));
   }  
-  subEvent(obj: Event) {
+  subEvent() {
     this.submitted = true;/*do something*/
     //alert(this.submitted);
    // console.log(obj);
-    //this.userService.addEvent("", this.model , "zJ0SMqxj43ZaJgz02NPE");
+    this.userService.addEvent(this.user, this.model , this.user.id);
     this.router.navigateByUrl('menu');
   }
 }
