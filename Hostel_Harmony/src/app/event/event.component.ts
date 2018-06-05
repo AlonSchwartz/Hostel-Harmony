@@ -59,6 +59,7 @@ export class EventComponent implements OnInit {
    // console.log(obj);
    //console.log(this.user)
     this.userService.addEvent(this.user, this.model);
+    alert("האירוע נוסף בהצלחה");
     this.router.navigateByUrl('menu');
   }
 }
