@@ -20,7 +20,7 @@ export class resident {
         public work: {info:string,phone:number,location:string}, // only if hasWork is TRUE
         public doctors: {psych:string, gp:string}, // family doctor and 2nd doctor
         public className: string = "resident",
-        public evals?: EvalForm[],
+        public evals: EvalForm[]= [],
         public events?: CalEvent[],
         public id?: string
 

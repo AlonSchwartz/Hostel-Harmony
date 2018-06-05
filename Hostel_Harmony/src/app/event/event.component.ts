@@ -57,7 +57,8 @@ export class EventComponent implements OnInit {
     this.submitted = true;/*do something*/
     //alert(this.submitted);
    // console.log(obj);
-    this.userService.addEvent(this.user, this.model , this.user.id);
+   //console.log(this.user)
+    this.userService.addEvent(this.user, this.model);
     this.router.navigateByUrl('menu');
   }
 }

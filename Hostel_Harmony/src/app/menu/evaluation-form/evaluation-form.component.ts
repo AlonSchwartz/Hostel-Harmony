@@ -1,6 +1,9 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { EvalForm} from '../../models/eval-form.model'
 import {NgModel,FormGroup,FormArray,FormBuilder ,FormControl} from '@angular/forms';
+import { UserService } from '../../services/user/user.service';
+import { NameSelectService } from '../../services/nameSelect/name-select.service';
+import { resident } from '../../models/resident.model';
 
 @Component({
   selector: 'app-evaluation-form',
@@ -13,10 +16,11 @@ export class EvaluationFormComponent implements OnInit {
   myForm: FormGroup;
   private model: EvalForm ;
   private submitted: boolean;
+  resident:resident;
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model); }
 
-  constructor(private fb:FormBuilder ) {
+  constructor(private fb:FormBuilder, private userService: UserService, private nameSel: NameSelectService ) {
     this.submitted = false;
     this.model = new EvalForm(
       '', 
@@ -25,6 +29,8 @@ export class EvaluationFormComponent implements OnInit {
     );
   }
   ngOnInit() {
+    this.nameSel.feval.subscribe(resident => this.resident = resident);
+    console.log(this.resident);
     this.myForm = this.fb.group({
       semiGoal: this.fb.array(
         [this.buildSemiGoal('')])
@@ -50,8 +56,9 @@ export class EvaluationFormComponent implements OnInit {
   subGoal(obj:object) {
     this.submitted = true;/*do something*/
     alert(this.submitted);
-    console.log(obj);
-    //add to database!
+    this.userService.addEvalForm(this.resident,this.model)// Not working for all of the residents now because not all of them have eval field in firebase
+    alert("תוכנית שיקום נוספה בהצלחה")
+    
   }
 
 }

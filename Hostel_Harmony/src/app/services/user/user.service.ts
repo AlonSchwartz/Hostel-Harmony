@@ -14,6 +14,7 @@ import { Response } from '@angular/http';
 import 'rxjs/Rx';
 import { LowerCasePipe } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
+import { EvalForm } from '../../models/eval-form.model';
 
 
 @Injectable()
@@ -96,7 +97,7 @@ export class UserService  {
   }
   
   
-  // function inactive for now
+  /** Receives a resident/staff object and adds it to the relevant database. */
   addToDatabase(per: resident | staff){
     console.log("--------")
     if (per.className == "resident"){
@@ -109,9 +110,15 @@ export class UserService  {
       
     }
   }
+
+  /** Adds evaluation form to relevant resident object */
+  addEvalForm(selResident: resident, evalForm: EvalForm){
+    selResident.evals.push(evalForm);
+    this.residentsCollection.doc(JSON.parse(JSON.stringify(selResident.id))).update(JSON.parse(JSON.stringify(selResident)));
+  }
   
   // Needs testing
-  addEvent(per: resident | staff, event: CalEvent, id: string ){
+  addEvent(per: resident | staff, event: CalEvent ){
     this.setMetaData();
     
     if (per.className == "resident"){
@@ -120,10 +127,10 @@ export class UserService  {
       this.res = this.residentsUsers[0];   
       if (this.feasibilityCheck()){
         for (let i = 0; i < this.residentUsersList.length ; i++){        
-          if (this.residentUsersList[i].id == id){
+          if (this.residentUsersList[i].id == per.id){
             console.log("id equals");
             per.events.push(event);
-            this.residentsCollection.doc(JSON.parse(JSON.stringify(id))).update(JSON.parse(JSON.stringify(per)));
+            this.residentsCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per)));
           }
         }
       }
@@ -135,10 +142,10 @@ export class UserService  {
       this.sta = this.staffUsers[0];    
       if (this.feasibilityCheck()){
         for (let i = 0; i < this.staffUsersList.length ; i++){        
-          if (this.staffUsersList[i].id == id){
+          if (this.staffUsersList[i].id == per.id){
             console.log("id equals");
             per.events.push(event);
-            this.staffCollection.doc(JSON.parse(JSON.stringify(id))).update(JSON.parse(JSON.stringify(per)));
+            this.staffCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per)));
           }
         }
       }

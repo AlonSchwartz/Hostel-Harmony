@@ -134,11 +134,6 @@ export class CalendarComponent implements OnInit {
 		  );
     
 		  rule.all().forEach(date => {
-        console.log("-----------")
-        console.log(this.events)
-        console.log(this.recurringEvents)
-        console.log("-----------")
-
 			 this.events.push(
 				Object.assign({}, event, {
 				  start: new Date(date)
