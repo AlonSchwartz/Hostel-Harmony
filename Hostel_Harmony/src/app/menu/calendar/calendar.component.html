@@ -2,7 +2,9 @@
 <div id="calendar" >
   <div id = "backToWeek">
 		<div  class="row text-center">
-			<div  class="col-md-4"></div>
+			<div  class="col-md-4">
+				<button class="BTNbackToWeek btn font-weight-bold text-right text-white" (click)="backToWeekView()">תצוגה שבועית</button>
+			</div>
 			<div class="col-md-4">
 				<h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'he' }}</h3>
 			</div>
@@ -38,30 +40,29 @@
 			</div>
 		</div>
 		<br>
-    <button class="BTNbackToWeek" (click)="backToWeekView()">חזרה לתצוגה שבועית</button>
-  </div>
-  
-  
-  <div [ngSwitch]="view">
-    <mwl-calendar-week-view
+		<div  class="col-md-4"></div>
     
-    *ngSwitchCase="'week'"
-    [viewDate]="viewDate"
+</div>
+<br>
+<div [ngSwitch]="view">
+<mwl-calendar-week-view
+	*ngSwitchCase="'week'"
+	[viewDate]="viewDate"
 	[events]="events"
 	[refresh]="refresh"
-    [locale]="locale"
-    [weekStartsOn]="weekStartsOn"
-    [weekendDays]="weekendDays"
-    (dayHeaderClicked)="viewDate = $event.day.date; view = 'day'">
-  </mwl-calendar-week-view>
-  <mwl-calendar-day-view
-  *ngSwitchCase="'day'"
-  [viewDate]="viewDate"
-  [events]="events"
-  [refresh]="refresh"
-  [hourSegments]=1
-  [hourSegmentTemplate]="hourSegmentTemplate"
-  [dayStartHour]="6">
+	[locale]="locale"
+	[weekStartsOn]="weekStartsOn"
+	[weekendDays]="weekendDays"
+	(dayHeaderClicked)="viewDate = $event.day.date; view = 'day'">
+</mwl-calendar-week-view>
+<mwl-calendar-day-view
+	*ngSwitchCase="'day'"
+	[viewDate]="viewDate"
+	[events]="events"
+	[refresh]="refresh"
+	[hourSegments]=1
+	[hourSegmentTemplate]="hourSegmentTemplate"
+	[dayStartHour]="6">
 </mwl-calendar-day-view>
 </div>
 </div>
