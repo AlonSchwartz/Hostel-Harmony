@@ -63,10 +63,11 @@ export class CalendarComponent implements OnInit,OnChanges {
     'Someting to do',
     'Elchanan' );
   ngOnInit() {
-    
-    
+	  //this.compareEvents();
     this.fixdEvent();
-	  this.updateCalendarEvents();
+    this.updateCalendarEvents();
+	  this.conflictEvent();
+    //console.log(new Date(this.inpEve.settime.start))
   }
   ngOnChanges(changes:{[propKey:string]:SimpleChange}){
     for(let na in changes){
@@ -152,16 +153,9 @@ export class CalendarComponent implements OnInit,OnChanges {
 		  });
 		});
 	 }
-
-
-
-
-
   locale: string = 'he';
   weekStartsOn: number = DAYS_OF_WEEK.SUNDAY;
-
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
-
   
   addEvent(eve: CalEvent){
     console.log(this.events);
@@ -193,19 +187,25 @@ export class CalendarComponent implements OnInit,OnChanges {
   //   this.refresh.next();
   // }
   
-// compareEvents(): void {
-// 	console.log("inFixedEve");
-// 	if(this.events[0].start.getHours === this.events[3].start.getHours)
-// 		alert(" כבר יש לך פגישה בשעה זו\nבבקשה קבע פגישה במועד אחר");
-// 	else
-// 		alert("no!!");
-// };
-fixdEvent(): void{
+conflictEvent(): void {
+	console.log("inFixedEve");
+  if(this.events[0].start.getHours === this.events[3].start.getHours)
+  {
+		if(confirm( "כבר יש לך פגישה בשעה "+ this.events[0].start.toLocaleTimeString() )) 
+		{
+			console.log("אירוע נשמר")
+		}
+		else {
+			console.log("אירוע נמחק")
+ 		}
+	}
+};
+fixdEvent(): void {
 
 }
 
-}
 
+}
 
 interface RecurringEvent {
 	title: string;
@@ -216,3 +216,4 @@ interface RecurringEvent {
     byweekday?: RRule.Weekday[];
 	};
  }
+
