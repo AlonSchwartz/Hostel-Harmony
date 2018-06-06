@@ -66,7 +66,7 @@ export class CalendarComponent implements OnInit {
 	  //this.compareEvents();
     this.fixdEvent();
     this.updateCalendarEvents();
-	  //this.conflictEvent();
+	  this.conflictEvent();
     //console.log(new Date(this.inpEve.settime.start))
   }
 /**need to find a way to do this after page initialized and only if name selected */
@@ -177,19 +177,19 @@ export class CalendarComponent implements OnInit {
   //   this.refresh.next();
   // }
   
-// conflictEvent(): void {
-// 	console.log("inFixedEve");
-//   if(this.events[0].start.getHours === this.events[3].start.getHours)
-//   {
-// 		if(confirm( "כבר יש לך פגישה בשעה "+ this.events[0].start.toLocaleTimeString() )) 
-// 		{
-// 			console.log("אירוע נשמר")
-// 		}
-// 		else {
-// 			console.log("אירוע נמחק")
-//  		}
-// 	}
-// };
+conflictEvent(): void {
+	console.log("inFixedEve");
+  if(this.events[0].start.getHours === this.events[3].start.getHours)
+  {
+		if(confirm( "כבר יש לך פגישה בשעה "+ this.events[0].start.toLocaleTimeString() )) 
+		{
+			console.log("אירוע נשמר")
+		}
+		else {
+			console.log("אירוע נמחק")
+ 		}
+	}
+};
 fixdEvent(): void {
 
 }
