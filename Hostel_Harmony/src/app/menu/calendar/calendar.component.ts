@@ -1,7 +1,7 @@
 import { Component, OnInit,Input, ViewChild, TemplateRef } from '@angular/core';
 //import { CalendarEvent } from 'calendar-utils';
 import { CalendarEvent, CalendarEventTitleFormatter ,CalendarDateFormatter,DAYS_OF_WEEK} from 'angular-calendar';
-import {  ChangeDetectionStrategy } from '@angular/core';
+import {  ChangeDetectionStrategy, OnChanges, SimpleChange } from '@angular/core';
 import {  CalendarMonthViewDay } from 'angular-calendar';
 import { isSameMonth, isSameDay } from 'ngx-bootstrap/chronos/utils/date-getters';
 import { CustomEventTitleFormatter } from '../provider/custom-event-title-formatter.provider';
@@ -36,7 +36,7 @@ import { resident } from '../../models/resident.model';
     }
   ]
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit,OnChanges {
   
   constructor(private nameSel: NameSelectService){
     // console.log(this.events);
@@ -68,12 +68,22 @@ export class CalendarComponent implements OnInit {
     this.fixdEvent();
 	  this.updateCalendarEvents();
   }
-/**need to find a way to do this after page initialized and only if name selected */
+  ngOnChanges(changes:{[propKey:string]:SimpleChange}){
+    for(let na in changes){
+      let rec=changes[na];
+      let temp=JSON.stringify(rec.currentValue);
+      if(!rec.isFirstChange()){
+        this.getUserSelected();
+      }
+    }
+  }
+/**Fixed!!*/
   public getUserSelected(){
     
     this.nameSel.cm.subscribe(selected => this.selected = selected);
     console.log(this.selected)
     this.inpEve=this.selected.events[0];
+    console.log(this.inpEve)
   }
 
 
