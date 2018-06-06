@@ -26,7 +26,6 @@
 				>
 				היום
 			</div>
-<<<<<<< HEAD
 		</div>
 		<br>
 		<div  class="col-md-4"></div>
@@ -52,44 +51,6 @@
 	[hourSegments]=1
 	[hourSegmentTemplate]="hourSegmentTemplate"
 	[dayStartHour]="6">
-=======
-			<div id="nextbar"
-			class="btn font-weight-bold text-right text-white"
-			mwlCalendarPreviousView
-			[(view)]="view"
-			[(viewDate)]="viewDate"
-			(viewDateChange)="activeDayIsOpen = false;">
-			הקודם
-		</div>			 
-	</div>
-</div>
-</div>
-<br>
-<button class="BTNbackToWeek" (click)="backToWeekView()">חזרה לתצוגה שבועית</button>
-</div>
-
-
-<div [ngSwitch]="view">
-	<mwl-calendar-week-view
-	
-	*ngSwitchCase="'week'"
-	[viewDate]="viewDate"
-	[events]="events"
-	[refresh]="refresh"
-	[locale]="locale"
-	[weekStartsOn]="weekStartsOn"
-	[weekendDays]="weekendDays"
-	(dayHeaderClicked)="viewDate = $event.day.date; view = 'day'">
-</mwl-calendar-week-view>
-<mwl-calendar-day-view
-*ngSwitchCase="'day'"
-[viewDate]="viewDate"
-[events]="events"
-[refresh]="refresh"
-[hourSegments]=1
-[hourSegmentTemplate]="hourSegmentTemplate"
-[dayStartHour]="6">
->>>>>>> b7b17ca356ebf768f612be64ce41a534dcaeeca3
 </mwl-calendar-day-view>
 </div>
 </div>

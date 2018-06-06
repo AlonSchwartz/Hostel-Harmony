@@ -63,18 +63,11 @@ export class CalendarComponent implements OnInit {
     'Someting to do',
     'Elchanan' );
   ngOnInit() {
-<<<<<<< HEAD
 	  //this.compareEvents();
     this.fixdEvent();
     this.updateCalendarEvents();
 	  //this.conflictEvent();
     //console.log(new Date(this.inpEve.settime.start))
-=======
-    
-    
-    this.fixdEvent();
-	  this.updateCalendarEvents();
->>>>>>> b7b17ca356ebf768f612be64ce41a534dcaeeca3
   }
 /**need to find a way to do this after page initialized and only if name selected */
   public getUserSelected(){
