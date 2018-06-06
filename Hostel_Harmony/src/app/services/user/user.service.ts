@@ -88,11 +88,11 @@ export class UserService  {
   
   // To pass event to the calendar
   public passEvent(eve:CalEvent){
-    this.staff2.events.push(eve); // IF THE APP STAYS ON THIS PAGE - THIS FUNCTION WONT WORK PROPERLY. WE NEED TO COPY THE VAR OR NAV TO MENU.
+    //this.staff2.events.push(eve); // IF THE APP STAYS ON THIS PAGE - THIS FUNCTION WONT WORK PROPERLY. WE NEED TO COPY THE VAR OR NAV TO MENU.
     
     // console.log(eve);
     // here needs to be some checking... if everything is ok, add to database and then pass it to the calendar.
-    this.calendar.addEvent(eve);
+    //this.calendar.addEvent(eve);
     
   }
   
