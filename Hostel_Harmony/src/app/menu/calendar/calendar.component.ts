@@ -7,12 +7,14 @@ import { isSameMonth, isSameDay } from 'ngx-bootstrap/chronos/utils/date-getters
 import { CustomEventTitleFormatter } from '../provider/custom-event-title-formatter.provider';
 import { CustomDateFormatter } from '../provider/custom-date-formatter.provider';
 import { EventComponent } from '../../event/event.component';
-import {Event} from '../../models/event.model';
+import {CalEvent} from '../../models/event.model';
 import { startOfDay, endOfDay,getMonth,startOfMonth,startOfWeek,endOfMonth,endOfWeek} from 'date-fns';
 import { Subject } from 'rxjs';
 import { start } from 'repl';
 import { RRule } from 'rrule';
-
+import {NameSelectService} from '../../services/nameSelect/name-select.service';
+import { staff } from '../../models/staff.model';
+import { resident } from '../../models/resident.model';
 
 
 
@@ -35,44 +37,57 @@ import { RRule } from 'rrule';
   ]
 })
 export class CalendarComponent implements OnInit {
-  constructor(){
-    console.log(this.events);
+  
+  constructor(private nameSel: NameSelectService){
+    // console.log(this.events);
   }
   @Input()//for getting name wanted
   name:string;
-  inpEve:Event=new Event({date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T23:00:00.000Z',end:'2018-05-30T24:00:00.000Z'},
+  selected:staff|resident;
+  rcvId:string;
+  inpEve:CalEvent=new CalEvent({date:'',start:'',end:''},
   false, 
-  'General',
-  'Someting to do',
-  'Elchanan' );
-  inpEve1:Event=new Event(
+  '',
+  '',
+  '' );
+  inpEve1:CalEvent=new CalEvent(
     {date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
     false, 
     'General-2',
     'Someting to do',
     'Elchanan' );
-  inpEve2:Event=new Event(
+  inpEve2:CalEvent=new CalEvent(
     {date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
     false, 
     'General-3',
     'Someting to do',
     'Elchanan' );
   ngOnInit() {
+<<<<<<< HEAD
 	  //this.compareEvents();
     this.fixdEvent();
     this.updateCalendarEvents();
 	  //this.conflictEvent();
     //console.log(new Date(this.inpEve.settime.start))
+=======
+    
+    
+    this.fixdEvent();
+	  this.updateCalendarEvents();
+>>>>>>> b7b17ca356ebf768f612be64ce41a534dcaeeca3
   }
+/**need to find a way to do this after page initialized and only if name selected */
+  public getUserSelected(){
+    
+    this.nameSel.cm.subscribe(selected => this.selected = selected);
+    console.log(this.selected)
+    this.inpEve=this.selected.events[0];
+  }
+
+
   view: string ='week'
   viewDate: Date = new Date();
   events: CalendarEvent[] = [
-     {
-		start: new Date(this.inpEve.settime.start),
-		end:new Date(this.inpEve.settime.end),
-		title: this.inpEve.activity,
-
-     },
     {
       start: new Date(),
       title: 'test event',
@@ -88,18 +103,24 @@ export class CalendarComponent implements OnInit {
       title: this.inpEve2.activity,
     },
   ];
+
   recurringEvents: RecurringEvent[] = [
 	{
 	  title: 'Recurs on the 5th of each month',
 	  rrule: {
 		freq: RRule.WEEKLY,
-		byweekday: [RRule.MO]
-	  }
+    byweekday: [RRule.MO],
+    },},
+    {	  title: 'Recurs works? Just a test.',
+	  rrule: {
+		freq: RRule.WEEKLY,
+    byweekday: [RRule.SU],
+  }
+
 	}];
   //add a check if event exists
 	updateCalendarEvents(): void {
 		//this.events = [];
-  
 		const startOfPeriod: any = {
 		  month: startOfMonth,
 		  week: startOfWeek,
@@ -117,9 +138,9 @@ export class CalendarComponent implements OnInit {
 			 Object.assign({}, event.rrule, {
 				dtstart: startOfPeriod[this.view](this.viewDate),
 				until: endOfPeriod[this.view](this.viewDate)
-			 })
+})
 		  );
-  
+    
 		  rule.all().forEach(date => {
 			 this.events.push(
 				Object.assign({}, event, {
@@ -133,7 +154,7 @@ export class CalendarComponent implements OnInit {
   weekStartsOn: number = DAYS_OF_WEEK.SUNDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
   
-  addEvent(eve: Event){
+  addEvent(eve: CalEvent){
     console.log(this.events);
     alert("I'm in calendar and i got your event!");
     console.log(eve);
@@ -189,7 +210,7 @@ interface RecurringEvent {
 	  freq: RRule.Frequency;
 	  bymonth?: number;
 	  bymonthday?: number;
-	  byweekday?: RRule.Weekday[];
+    byweekday?: RRule.Weekday[];
 	};
  }
 

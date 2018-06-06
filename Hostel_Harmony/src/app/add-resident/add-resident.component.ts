@@ -39,6 +39,9 @@ export class AddResidentComponent implements OnInit {
       [this.buildItem('').value,this.buildItem('').value,],
       {info:'',phone:0,location:''},
       {psych:'',gp:''},
+      "resident",
+      [],
+      []
     );
   }
   ngOnInit() {
@@ -56,10 +59,12 @@ export class AddResidentComponent implements OnInit {
     })
   }
   subResident(obj:resident) {
+    console.log("1");
     this.submitted = true;/*do something*/
     //alert(this.submitted);
-    //console.log(obj);
-    this.userService.addNewResident(this.model);
+    console.log(this.model);
+    this.userService.addToDatabase(this.model);
+    console.log("2");
     this.router.navigateByUrl('menu');
   }
  

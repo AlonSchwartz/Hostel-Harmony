@@ -6,13 +6,15 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import {Event} from '../models/event.model';
+import {CalEvent} from '../models/event.model';
 import { Router ,RouterEvent} from '@angular/router';
 import {NgModel} from '@angular/forms';
 import {NameSelectService} from '../services/nameSelect/name-select.service';
 import { supportsPassiveEventListeners } from '@angular/cdk/platform';
 import { UserService } from '../services/user/user.service';
 import { ActivityTypes } from '../models/activity-types.model'
+import { staff } from '../models/staff.model';
+import { resident } from '../models/resident.model';
 
 @Component({
   selector: 'app-event',
@@ -22,10 +24,10 @@ import { ActivityTypes } from '../models/activity-types.model'
 // TODO: check required fields
 //       try to extract time or date from ISO format in json - use Date function!
 export class EventComponent implements OnInit {
-  private model: Event ;
+  private model: CalEvent ;
   private submitted: boolean;
   private customActivity:string;
-  message:string;
+  user:staff|resident;
   types :ActivityTypes[]=[
     {value: 'general-0', viewValue: 'כללי',color:'green'},
     {value: 'staff-1', viewValue: 'איש צוות',color: 'blue'},
@@ -37,7 +39,7 @@ export class EventComponent implements OnInit {
   constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
     this.submitted = false;
     this.customActivity=null;
-    this.model = new Event(
+    this.model = new CalEvent(
       {date:'',start:'',end:''},
       false, 
       '',
@@ -46,16 +48,18 @@ export class EventComponent implements OnInit {
     );
   }
   ngOnInit() {
-    this.nameSel.cm.subscribe(message => this.message = message);
+    this.nameSel.cm.subscribe(user => this.user = user);
   }
   addActivity(val:string,color:string){
     this.types.push(new ActivityTypes(val,val,color));
   }  
-  subEvent(obj: Event) {
+  subEvent() {
     this.submitted = true;/*do something*/
     //alert(this.submitted);
    // console.log(obj);
-    this.userService.passEvent(this.model);
+   //console.log(this.user)
+    this.userService.addEvent(this.user, this.model);
+    alert("האירוע נוסף בהצלחה");
     this.router.navigateByUrl('menu');
   }
 }

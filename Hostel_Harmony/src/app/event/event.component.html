@@ -2,11 +2,11 @@
   <h1>Event Form</h1>
   {{diagnostic}}
   <h1>
-  הוסף אירוע חדש עבור {{message}}
+  הוסף אירוע חדש עבור {{user?.firstName}}
   </h1>
   
   
-  <form (ngSubmit)="subEvent(eventForm.value)" #eventForm="ngForm">
+  <form (ngSubmit)="subEvent()" #eventForm="ngForm">
       <div class="form-group row" style="direction: rtl">
         <div class="col-sm-4">
           <label for ="date">

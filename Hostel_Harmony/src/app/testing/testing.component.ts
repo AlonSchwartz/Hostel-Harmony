@@ -15,13 +15,13 @@ import { HttpClientModule } from '@angular/common/http'; import { HttpModule, Re
 
 export class TestingComponent implements OnInit {
   
-  constructor(private userService: UserService, private authService: AuthService) { }
+  constructor(private userService: UserService, private authService: AuthService) {     this.userService.getStaff();  }
   bla: test;
   resident: resident;
   staff: staff;
   staffUsers: staff[] = []
   
-  
+  staa: staff[] = [];
   ngOnInit() {
     
     this.resident;// = new resident("Rami from test", "Ami2", 542, true, "4/2/3", 2, "Benni", true, false) // According to resident.option #2
@@ -51,17 +51,24 @@ export class TestingComponent implements OnInit {
     // this.userService.getDataFromFirestome();
     //this.userService.getResidents();
     //console.log(this.userService.setMetaData());
-    //console.log(this.userService.getStaff());
-    //console.log(this.userService.getResidents());
+    //this.staa =this.userService.getStaff();
+
+    console.log(this.userService.getStaff());
+    console.log(this.userService.getResidents());
+    console.log("-----");
+    console.log(this.staa);
+    console.log(this.staa[0])
+    console.log(this.staa[0].firstName)
     //console.log(this.userService.check());
    // this.userService.updateListing("52");   
     //this.userService.setMetaData();
-this.userService.getResidentsNames();
+    //console.log(this.userService.getStaff());
+//this.userService.residentsCollection.doc(JSON.parse(JSON.stringify("zJ0SMqxj43ZaJgz02NPE"))).update(JSON.parse(JSON.stringify(per)));
   }
   
   passTest(){
     
-    this.userService.updateStaff(this.staff);
+    //this.userService.updateStaff(this.staff);
     
   }
 }
