@@ -16,10 +16,6 @@ import {NameSelectService} from '../../services/nameSelect/name-select.service';
 import { staff } from '../../models/staff.model';
 import { resident } from '../../models/resident.model';
 
-
-
-
-
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -36,11 +32,17 @@ import { resident } from '../../models/resident.model';
     }
   ]
 })
+
 export class CalendarComponent implements OnInit,OnChanges {
   
   constructor(private nameSel: NameSelectService){
     // console.log(this.events);
   }
+  locale: string = 'he';
+  weekStartsOn: number = DAYS_OF_WEEK.SUNDAY;
+  weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
+  refresh: Subject<any> = new Subject();
+
   @Input()//for getting name wanted
   name:string;
   selected:staff|resident;
@@ -49,101 +51,90 @@ export class CalendarComponent implements OnInit,OnChanges {
   false, 
   '',
   '',
-  '' );
-  inpEve1:CalEvent=new CalEvent(
-    {date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
-    false, 
-    'General-2',
-    'Someting to do',
-    'Elchanan' );
-  inpEve2:CalEvent=new CalEvent(
-    {date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
-    false, 
-    'General-3',
-    'Someting to do',
-    'Elchanan' );
-  ngOnInit() {
-	  //this.compareEvents();
-    this.fixdEvent();
-    this.updateCalendarEvents();
-	  this.conflictEvent();
-    //console.log(new Date(this.inpEve.settime.start))
-  }
-  ngOnChanges(changes:{[propKey:string]:SimpleChange}){
-    for(let na in changes){
-      let rec=changes[na];
-      let temp=JSON.stringify(rec.currentValue);
-      if(!rec.isFirstChange()){
-        this.getUserSelected();
-      }
+  '' 
+);
+
+inpEve1:CalEvent=new CalEvent(
+  {date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
+  false, 
+  'General-2',
+  'Someting to do',
+  'Elchanan' 
+);
+
+ngOnInit() {
+  this.fixdEvent();
+  this.updateCalendarEvents();
+  this.conflictEvent();
+  console.log(new Date(this.inpEve.settime.start))
+}
+
+ngOnChanges(changes:{[propKey:string]:SimpleChange}){
+  for(let na in changes){
+    let rec=changes[na];
+    let temp=JSON.stringify(rec.currentValue);
+    if(!rec.isFirstChange()){
+      this.getUserSelected();
     }
   }
+}
 /**Fixed!!*/
-  public getUserSelected(){
-    
-    this.nameSel.cm.subscribe(selected => this.selected = selected);
-    console.log(this.selected)
-    this.inpEve=this.selected.events[0];
-    console.log(this.inpEve)
-  }
+public getUserSelected(){
+  this.nameSel.cm.subscribe(selected => this.selected = selected);
+  this.addEventToCal(this.selected.events);
+  console.log(this.selected)
+  this.inpEve = this.selected.events[0];
+  console.log(this.inpEve)
 
-
-  view: string ='week'
-  viewDate: Date = new Date();
-  events: CalendarEvent[] = [
-    {
-      start: new Date(),
-      title: 'test event',
-    },
-    {
-      start: new Date(this.inpEve1.settime.start),
-      end:new Date(this.inpEve1.settime.end),
-      title: this.inpEve1.activity,
-	 },
-	 {
-      start: new Date(this.inpEve2.settime.start),
-      end:new Date(this.inpEve2.settime.end),
-      title: this.inpEve2.activity,
-    },
-  ];
-
-  recurringEvents: RecurringEvent[] = [
-	{
-	  title: 'Recurs on the 5th of each month',
-	  rrule: {
-		freq: RRule.WEEKLY,
-    byweekday: [RRule.MO],
-    },},
-    {	  title: 'Recurs works? Just a test.',
-	  rrule: {
-		freq: RRule.WEEKLY,
-    byweekday: [RRule.SU],
-  }
+}
+view: string ='week'
+viewDate: Date = new Date();
+events: CalendarEvent[] = [
+  {
+    start: new Date(),
+    title: 'test event',
+  },
+  {
+    start: new Date(this.inpEve1.settime.start),
+    end:new Date(this.inpEve1.settime.end),
+    title: this.inpEve1.activity,
+  },
+];
+//for permnent events
+recurringEvents: RecurringEvent[] = [
+{
+  title: 'Recurs on the 5th of each month',
+  rrule: {
+  freq: RRule.WEEKLY,
+  byweekday: [RRule.MO],
+  },},
+  {	  title: 'Recurs works? Just a test.',
+  rrule: {
+  freq: RRule.WEEKLY,
+  byweekday: [RRule.SU],
+}
 
 	}];
-  //add a check if event exists
-	updateCalendarEvents(): void {
-		//this.events = [];
-		const startOfPeriod: any = {
-		  month: startOfMonth,
-		  week: startOfWeek,
-		  day: startOfDay
-		};
-  
-		const endOfPeriod: any = {
-		  month: endOfMonth,
-		  week: endOfWeek,
-		  day: endOfDay
-		};
-  
-		this.recurringEvents.forEach(event => {
-		  const rule: RRule = new RRule(
-			 Object.assign({}, event.rrule, {
-				dtstart: startOfPeriod[this.view](this.viewDate),
-				until: endOfPeriod[this.view](this.viewDate)
+//add a check if event exists
+updateCalendarEvents(): void {
+  //this.events = [];
+  const startOfPeriod: any = {
+    month: startOfMonth,
+    week: startOfWeek,
+    day: startOfDay
+  };
+  const endOfPeriod: any = {
+    month: endOfMonth,
+    week: endOfWeek,
+    day: endOfDay
+  };
+this.recurringEvents.forEach(event => {
+  const rule: RRule = new RRule(
+    Object.assign({}, event.rrule, {
+    dtstart: startOfPeriod[this.view](this.viewDate),
+    until: endOfPeriod[this.view](this.viewDate)
 })
 		  );
-    
 		  rule.all().forEach(date => {
 			 this.events.push(
 				Object.assign({}, event, {
@@ -153,57 +144,38 @@ export class CalendarComponent implements OnInit,OnChanges {
 		  });
 		});
 	 }
-  locale: string = 'he';
-  weekStartsOn: number = DAYS_OF_WEEK.SUNDAY;
-  weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
   
-  addEvent(eve: CalEvent){
-    console.log(this.events);
-    alert("I'm in calendar and i got your event!");
-    console.log(eve);
-    console.log("----Details----");
-    console.log("activity = " + eve.activity);
-    console.log("asign = " + eve.asign);
-    console.log("describe = " + eve.describe);
-    console.log("settime = ");
-    console.log(eve.settime);
+backToWeekView() {
+  this.view = 'week';
+}
+  
+addEventToCal(eve:CalEvent[]): void {
+  for(let sel of eve){
+      this.events.push({
+        title: 'database test',
+        //date: new Date(sel.settime.start),
+        start: new Date(sel.settime.start),
+        end:new Date(sel.settime.end),
+      });
+    this.refresh.next();
   }
-
-  backToWeekView() {
-   this.view = 'week';
-  }
-  refresh: Subject<any> = new Subject();
-  // addEvent(): void {
-  //   this.events.push({
-  //     title: 'New event',
-  //     start: startOfDay(new Date()),
-  //     end: endOfDay(new Date()),
-  //     draggable: true,
-  //     resizable: {
-  //       beforeStart: true,
-  //       afterEnd: true
-  //     }
-  //   });
-  //   this.refresh.next();
-  // }
+}
   
 conflictEvent(): void {
 	console.log("inFixedEve");
   if(this.events[0].start.getHours === this.events[3].start.getHours)
   {
-		if(confirm( "כבר יש לך פגישה בשעה "+ this.events[0].start.toLocaleTimeString() )) 
-		{
-			console.log("אירוע נשמר")
-		}
-		else {
-			console.log("אירוע נמחק")
- 		}
+		// if(confirm( "כבר יש לך פגישה בשעה "+ this.events[0].start.toLocaleTimeString() )) 
+		// {
+		// 	console.log("אירוע נשמר")
+		// }
+		// else {
+		// 	console.log("אירוע נמחק")
+ 		// }
 	}
 };
-fixdEvent(): void {
-
-}
-
+fixdEvent(): void {}
+chengeCal(): void{}
 
 }
 

@@ -1,29 +1,20 @@
-
-
-#head{
-    margin-bottom: 20px;
-}
-#bar{
-    font-size: 20px;
-    width: 100%;
-   
-}
 #nev{
-    border-radius: 15px;   
+    /*border-radius: 15px;   
     margin-top: 10px;
-    padding-bottom: 20px;
-    background-color:darkgreen;
-      
+    padding-bottom: 20px;*/
+    background-color:darkgreen;    
+    font-size: 25px;
+    width: 100%; 
+     
 }
 select{
-    width:200px;
     padding-top:0px;
     margin-top:0px;
     direction: rtl;
     background-color: darkgreen;
     border: none;
+    margin-right: 0px;
 }
-#logout
-{
-   padding-right: 150px;
+a{
+    margin-left: 15px;
 }
