@@ -2,47 +2,47 @@
 <div id="calendar" >
 	<div id = "backToWeek">
 		<div  class="row text-center">
-			<div  class="col-md-4"></div>
+			<div  class="col-md-4">
+				<button class="BTNbackToWeek btn font-weight-bold text-right text-white" (click)="backToWeekView()">תצוגה שבועית</button>
+			</div>
 			<div class="col-md-4">
 				<h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'he' }}</h3>
 			</div>
 			<div class="col-md-4">
 				<div class="btn-group">
+						<div id="nextbar"
+						class="btn font-weight-bold text-right text-white"
+						mwlCalendarNextView
+						[(view)]="view"
+						[(viewDate)]="viewDate"
+						(viewChange)="updateCalendarEvents()"
+						(viewDateChange)="activeDayIsOpen = false; updateCalendarEvents()">
+						הבא
+					</div>
 					<div id="nextbar"
-					class="btn font-weight-bold text-right text-white"
-					mwlCalendarNextView
-					[(view)]="view"
+						class="btn btn-outline-secondary font-weight-bold text-right text-white"
+						mwlCalendarToday
+						[(viewDate)]="viewDate"
+						>
+						היום
+					</div>
+					<div id="nextbar"
+					class="btn btn-outline-secondary font-weight-bold text-right text-white"
+					mwlCalendarPreviousView
+					[view]="view"
 					[(viewDate)]="viewDate"
-					(viewChange)="updateCalendarEvents()"
-					(viewDateChange)="activeDayIsOpen = false; updateCalendarEvents()">
-					הבא
-				</div>
-				<div id="nextbar"
-				class="btn btn-outline-secondary font-weight-bold text-right text-white"
-				mwlCalendarToday
-				[(viewDate)]="viewDate"
-				>
-				היום
+					(viewDateChange)="activeDayIsOpen = false;updateCalendarEvents()">
+					קודם
+					</div>
+					
 			</div>
-			<div id="nextbar"
-			class="btn font-weight-bold text-right text-white"
-			mwlCalendarPreviousView
-			[(view)]="view"
-			[(viewDate)]="viewDate"
-			(viewDateChange)="activeDayIsOpen = false;">
-			הקודם
-		</div>			 
-	</div>
-</div>
+		</div>
+		<br>
+	<div  class="col-md-4"></div>
 </div>
 <br>
-<button class="BTNbackToWeek" (click)="backToWeekView()">חזרה לתצוגה שבועית</button>
-</div>
-
-
 <div [ngSwitch]="view">
-	<mwl-calendar-week-view
-	
+<mwl-calendar-week-view
 	*ngSwitchCase="'week'"
 	[viewDate]="viewDate"
 	[events]="events"
@@ -53,13 +53,13 @@
 	(dayHeaderClicked)="viewDate = $event.day.date; view = 'day'">
 </mwl-calendar-week-view>
 <mwl-calendar-day-view
-*ngSwitchCase="'day'"
-[viewDate]="viewDate"
-[events]="events"
-[refresh]="refresh"
-[hourSegments]=1
-[hourSegmentTemplate]="hourSegmentTemplate"
-[dayStartHour]="6">
+	*ngSwitchCase="'day'"
+	[viewDate]="viewDate"
+	[events]="events"
+	[refresh]="refresh"
+	[hourSegments]=1
+	[hourSegmentTemplate]="hourSegmentTemplate"
+	[dayStartHour]="6">
 </mwl-calendar-day-view>
 </div>
 </div>
