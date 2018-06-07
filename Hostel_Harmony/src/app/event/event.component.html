@@ -1,55 +1,52 @@
 <div class="container">
-  <h1>Event Form</h1>
-  {{diagnostic}}
+  
   <h1>
   הוסף אירוע חדש עבור {{user?.firstName}}
   </h1>
-  
+  {{diagnostic}}
   
   <form (ngSubmit)="subEvent()" #eventForm="ngForm">
       <div class="form-group row" style="direction: rtl">
-        <div class="col-sm-4">
-          <label for ="date">
-            בחר תאריך</label>
-            <input placeholder="בחר תאריך..." [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" required [(ngModel)]="model.settime.date" name="date">
-            <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
-          </div>
-            <div class="col-sm-4">
-          <label for="start">
-            שעת התחלה</label>
-            <input placeholder="בחר שעה..." [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4" required [(ngModel)]="model.settime.start" name="start">
-            <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
-          </div>
-            <div class="col-sm-4">
-          <label for ="end">
-            שעת סיום</label>
-            <input placeholder="בחר שעה..." [owlDateTimeTrigger]="dt5" [owlDateTime]="dt5" required [(ngModel)]="model.settime.end" name="end">
-            <owl-date-time [pickerType]="'timer'" #dt5></owl-date-time>
-          </div>
+        <div class="col-sm-3">
+          <label>
+            שעת התחלה:
+            <input placeholder="בחר שעה ותאריך..." [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
+                   [selectMode]="'rangeFrom'" [owlDateTime]="dt4" required [(ngModel)]="model.settime.start" name="start">
+            <owl-date-time #dt12></owl-date-time>
+          </label>
+        </div>
+        <div class="col-sm-3">
+          <label>
+          שעת סיום:
+              <input placeholder="בחר שעה ותאריך..." [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
+                   [selectMode]="'rangeTo'" required [(ngModel)]="model.settime.end" name="end">
+              <owl-date-time #dt13></owl-date-time>
+          </label>
+        </div>
       </div>  
           
-    <div class="form-group" >
+      <div class="form-group" >
         <mat-form-field>
-            <mat-select  placeholder="סוג פעילות"  [(ngModel)]="model.activity" name="activity">
-              <mat-option [style.background]="type.color" *ngFor="let type of types" [value]="type.value">
+          <mat-select  placeholder="סוג פעילות" (click)="edited=false" [(ngModel)]="model.activity" name="activity">
+            <mat-option [style.background]="type.color" *ngFor="let type of types" [value]="type.value">
                 {{ type.viewValue }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <div class="form-group row" style="direction: rtl" >
-            <div class="col-sm-2 col-sm-offset-10">
-              <button type="button" class="btn btn-primary"
-                  (click)="addActivity(customActivity,color)">להוספת פעילות</button>
-            </div>
-            <div class="col-sm-1">
-                  <label for="color" >בחר צבע</label>
-            <input [(colorPicker)]="color" [style.background]="color" [cpPosition]="'bottom'" class="form-control" />
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="form-group row" style="direction: rtl" *ngIf="model.activity=='add' && !edited">
+            <div class="col-sm-2">
+              <label for="color" >בחר צבע</label>
+              <input [(colorPicker)]="color" [style.background]="color" [cpPosition]="'bottom'" class="form-control" />
             </div>
             <div class="col-sm-4 ">
               <label for="describe" >סוג פעילות</label>
               <input type="text" class="form-control" id="describe" [(ngModel)]="customActivity" name ="cust" >
             </div>
-      </div>
+            <div class="col-sm-2" >
+              <button id="addButt" type="button" class="btn btn-primary"
+                  (click)="addActivity(customActivity,color)" >לחץ להוספת פעילות</button>
+            </div>
+        </div>
     </div>  
     <div class="form-group">
         <mat-checkbox  [(ngModel)]="model.asign" name ="asign">ליווי</mat-checkbox>

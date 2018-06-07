@@ -27,11 +27,10 @@ export class EventComponent implements OnInit {
   private model: CalEvent ;
   private submitted: boolean;
   private customActivity:string;
+  public edited:boolean=false;
   user:staff|resident;
   types :ActivityTypes[]=[
-    {value: 'general-0', viewValue: 'כללי',color:'green'},
-    {value: 'staff-1', viewValue: 'איש צוות',color: 'blue'},
-    {value: 'res-2', viewValue: 'דייר', color:'yellow'},
+    {value: 'add', viewValue: ' הוסף אירוע חדש  +',color:'white'},
   ];
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model); }
@@ -40,7 +39,7 @@ export class EventComponent implements OnInit {
     this.submitted = false;
     this.customActivity=null;
     this.model = new CalEvent(
-      {date:'',start:'',end:''},
+      {start:'',end:''},
       false, 
       '',
       '',
@@ -49,15 +48,16 @@ export class EventComponent implements OnInit {
   }
   ngOnInit() {
     this.nameSel.cm.subscribe(user => this.user = user);
+    if(this.user==null){
+      this.router.navigateByUrl('menu');
+    }
   }
   addActivity(val:string,color:string){
     this.types.push(new ActivityTypes(val,val,color));
+    this.edited=true;
   }  
   subEvent() {
-    this.submitted = true;/*do something*/
-    //alert(this.submitted);
-   // console.log(obj);
-   //console.log(this.user)
+    this.submitted = true;
     this.userService.addEvent(this.user, this.model);
     alert("האירוע נוסף בהצלחה");
     this.router.navigateByUrl('menu');

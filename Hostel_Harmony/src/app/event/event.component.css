@@ -3,7 +3,14 @@
     border-radius: 7px;
     color:rgb(10, 4, 4);
     direction: rtl;
+    font-size: 12px;
     text-align: right;
+}
+.mat-form-field{
+    text-align: inherit;
+}
+#addButt{
+    margin:28px 0px 20px 0px;
 }
 h1{
     font-size: 40px;
@@ -16,6 +23,7 @@ label {
 }
 input,textarea {
     direction: rtl;
+    font-size: 12px;
 }
 
  .form-group{

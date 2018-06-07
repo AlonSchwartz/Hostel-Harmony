@@ -25,6 +25,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import { TestingComponent } from './testing/testing.component';
 import { UserService } from './services/user/user.service';
+import { FilesService } from './services/files/files.service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -85,6 +86,7 @@ registerLocaleData(localeFr);
   ],
   providers: [
     NameSelectService,
+    FilesService,
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'il'},
     UserService,
     AuthService,
