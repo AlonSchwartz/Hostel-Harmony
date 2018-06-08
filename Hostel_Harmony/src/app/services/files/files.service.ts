@@ -9,9 +9,9 @@ export class FilesService {
 
   public basePath;
   
-    constructor(private db: AngularFireDatabase) { }
+  constructor(private db: AngularFireDatabase) { }
   
-    pushFileToStorage(fileUpload: UpFile, progress: { percentage: number }) {
+  pushFileToStorage(fileUpload: UpFile, progress: boolean) {
   
       return new Promise((resolve, reject) => {
       const storageRef = firebase.storage().ref();
@@ -19,16 +19,16 @@ export class FilesService {
   
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
         (snapshot) => {
-          // in progress , raise the progress bar
+          // in progress , raise a flag that is in progress (can be edited for other needs)
           const snap = snapshot as firebase.storage.UploadTaskSnapshot;
-          progress.percentage = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
+          progress=this.isActive(snap); 
         },
         (error) => {
           // fail
           console.log(error);
         },
         () => {
-          // success, finished upload , now the save the file
+          // success, finished upload => save the file
           fileUpload.url = uploadTask.snapshot.downloadURL;
           fileUpload.name = fileUpload.file.name;
           this.saveFileData(fileUpload);
@@ -37,31 +37,35 @@ export class FilesService {
       );
     });
     }
+  isActive(snapshot) {
+      return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes
+  }
   
-    private saveFileData(fileUpload: UpFile) {
+  //================save data in firebase=================//
+  private saveFileData(fileUpload: UpFile) {
       this.db.list(`${this.basePath}/`).push(fileUpload);
-    }
-  //========================================//
-    getFileUploads(numberItems): AngularFireList<UpFile> {
-      return this.db.list(this.basePath, ref =>
+  }
+  //================get list of files=================//
+  getFileUploads(numberItems): AngularFireList<UpFile> {
+      return this.db.list(`${this.basePath}/`, ref =>
         ref.limitToLast(numberItems));
-    }
+  }
   //================DELETE==================//
-    public deleteFileUpload(fileUpload: UpFile) {
+  public deleteFileUpload(fileUpload: UpFile) {
       this.deleteFileDatabase(fileUpload.key)
         .then(() => {
           this.deleteFileStorage(fileUpload.name);
         })
         .catch(error => console.log(error));
-    }
+  }
   
-    private deleteFileDatabase(key: string) {
+  private deleteFileDatabase(key: string) {
       return this.db.list(`${this.basePath}/`).remove(key);
-    }
+  }
   
-    private deleteFileStorage(name: string) {
+  private deleteFileStorage(name: string) {
       const storageRef = firebase.storage().ref();
       storageRef.child(`${this.basePath}/${name}`).delete();
-    }
+  }
 
 }

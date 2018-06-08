@@ -1,38 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+/**http://javasampleapproach.com/frontend/angular/angular-5-firebase-upload-display-delete-files-storage */
+
+import { Component, OnInit, Input } from '@angular/core';
 import { FilesService } from '../../services/files/files.service';
 import { UpFile } from '../../models/up-file.model';
+import { NameSelectService } from '../../services/nameSelect/name-select.service';
+import { resident } from '../../models/resident.model';
+import { staff } from '../../models/staff.model';
 @Component({
   selector: 'app-files',
   templateUrl: './files.component.html',
   styleUrls: ['./files.component.css']
 })
 export class FilesComponent implements OnInit {
-  selectedFiles: FileList;
-  currentFileUpload: UpFile;
-  file_project_selected = false;
-  progress: { percentage: number } = { percentage: 0 };
-  constructor(public uploadService: FilesService) { }
-  selectFile(event) {
-    this.selectedFiles = event.target.files;
-    this.file_project_selected = true;
+  @Input()//for getting name wanted
+  name:string;
+  selected:staff|resident;
+  fileUploads: any[];
+  
+   constructor(private uploadService: FilesService,private nameSel: NameSelectService) { }
+  
+   ngOnInit() {
+    this.nameSel.cm.subscribe(selected => this.selected = selected);
+    
+     this.uploadService.getFileUploads(6).snapshotChanges().map(changes => {
+       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+      }).subscribe(fileUploads => {
+       this.fileUploads = fileUploads;
+      });
+   }
+   deleteFileUpload(fileUpload) {
+    this.uploadService.deleteFileUpload(fileUpload);
   }
-
-  cancelSelectFile() {
-    this.selectedFiles = null;
-    this.file_project_selected = false;
-  }
-
-  //Uploads the selected file to firebase storage
-  upload() {
-    this.uploadService.basePath = 'files';
-    const file = this.selectedFiles.item(0);
-    this.selectedFiles = undefined;
-    this.currentFileUpload = new UpFile(file);
-    this.uploadService.pushFileToStorage(this.currentFileUpload, this.progress).then(() => {
-      this.file_project_selected = false;
-    });
-  }
-  ngOnInit() {
-  }
-
 }

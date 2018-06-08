@@ -1,20 +1,7 @@
 <div  id="menu">
     <div id="bar">
         <nav id="nev" class=" nav nav-pills d-flex flex-row-reverse p-2 mb-2 text-white font-weight-bold">
-
-                <a class="nav-link text-white" routerLink="/">בית</a>  
-                <a class="nav-link text-white" dropdown>
-                        
-                        <select  class="text-white dropdown-toggle font-weight-bold text-sm-center" title="עריכה" #edit  (change)="sendVal(edit.value);" >
-                            <option   disabled hidden >עריכה</option>
-                            <optgroup label="איש צוות">
-                                <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
-                            </optgroup>
-                            <optgroup label="דיירים">
-                                <option  [value]="user"  *ngFor = "let user of residents" >{{user}}</option>
-                            </optgroup>
-                        </select>
-                    </a>
+            <a class="nav-link text-white" routerLink="/">בית</a>  
             <a class="nav-link text-white" dropdown>
                 <select class="text-white dropdown-toggle font-weight-bold text-sm-center" title="יומנים" #diary  (change)="sendVal(diary.value);" >
                     <option   disabled hidden >יומנים</option> 
@@ -39,6 +26,18 @@
             </a>
             <a class="nav-link text-white" href="/add-staff">הוסף איש צוות</a>
             <a class="nav-link text-white" routerLink="/add-resident"> הוסף דייר</a>
+            <a class="nav-link text-white" dropdown>
+                
+                <select  class="text-white dropdown-toggle font-weight-bold text-sm-center" title="קבצים" #file (change)="sendVal(file.value);openDialog()" >
+                    <option   disabled hidden >הוספת קובץ</option>
+                    <optgroup label="איש צוות">
+                        <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
+                    </optgroup>
+                    <optgroup label="דיירים">
+                        <option  [value]="user"  *ngFor = "let user of residents" >{{user}}</option>
+                    </optgroup>
+                </select>
+            </a>
             <a class="nav-link text-dark  w-25 p-1" >
                 <button (click)="logout()" type="button" class="btn pull-left" >התנתק</button>
             </a>  
@@ -52,7 +51,7 @@
         <app-calendar [name]="diary.value"></app-calendar>
         <app-view *ngIf="diary.value!='יומנים'" [name]="diary.value"></app-view>
         <app-evaluation-form *ngIf="diary.value!='יומנים'" [name]="diary.value"></app-evaluation-form>
-        <app-files *ngIf="diary.value!='יומנים'"></app-files>
+        <app-files *ngIf="diary.value!='יומנים'" [name]="diary.value"></app-files>
     </div>
     
 </div>

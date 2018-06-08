@@ -6,6 +6,8 @@ import { AuthService } from '../services/auth/auth.service';
 import { UserService } from '../services/user/user.service';
 import { staff } from '../models/staff.model';
 import { resident } from '../models/resident.model';
+import {MatDialog, MatDialogConfig} from "@angular/material"
+import { DialogFiComponent } from './dialog-fi/dialog-fi.component'
 
 @Component({
   selector: 'app-menu',
@@ -13,8 +15,22 @@ import { resident } from '../models/resident.model';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  
-  constructor(private router: Router,private data:NameSelectService, private authService: AuthService, private userService: UserService) { 
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+        id: 1,
+        title: 'Hostel users files'
+    };
+    const dialogRef = this.dialog.open(DialogFiComponent, dialogConfig);
+
+    // dialogRef.afterClosed().subscribe(
+    //     data => console.log("Dialog output:", data)
+    // );    
+}
+  constructor(private dialog: MatDialog,private router: Router,private data:NameSelectService, private authService: AuthService, private userService: UserService) { 
     //this.userService.getStaff(); 
     userService.getStaff().then(()=>{ 
       this.getNames() });

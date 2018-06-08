@@ -11,7 +11,6 @@ import { CalendarModule } from 'angular-calendar';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { CanActivateRouteGuard } from './services/auth/can-activate-route.guard';
 import { AppRoutingModule, routes } from './app.router';
-
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -40,7 +39,8 @@ import { EvaluationFormComponent } from './menu/evaluation-form/evaluation-form.
 import { ViewComponent } from './menu/view/view.component';
 import { FilesComponent } from './menu/files/files.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-
+import { DialogFiComponent } from './menu/dialog-fi/dialog-fi.component';
+import { MatDialogModule } from '@angular/material'
 
 
 registerLocaleData(localeFr);
@@ -57,10 +57,12 @@ registerLocaleData(localeFr);
     TestingComponent,
     EvaluationFormComponent,
     ViewComponent,
-    FilesComponent
+    FilesComponent,
+    DialogFiComponent
   ],
   imports: [BrowserModule,FormsModule,HttpModule,
     MatSelectModule,
+    MatDialogModule,
     ColorPickerModule,
     OwlDateTimeModule,
     MatCheckboxModule,
@@ -82,7 +84,7 @@ registerLocaleData(localeFr);
     AngularFireAuthModule,
     AppRoutingModule,
     HttpModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     NameSelectService,
@@ -94,6 +96,9 @@ registerLocaleData(localeFr);
     HttpModule,
     HttpClientModule,
     CanActivateRouteGuard],
+    entryComponents: [
+      DialogFiComponent
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

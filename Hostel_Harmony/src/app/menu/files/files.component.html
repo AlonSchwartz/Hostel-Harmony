@@ -1,26 +1,12 @@
-<div class="row">
-  <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-      <div class="input-group image-preview">
-          <div class="btn btn-default image-preview-input">
-              <input type="file" (change)="selectFile($event)" required name="fileupload" />
-              <span class="glyphicon glyphicon-folder-open"></span>
-              <span class="image-preview-input-title">בחר קובץ</span>
-          </div>
-          <div class="file" *ngIf="this.selectedFiles != null">{{this.selectedFiles.item(0).name}}</div>
-          <div>
-              <button type="button" class="btn btn-labeled btn-primary" [disabled]="!selectedFiles" (click)="upload()">
-                  <span class="btn-label">
-                      <i class="glyphicon glyphicon-upload"></i>
-                  </span>העלה קובץ</button>
-              <button type="button" class="btn btn-labeled btn-primary" [hidden]="this.selectedFiles == null" (click)="cancelSelectFile()">
-                  <span class="btn-label">
-                  </span>בטל בחירה</button>
-          </div>
-          <div *ngIf="currentFileUpload" class="progress">
-              <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 15%" attr.aria-valuenow="{{progress.percentage}}"
-                  aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
-                  {{progress.percentage}}%</div>
-          </div>
-      </div>
-  </div>
+
+<div class="panel panel-primary">
+	<div class="panel-heading" style="text-align:right">רשימת הקבצים עבור: {{name}}</div>
+	<div *ngFor="let file of fileUploads">
+		<div class="panel-body">
+            <a href="{{file.url}}">{{file.name}}</a>
+            <button (click)='deleteFileUpload(file)'
+	            class="btn btn-danger btn-xs" style="float: right">מחק</button>
+			<!-- <details-upload [fileUpload]='file'></details-upload> -->
+		</div>
+	</div>
 </div>
