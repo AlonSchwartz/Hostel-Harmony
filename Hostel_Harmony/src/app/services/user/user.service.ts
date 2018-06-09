@@ -332,6 +332,12 @@ export class UserService  {
             let copy = Object.assign({}, this.eventType); // push delivers by reference, so we need to copy our object first
             this.eventTypes.push(copy);
           }
+         
+         // Option #2 for adding new activity.
+          this.eventType.viewValue = "הוסף אירוע חדש | עודכן מהעורך"
+          this.eventType.color = "white";
+          this.eventType.value = "add";
+          this.eventTypes.unshift(this.eventType)
           resolve();
         })}
       )

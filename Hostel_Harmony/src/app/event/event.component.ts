@@ -80,9 +80,6 @@ export class EventComponent implements OnInit {
       // console.log(obj);
       //console.log(this.user)
       if (this.newEventTypeSubmited){
-        console.log(this.types);
-        console.log(this.types.length);
-        
         for (let i=this.newEventIndex; i < this.types.length ; i++){
           console.log[i];
           this.userService.updateEventTypes(this.types[i]);
