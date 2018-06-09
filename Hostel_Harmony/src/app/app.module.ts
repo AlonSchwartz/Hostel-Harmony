@@ -11,7 +11,6 @@ import { CalendarModule } from 'angular-calendar';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { CanActivateRouteGuard } from './services/auth/can-activate-route.guard';
 import { AppRoutingModule, routes } from './app.router';
-
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -25,6 +24,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import { TestingComponent } from './testing/testing.component';
 import { UserService } from './services/user/user.service';
+import { FilesService } from './services/files/files.service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -39,7 +39,8 @@ import { EvaluationFormComponent } from './menu/evaluation-form/evaluation-form.
 import { ViewComponent } from './menu/view/view.component';
 import { FilesComponent } from './menu/files/files.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-
+import { DialogFiComponent } from './menu/dialog-fi/dialog-fi.component';
+import { MatDialogModule } from '@angular/material'
 
 
 registerLocaleData(localeFr);
@@ -56,10 +57,12 @@ registerLocaleData(localeFr);
     TestingComponent,
     EvaluationFormComponent,
     ViewComponent,
-    FilesComponent
+    FilesComponent,
+    DialogFiComponent
   ],
   imports: [BrowserModule,FormsModule,HttpModule,
     MatSelectModule,
+    MatDialogModule,
     ColorPickerModule,
     OwlDateTimeModule,
     MatCheckboxModule,
@@ -81,10 +84,11 @@ registerLocaleData(localeFr);
     AngularFireAuthModule,
     AppRoutingModule,
     HttpModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     NameSelectService,
+    FilesService,
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'il'},
     UserService,
     AuthService,
@@ -92,6 +96,9 @@ registerLocaleData(localeFr);
     HttpModule,
     HttpClientModule,
     CanActivateRouteGuard],
+    entryComponents: [
+      DialogFiComponent
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

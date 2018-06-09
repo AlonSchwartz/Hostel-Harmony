@@ -47,7 +47,7 @@ export class CalendarComponent implements OnInit,OnChanges {
   name:string;
   selected:staff|resident;
   rcvId:string;
-  inpEve:CalEvent=new CalEvent({date:'',start:'',end:''},
+  inpEve:CalEvent=new CalEvent({start:'',end:''},
   false, 
   '',
   '',
@@ -55,7 +55,7 @@ export class CalendarComponent implements OnInit,OnChanges {
 );
 
 inpEve1:CalEvent=new CalEvent(
-  {date:'2018-05-30T21:00:00.000Z',start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
+  {start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
   false, 
   'General-2',
   'Someting to do',
@@ -66,9 +66,9 @@ ngOnInit() {
   this.fixdEvent();
   this.updateCalendarEvents();
   this.conflictEvent();
-  console.log(new Date(this.inpEve.settime.start))
+  // console.log(new Date(this.inpEve.settime.start))
 }
-
+/**allow page to wait until a person is passed to calendar, only then will the function run */
 ngOnChanges(changes:{[propKey:string]:SimpleChange}){
   for(let na in changes){
     let rec=changes[na];
@@ -80,12 +80,12 @@ ngOnChanges(changes:{[propKey:string]:SimpleChange}){
 }
 /**Fixed!!*/
 public getUserSelected(){
+  //this.events=[];//empty arrey of current user, need to keep reaccuring events(from database!)
   this.nameSel.cm.subscribe(selected => this.selected = selected);
+  if(this.selected==null){
+    alert('no user entered')
+  }
   this.addEventToCal(this.selected.events);
-  console.log(this.selected)
-  this.inpEve = this.selected.events[0];
-  console.log(this.inpEve)
-
 }
 view: string ='week'
 viewDate: Date = new Date();
@@ -153,7 +153,6 @@ addEventToCal(eve:CalEvent[]): void {
   for(let sel of eve){
       this.events.push({
         title: 'database test',
-        //date: new Date(sel.settime.start),
         start: new Date(sel.settime.start),
         end:new Date(sel.settime.end),
       });

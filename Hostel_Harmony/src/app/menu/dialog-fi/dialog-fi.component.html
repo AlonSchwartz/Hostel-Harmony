@@ -1,0 +1,50 @@
+<div class="container">
+<h2 mat-dialog-title>העלאה עבור {{selected?.firstName}}</h2>
+
+
+<mat-dialog-content>
+
+  <div class="row">
+    <div class="col-xl-12 ">
+        <div class="input-group image-preview">
+            <div class="btn btn-default image-preview-input">
+                <span class="image-preview-input-title">בחר קובץ</span>
+                <label class="custom-file-upload btn">
+                  <input type="file" class="btn btn-danger" (change)="selectFile($event)" required name="fileupload" />
+                </label>
+                <span class="glyphicon glyphicon-folder-open"></span>
+                
+            </div>
+            <div class="file" *ngIf="this.selectedFiles != null">{{this.selectedFiles.item(0)?.name}}</div>
+            <div *ngIf="currentFileUpload">
+                <img src="../../../assets/loadingGif/loading.gif"  />
+                מעלה את הקובץ...
+            </div>
+            
+        </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div class="row">
+      <div class="col-lg-5">
+        <button class="mat-raised-button"
+            (click)="close()">
+        סגור
+        </button>
+      </div>
+      <div class="col-lg-4">
+        <button type="button" class="btn btn-labeled btn-primary" [disabled]="!selectedFiles" (click)="upload()">
+          <span class="btn-label">
+            <i class="glyphicon glyphicon-upload"></i></span>העלאה
+        </button>
+      </div>
+      <div class="col-lg-3">
+        <button type="button" class="btn btn-labeled btn-primary" [hidden]="this.selectedFiles == null" (click)="cancelSelectFile()">
+          <span class="btn-label"></span>בטל
+        </button>
+      </div>
+    </div>
+</mat-dialog-actions>
+</div>

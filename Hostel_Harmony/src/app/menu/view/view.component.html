@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             <div class="col-xs-3">גיל:</div>
-            <div class="col-xs-9 pull-right">{{ selected.birthday }}</div>
+            <div class="col-xs-9 pull-right">{{ getAge(selected.birthday) }}</div>
         </div>
         <div class="row">
             <div class="col-xs-3">תפקיד:</div>
@@ -40,7 +40,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-3">גיל:</div>
-                <div class="col-xs-9 pull-left">{{ selected.birthday }}</div>
+                <div class="col-xs-9 pull-left">{{ getAge(selected.birthday) }}</div>
             </div>
             <div class="row">
                 <div class="col-xs-3">מתאם טיפול:</div>
@@ -48,7 +48,7 @@
             </div>
             <div class="row">
                     <div class="col-xs-3">תאריך כניסה:</div>
-                    <div class="col-xs-9 pull-left">{{ selected.memberSince }}</div>
+                    <div class="col-xs-9 pull-left">{{ getSince(selected.memberSince) }}</div>
             </div>
             <hr>
             <div class="row">

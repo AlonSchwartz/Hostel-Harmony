@@ -31,62 +31,73 @@ export class EventComponent implements OnInit {
   user:staff|resident;
   types :ActivityTypes[]=[];
   private newEventIndex = -1;
+  public edited:boolean=false;
+  private firstAddition:boolean=true;
   /*
   [
     {value: 'general-0', viewValue: 'כללי',color:'green'},
     {value: 'staff-1', viewValue: 'איש צוות',color: 'blue'},
     {value: 'res-2', viewValue: 'דייר', color:'yellow'},
-  ];
-  */
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
-  
-  constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
-    this.userService.getEventTypes().then(()=> this.types = this.userService.eventTypes);
-    this.submitted = false;
-    this.customActivity=null;
-    this.model = new CalEvent(
-      {date:'',start:'',end:''},
-      false, 
-      '',
-      '',
-      '' 
-    );
-  }
-  ngOnInit() {
-    this.nameSel.cm.subscribe(user => this.user = user);
-
-  }
-  addActivity(val:string,color:string){
-    this.newEventIndex = this.types.length;
-    this.types.push(new ActivityTypes(val,val,color));
-    this.newEventTypeSubmited=true;
-    console.log(this.newEventIndex);
-  }  
-  subEvent() {
-    this.submitted = true;/*do something*/
-    //alert(this.submitted);
-    // console.log(obj);
-    //console.log(this.user)
-    if (this.newEventTypeSubmited){
-      console.log(this.types);
-      console.log(this.types.length);
-
-      for (let i=this.newEventIndex; i < this.types.length ; i++){
-        console.log[i];
-        this.userService.updateEventTypes(this.types[i]);
-      }
-
-      //console.log(this.types.values());
-     // console.log(this.types.filter(type => this.types[3] != this.types[4]));
-//console.log(this.userService.getEventTypes());
-
-     // this.userService.updateEventTypes(this.types[2]);
+    public edited:boolean=false;
+    user:staff|resident;
+    types :ActivityTypes[]=[
+      {value: 'add', viewValue: ' הוסף אירוע חדש  +',color:'white'},
+    ];
+    */
+    // TODO: Remove this when we're done
+    get diagnostic() { return JSON.stringify(this.model); }
+    
+    constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
+      this.userService.getEventTypes().then(()=> this.types = this.userService.eventTypes);
+      this.submitted = false;
+      this.customActivity=null;
+      this.model = new CalEvent(
+        {start:'',end:''},
+        false, 
+        '',
+        '',
+        '' 
+      );
     }
-
-    this.userService.addEvent(this.user, this.model);
-    alert("האירוע נוסף בהצלחה");
-    this.router.navigateByUrl('menu');
+    ngOnInit() {
+      this.nameSel.cm.subscribe(user => this.user = user);
+      if(this.user==null){
+        this.router.navigateByUrl('menu');
+      }
+    }
+    addActivity(val:string,color:string){
+      if (this.firstAddition){
+        this.newEventIndex = this.types.length;
+        this.firstAddition=false;
+      }
+      this.types.push(new ActivityTypes(val,val,color));
+      this.newEventTypeSubmited=true;
+      this.edited=true;
+    }  
+    subEvent() {
+      this.submitted = true;/*do something*/
+      //alert(this.submitted);
+      // console.log(obj);
+      //console.log(this.user)
+      if (this.newEventTypeSubmited){
+        console.log(this.types);
+        console.log(this.types.length);
+        
+        for (let i=this.newEventIndex; i < this.types.length ; i++){
+          console.log[i];
+          this.userService.updateEventTypes(this.types[i]);
+        }
+        
+        //console.log(this.types.values());
+        // console.log(this.types.filter(type => this.types[3] != this.types[4]));
+        //console.log(this.userService.getEventTypes());
+        
+        // this.userService.updateEventTypes(this.types[2]);
+      }
+      
+      this.userService.addEvent(this.user, this.model);
+      alert("האירוע נוסף בהצלחה");
+      this.router.navigateByUrl('menu');
+    }
+    
   }
-
-}
