@@ -21,7 +21,7 @@ export class FilesComponent implements OnInit {
   
    ngOnInit() {
     this.nameSel.cm.subscribe(selected => this.selected = selected);
-    
+    this.uploadService.basePath = this.selected.firstName;
      this.uploadService.getFileUploads(6).snapshotChanges().map(changes => {
        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
       }).subscribe(fileUploads => {
