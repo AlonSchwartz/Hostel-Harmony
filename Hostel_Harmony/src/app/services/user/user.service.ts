@@ -179,6 +179,27 @@ export class UserService  {
     
     return true;
   }
+  
+  /** Updated a resdient or a staff profile at Firestore Database. Used mostly for saving data changes to profile */
+  update(per: resident | staff){
+    if (per.className == "resident"){
+      for (let i = 0; i < this.residentUsersList.length ; i++){        
+        if (this.residentUsersList[i].id == per.id){
+          console.log("id equals, resident");
+          this.residentsCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
+        }
+      }
+    }
+    
+    if (per.className == "staff"){
+      for (let i = 0; i < this.staffUsersList.length ; i++){        
+        if (this.staffUsersList[i].id == per.id){
+          console.log("id equals, staff");
+          this.staffCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
+        }
+      }
+    }
+  }
   // addNewResident(resident: resident){
   //   this.residentsCollection.add(JSON.parse(JSON.stringify(resident)));
   // }
@@ -333,8 +354,8 @@ export class UserService  {
             let copy = Object.assign({}, this.eventType); // push delivers by reference, so we need to copy our object first
             this.eventTypes.push(copy);
           }
-         
-         // Option #2 for adding new activity.
+          
+          // Option #2 for adding new activity.
           this.eventType.viewValue = "הוסף אירוע חדש | עודכן מהעורך"
           this.eventType.color = "white";
           this.eventType.value = "add";
