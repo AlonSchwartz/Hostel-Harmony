@@ -24,6 +24,7 @@ form label {
   
   form input.editMode {
     display:auto;
+    color:black;
   }
   
   form select.viewMode {

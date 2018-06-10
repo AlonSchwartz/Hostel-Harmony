@@ -85,25 +85,72 @@
 <div class="container">
   
     <form id="manufacturerForm" name="manufacturerForm"  method="post" novalidate (ngSubmit)="saveManufacturer()" #manufacturerForm="ngForm">
-      <p>
-          <label for="nameInput">Name:</label>
+        <div *ngIf="selected.className=='staff'">
+        <p>
+          <label for="nameInput">שם ומשפחה:</label>
           <input type="text" id="nameInput" name="nameInput"  [ngClass]="pageMode" [(ngModel)]="selected.firstName" required #nameInput="ngModel"/>
           <span class="error"  [hidden]="nameInput.valid || !nameInput.errors.required">Name field is required</span>
           <span class="displayValue" [ngClass]="pageMode">{{selected.firstName}}</span>
       </p>
       <p>
-          <label for="accountNumberInput">Account #:</label>
+          <label for="accountNumberInput">מספר טלפון :</label>
           <input type="text" id="accountNumberInput" name="accountNumberInput" #accountNumberInput="ngModel" [ngClass]="pageMode" [(ngModel)]="selected.phoneNumber" required minlength="3" [maxlength]="15"/>
           <span class="error"  [hidden]="accountNumberInput.valid || !accountNumberInput.errors.required">Account Number is required</span>
           <span class="error"   [hidden]="accountNumberInput.valid || (!accountNumberInput.errors.minlength && !accountNumberInput.errors.maxlength)">Account Number must be between 3 and 15 chars</span>
           <span class="displayValue"  [ngClass]="pageMode">{{selected.phoneNumber}}</span>
       </p>
       <p>
-          <label for="addressLine1Input">Address 1:</label>
+          <label for="addressLine1Input">דואר אלקטרוני:</label>
           <input type="text" id="addressLine1Input" name="addressLine1Input" [ngClass]="pageMode" [(ngModel)]="selected.caretaker"/>
           <span class="displayValue" [ngClass]="pageMode">{{selected.caretaker}}</span>
       </p>
-      
+      <p>
+        <label for="ageLine2Input">גיל:</label>
+        <input type="text" id="ageLine2Input" name="ageLine2Input" [ngClass]="pageMode" [(ngModel)]="manufacturerForm.ageLine2Input"/>
+        <span class="displayValue" [ngClass]="pageMode">{{manufacturerForm.ageLine2Input}}</span>
+    </p>
+    <p>
+        <label for="tfkedLine2Input">תפקיד:</label>
+        <input type="text" id="tfkedLine2Input" name="tfkedLine2Input" [ngClass]="pageMode" [(ngModel)]="manufacturerForm.tfkedLine2Input"/>
+        <span class="displayValue" [ngClass]="pageMode">{{manufacturerForm.tfkedLine2Input}}</span>
+    </p>
+    </div>
+    <div *ngIf="selected.className=='resident'">
+        <p>
+            <label for="nameInput">שם ומשפחה:</label>
+            <input type="text" id="nameInput" name="nameInput"  [ngClass]="pageMode" [(ngModel)]="selected.firstName" required #nameInput="ngModel"/>
+            <span class="error"  [hidden]="nameInput.valid || !nameInput.errors.required">Name field is required</span>
+            <span class="displayValue" [ngClass]="pageMode">{{selected.firstName}}</span>
+        </p>
+        <p>
+            <label for="accountNumberInput">מספר טלפון :</label>
+            <input type="text" id="accountNumberInput" name="accountNumberInput" #accountNumberInput="ngModel" [ngClass]="pageMode" [(ngModel)]="selected.phoneNumber" required minlength="3" [maxlength]="15"/>
+            <span class="error"  [hidden]="accountNumberInput.valid || !accountNumberInput.errors.required">Account Number is required</span>
+            <span class="error"   [hidden]="accountNumberInput.valid || (!accountNumberInput.errors.minlength && !accountNumberInput.errors.maxlength)">Account Number must be between 3 and 15 chars</span>
+            <span class="displayValue"  [ngClass]="pageMode">{{selected.phoneNumber}}</span>
+        </p>
+        <p>
+            <label for="ageLine2Input">גיל:</label>
+            <input type="text" id="ageLine2Input" name="ageLine2Input" [ngClass]="pageMode" [(ngModel)]="manufacturerForm.ageLine2Input"/>
+            <span class="displayValue" [ngClass]="pageMode">{{manufacturerForm.ageLine2Input}}</span>
+        </p>
+        <p>
+            <label for="guideInput">מלווה:</label>
+            <input type="text" id="guideInput" name="guideInput"  [ngClass]="pageMode" [(ngModel)]="manufacturerForm.guideInput" required #guideInput="ngModel"/>
+            <span class="error"  [hidden]="nameInput.valid || !nameInput.errors.required">Name field is required</span>
+            <span class="displayValue" [ngClass]="pageMode">{{manufacturerForm.guideInput}}</span>
+        </p>
+          
+        <p>
+            <label for="mtaemInput">מתאם טיפול:</label>
+            <input type="text" id="mtaemInput" name="mtaemInput"  [ngClass]="pageMode" [(ngModel)]="manufacturerForm.mtaemInput" required #mtaemInput="ngModel"/>
+            <span class="error"  [hidden]="mtaemInput.valid || !nameInput.errors.required">Name field is required</span>
+            <span class="displayValue" [ngClass]="pageMode">{{manufacturerForm.mtaemInput}}</span>
+        </p>
+
+
+    </div>
+
         <button type="submit" class="editButton" [ngClass]="pageMode" form="manufacturerForm"  [disabled]="manufacturerForm.invalid">Save</button>
   <button class="editButton" [ngClass]="pageMode" (click)="cancelEdit()">Cancel</button>
      
