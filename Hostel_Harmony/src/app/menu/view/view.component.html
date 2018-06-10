@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <div *ngIf="selected.className=='staff'">
         <h2>איש צוות {{name}}</h2>
         <div class="row">
@@ -76,4 +76,40 @@
             <br>
             <button class="btn btn-primary" (click)="submitted=false">ערוך</button>
         </div>
+</div> -->
+<h1>Angular2 Simple Edit Form</h1>
+
+<hr />
+
+<h2>Manufacturer</h2>
+<div class="container">
+  
+    <form id="manufacturerForm" name="manufacturerForm"  method="post" novalidate (ngSubmit)="saveManufacturer()" #manufacturerForm="ngForm">
+      <p>
+          <label for="nameInput">Name:</label>
+          <input type="text" id="nameInput" name="nameInput"  [ngClass]="pageMode" [(ngModel)]="selected.firstName" required #nameInput="ngModel"/>
+          <span class="error"  [hidden]="nameInput.valid || !nameInput.errors.required">Name field is required</span>
+          <span class="displayValue" [ngClass]="pageMode">{{selected.firstName}}</span>
+      </p>
+      <p>
+          <label for="accountNumberInput">Account #:</label>
+          <input type="text" id="accountNumberInput" name="accountNumberInput" #accountNumberInput="ngModel" [ngClass]="pageMode" [(ngModel)]="selected.phoneNumber" required minlength="3" [maxlength]="15"/>
+          <span class="error"  [hidden]="accountNumberInput.valid || !accountNumberInput.errors.required">Account Number is required</span>
+          <span class="error"   [hidden]="accountNumberInput.valid || (!accountNumberInput.errors.minlength && !accountNumberInput.errors.maxlength)">Account Number must be between 3 and 15 chars</span>
+          <span class="displayValue"  [ngClass]="pageMode">{{selected.phoneNumber}}</span>
+      </p>
+      <p>
+          <label for="addressLine1Input">Address 1:</label>
+          <input type="text" id="addressLine1Input" name="addressLine1Input" [ngClass]="pageMode" [(ngModel)]="selected.caretaker"/>
+          <span class="displayValue" [ngClass]="pageMode">{{selected.caretaker}}</span>
+      </p>
+      
+        <button type="submit" class="editButton" [ngClass]="pageMode" form="manufacturerForm"  [disabled]="manufacturerForm.invalid">Save</button>
+  <button class="editButton" [ngClass]="pageMode" (click)="cancelEdit()">Cancel</button>
+     
+  </form> 
+  
+  <button class="viewButton" [ngClass]="pageMode" (click)="editManufacturer()">Edit</button>
+  <button class="viewButton" [ngClass]="pageMode" (click)="newManufacturer()">New</button>
+  
 </div>

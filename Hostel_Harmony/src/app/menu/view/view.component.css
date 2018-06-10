@@ -5,6 +5,61 @@
     direction: rtl;
     text-align: right;
 }
-/* .row{
-    
-} */
+form label {
+    width: 150px;
+      padding-right: 20px;
+      display: inline-block;
+      text-align:right;
+      font-weight:bold;
+  }
+  
+  form input[type=text] {
+    width: 250px;
+    display: inline-block;
+  }
+  
+  form input.viewMode {
+    display: none;
+  }
+  
+  form input.editMode {
+    display:auto;
+  }
+  
+  form select.viewMode {
+    display:none;
+  }
+  
+  form select.editMode {
+    display:auto;
+  }
+  
+  form .displayValue.viewMode{
+    display:auto;
+  }
+  
+  form .displayValue.editMode {
+    display:none;
+  }
+  
+  .error {
+    color:red;
+  }
+  
+  .viewButton.viewMode {
+    display:auto;
+  
+  }
+  
+  .viewButton.editMode {
+    display:none;
+  
+  }
+  
+  .editButton.viewMode {
+    display:none;
+  }
+  
+  .editButton.editMode {
+    display:auto;
+  }
