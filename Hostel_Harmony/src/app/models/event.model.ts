@@ -1,3 +1,5 @@
+import { CalendarEvent } from "angular-calendar";
+
 export class CalEvent{
     constructor(
         public settime:{start:string,end:string},
@@ -6,6 +8,15 @@ export class CalEvent{
         public describe: string,
         public issuer:string
     ){
-
     }
+
 }
+
+
+export interface CALtest extends CalendarEvent{
+
+    asign: boolean,
+    issuer:string,
+    activity?: string,
+    describe?: string
+    }

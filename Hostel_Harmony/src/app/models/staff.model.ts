@@ -1,4 +1,4 @@
-import { CalEvent } from '../models/event.model';
+import { CalEvent, CALtest } from '../models/event.model';
 
 
 export class staff {
@@ -13,7 +13,7 @@ export class staff {
         public email: string,
         public role: string,
         public className: string = "staff",
-        public events?: CalEvent[],
+        public events?: CALtest[],
         public id?: string
     )
     {};

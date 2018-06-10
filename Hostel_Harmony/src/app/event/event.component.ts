@@ -6,7 +6,7 @@
 */
 
 import { Component, OnInit } from '@angular/core';
-import {CalEvent} from '../models/event.model';
+import {CalEvent, CALtest} from '../models/event.model';
 import { Router ,RouterEvent} from '@angular/router';
 import {NgModel} from '@angular/forms';
 import {NameSelectService} from '../services/nameSelect/name-select.service';
@@ -15,6 +15,7 @@ import { UserService } from '../services/user/user.service';
 import { ActivityTypes } from '../models/activity-types.model'
 import { staff } from '../models/staff.model';
 import { resident } from '../models/resident.model';
+import { CalendarEvent } from 'angular-calendar';
 
 @Component({
   selector: 'app-event',
@@ -24,7 +25,9 @@ import { resident } from '../models/resident.model';
 // TODO: check required fields
 //       try to extract time or date from ISO format in json - use Date function!
 export class EventComponent implements OnInit {
-  private model: CalEvent ;
+  private date: Date = new Date();
+
+  private model = {start: this.date, end: this.date, title: "", issuer: "", activity: "", describe: ""} as CALtest ;
   private submitted: boolean;
   private customActivity:string;
   private newEventTypeSubmited:boolean=false;
@@ -33,6 +36,9 @@ export class EventComponent implements OnInit {
   private newEventIndex = -1;
   public edited:boolean=false;
   private firstAddition:boolean=true;
+  private test: CalendarEvent;
+  test2: CALtest;
+
   /*
   [
     {value: 'general-0', viewValue: 'כללי',color:'green'},
@@ -51,13 +57,17 @@ export class EventComponent implements OnInit {
       this.userService.getEventTypes().then(()=> this.types = this.userService.eventTypes);
       this.submitted = false;
       this.customActivity=null;
-      this.model = new CalEvent(
+      console.log(this.model);
+      /*
+      new CalEvent(
         {start:'',end:''},
         false, 
         '',
         '',
         '' 
       );
+*/
+      
     }
     ngOnInit() {
       this.nameSel.cm.subscribe(user => this.user = user);
@@ -91,7 +101,11 @@ export class EventComponent implements OnInit {
         
         // this.userService.updateEventTypes(this.types[2]);
       }
-      
+      console.log("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ")
+      console.log(this.model)
+      this.model.start = new Date(this.model.start);
+      this.model.end = new Date(this.model.end);
+      console.log(this.model)
       this.userService.addEvent(this.user, this.model);
       alert("האירוע נוסף בהצלחה");
       this.router.navigateByUrl('menu');

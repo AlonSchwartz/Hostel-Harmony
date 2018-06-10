@@ -11,7 +11,7 @@
           <label>
             שעת התחלה:
             <input placeholder="בחר שעה ותאריך..." [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
-                   [selectMode]="'rangeFrom'" [owlDateTime]="dt4" required [(ngModel)]="model.settime.start" name="start">
+                   [selectMode]="'rangeFrom'" [owlDateTime]="dt4" required [(ngModel)]="model.start" name="start">
             <owl-date-time #dt12></owl-date-time>
           </label>
         </div>
@@ -19,7 +19,7 @@
           <label>
           שעת סיום:
               <input placeholder="בחר שעה ותאריך..." [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
-                   [selectMode]="'rangeTo'" required [(ngModel)]="model.settime.end" name="end">
+                   [selectMode]="'rangeTo'" required [(ngModel)]="model.end" name="end">
               <owl-date-time #dt13></owl-date-time>
           </label>
         </div>

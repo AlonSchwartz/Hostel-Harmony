@@ -8,7 +8,7 @@ import { FirebaseDatabase } from '@firebase/database-types';
 import { AngularFireDatabase, snapshotChanges } from 'angularfire2/database';
 import { EventComponent } from '../../event/event.component';
 import { CalendarComponent } from '../../menu/calendar/calendar.component';
-import { CalEvent } from '../../models/event.model';
+import { CalEvent, CALtest } from '../../models/event.model';
 import { HttpClient } from '@angular/common/http';
 import { Response } from '@angular/http';
 import 'rxjs/Rx';
@@ -134,7 +134,7 @@ export class UserService  {
   }
   
   // Needs testing
-  addEvent(per: resident | staff, event: CalEvent ){
+  addEvent(per: resident | staff, event: CALtest ){
     this.setMetaData();
     
     if (per.className == "resident"){
@@ -146,6 +146,7 @@ export class UserService  {
           if (this.residentUsersList[i].id == per.id){
             console.log("id equals, resident");
             per.events.push(event);
+            console.log(per.events)
             this.residentsCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
           }
         }
