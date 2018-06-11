@@ -8,6 +8,7 @@ import { staff } from '../models/staff.model';
 import { resident } from '../models/resident.model';
 import {MatDialog, MatDialogConfig} from "@angular/material"
 import { DialogFiComponent } from './dialog-fi/dialog-fi.component'
+import { CalendarComponent } from './calendar/calendar.component';
 
 @Component({
   selector: 'app-menu',
@@ -30,7 +31,7 @@ export class MenuComponent implements OnInit {
     //     data => console.log("Dialog output:", data)
     // );    
 }
-  constructor(private dialog: MatDialog,private router: Router,private data:NameSelectService, private authService: AuthService, private userService: UserService) { 
+  constructor(private dialog: MatDialog,private router: Router,private data:NameSelectService, private authService: AuthService, private userService: UserService, private calendar:CalendarComponent) { 
     //this.userService.getStaff(); 
     userService.getStaff().then(()=>{ 
       this.getNames() });
@@ -76,13 +77,15 @@ export class MenuComponent implements OnInit {
         //this.data.cm.subscribe(message =>this.name=message);
       }
       sendVal(selval:string){
-        
         if((this.selected=this.userService.getSelectedUser(selval,this.residents,this.ress))!=null || 
         (this.selected=this.userService.getSelectedUser(selval,this.staff,this.staa))!=null){
           this.data.changeMessage(this.selected)
         }
         if((this.sel2=this.userService.getSelectedUser(selval,this.residents,this.ress))!=null){
           this.data.exportUser(this.sel2);
+          console.log(this.sel2);
+          this.calendar.changeView(this.sel2);
+          
         }
       }
       

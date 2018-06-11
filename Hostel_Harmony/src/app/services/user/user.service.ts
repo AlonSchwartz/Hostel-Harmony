@@ -8,13 +8,14 @@ import { FirebaseDatabase } from '@firebase/database-types';
 import { AngularFireDatabase, snapshotChanges } from 'angularfire2/database';
 import { EventComponent } from '../../event/event.component';
 import { CalendarComponent } from '../../menu/calendar/calendar.component';
-import { CalEvent } from '../../models/event.model';
+import { CalEvent, CALtest } from '../../models/event.model';
 import { HttpClient } from '@angular/common/http';
 import { Response } from '@angular/http';
 import 'rxjs/Rx';
 import { LowerCasePipe } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { EvalForm } from '../../models/eval-form.model';
+import { ActivityTypes } from '../../models/activity-types.model';
 
 
 @Injectable()
@@ -27,6 +28,9 @@ export class UserService  {
   resident: resident = null;
   staffNames: string[][] = [[""],["",""]];
   residentNames: string[][] = [[""],["",""]];
+  eventTypes: ActivityTypes[] = [];
+  eventType: ActivityTypes;
+  
   
   private testArray: test 
   testing: test[] = []
@@ -38,11 +42,14 @@ export class UserService  {
   public dc;
   public residentsCollection;
   public staffCollection;
+  public eventTypesCollection;
   listingDoc: AngularFirestoreDocument<resident>;
   public dcTest;
   res:resident;
   sta:staff;
   ev2: CalEvent;
+  //generalSettings={eventTypes:ActivityTypes[""]}
+  types2:ActivityTypes;
   
   observableUsers: Observable<resident[]>; //A temp variable that returns metadata. used by usersList
   residentUsersList = []; //To store all residents with ID's
@@ -59,6 +66,7 @@ export class UserService  {
     this.dcTest = af.collection<any>('Books').doc('3e5c6mgUZzzGYgIoUUzn');
     this.residentsCollection = af.collection<any>("residents"); 
     this.staffCollection = af.collection<any>("staff"); 
+    this.eventTypesCollection = af.collection<any>("eventTypes");
     
     // Initializing staff & resident with dummy data, so it won't be undefined
     this.staff = new staff("Ot","ron2",6535, true, "2/4/6", 2, "ffda", "supervisor");
@@ -78,6 +86,14 @@ export class UserService  {
       new staff("Ot","ron2",6535, true, "2/4/6", 2, "ffda", "supervisor"), // According to staff.option #2
     ];
     
+    this.eventType = new ActivityTypes("", "", "");
+    
+    
+    //this.generalSettings.eventTypes = [];
+    /*
+    [{value: 'general-0', viewValue: 'כללי',color:'green'},  {value: 'staff-1', viewValue: 'איש צוות',color: 'blue'},
+    {value: 'res-2', viewValue: 'דייר', color:'yellow'}];
+    */
     //  Calling these functions to initilize them
     this.setMetaData();
     this.setStaffMetaData();
@@ -110,7 +126,7 @@ export class UserService  {
       
     }
   }
-
+  
   /** Adds evaluation form to relevant resident object */
   addEvalForm(selResident: resident, evalForm: EvalForm){
     selResident.evals.push(evalForm);
@@ -118,7 +134,7 @@ export class UserService  {
   }
   
   // Needs testing
-  addEvent(per: resident | staff, event: CalEvent ){
+  addEvent(per: resident | staff, event: CALtest ){
     this.setMetaData();
     
     if (per.className == "resident"){
@@ -130,6 +146,7 @@ export class UserService  {
           if (this.residentUsersList[i].id == per.id){
             console.log("id equals, resident");
             per.events.push(event);
+            console.log(per.events)
             this.residentsCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
           }
         }
@@ -161,6 +178,27 @@ export class UserService  {
     
     
     return true;
+  }
+  
+  /** Updated a resdient or a staff profile at Firestore Database. Used mostly for saving data changes to profile */
+  update(per: resident | staff){
+    if (per.className == "resident"){
+      for (let i = 0; i < this.residentUsersList.length ; i++){        
+        if (this.residentUsersList[i].id == per.id){
+          console.log("id equals, resident");
+          this.residentsCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
+        }
+      }
+    }
+    
+    if (per.className == "staff"){
+      for (let i = 0; i < this.staffUsersList.length ; i++){        
+        if (this.staffUsersList[i].id == per.id){
+          console.log("id equals, staff");
+          this.staffCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
+        }
+      }
+    }
   }
   // addNewResident(resident: resident){
   //   this.residentsCollection.add(JSON.parse(JSON.stringify(resident)));
@@ -253,102 +291,129 @@ export class UserService  {
         }
         resolve();    
       })})
-}
-
-// To get all resident collection from firebase
-getResidents(){
-  //this.setMetaData();
-  return new Promise(resolve=>{
-    this.residentsCollection.valueChanges().subscribe(collection =>  {
-      this.residentsUsers = [];
-      
-      for (var i = 0; i < collection.length ; i++){
-        
-        this.resident.birthday = collection[i].birthday;
-        this.resident.calendarID = collection[i].calendarID;
-        this.resident.caretaker = collection[i].caretaker;
-        this.resident.className = collection[i].className;
-        this.resident.contacts = collection[i].contacts;
-        this.resident.doctors = collection[i].doctors;
-        this.resident.firstName = collection[i].firstName;
-        this.resident.hasWork = collection[i].hasWork;
-        this.resident.isActive = collection[i].isActive;
-        this.resident.lastName = collection[i].lastName;
-        this.resident.memberSince = collection[i].memberSince;
-        this.resident.metaem = collection[i].metaem;
-        this.resident.evals = collection[i].evals;
-        this.resident.events = collection[i].events;
-        this.resident.id = this.residentUsersList[i].id;
-        
-        let copy = Object.assign({}, this.resident); // push delivers by reference, so we need to copy our object first
-        this.residentsUsers.push(copy);
+    }
+    
+    // To get all resident collection from firebase
+    getResidents(){
+      //this.setMetaData();
+      return new Promise(resolve=>{
+        this.residentsCollection.valueChanges().subscribe(collection =>  {
+          this.residentsUsers = [];
+          
+          for (var i = 0; i < collection.length ; i++){
+            
+            this.resident.birthday = collection[i].birthday;
+            this.resident.calendarID = collection[i].calendarID;
+            this.resident.caretaker = collection[i].caretaker;
+            this.resident.className = collection[i].className;
+            this.resident.contacts = collection[i].contacts;
+            this.resident.doctors = collection[i].doctors;
+            this.resident.firstName = collection[i].firstName;
+            this.resident.hasWork = collection[i].hasWork;
+            this.resident.isActive = collection[i].isActive;
+            this.resident.lastName = collection[i].lastName;
+            this.resident.memberSince = collection[i].memberSince;
+            this.resident.metaem = collection[i].metaem;
+            this.resident.evals = collection[i].evals;
+            this.resident.events = collection[i].events;
+            this.resident.id = this.residentUsersList[i].id;
+            
+            let copy = Object.assign({}, this.resident); // push delivers by reference, so we need to copy our object first
+            this.residentsUsers.push(copy);
+          }
+          resolve();    
+        })}
+      )
+    }
+    /**works only when users are loaded to components */
+    public getSelectedUser(selected:string,names:string[], user:resident[]|staff[]){
+      let sel=null;
+      for (var i=0; i<user.length; i++)
+      {
+        if(selected===names[i] ){
+          sel=user[i];
+        }
       }
-      resolve();    
-  })}
-)
-}
-/**works only when users are loaded to components */
-public getSelectedUser(selected:string,names:string[], user:resident[]|staff[]){
-  let sel=null;
-  for (var i=0; i<user.length; i++)
-  {
-    if(selected===names[i] ){
-      sel=user[i];
+      return sel;
     }
-  }
-  return sel;
-}
-
-
-//**************************** TESTING FUNCTIONS ***************************** //
-storeAtFirestorme(){
-  
-  this.dataCollections.add({hi:"hi"});
-  this.dc.add(JSON.parse(JSON.stringify(this.staff)));
-  alert("Done");
-}
-
-
-getDataFromFirestome(){
-  this.dc.valueChanges().subscribe(collection =>  {
-    this.dbusers = "";
-    for (var i = 0; i < collection.length ; i++){
-      
-      this.staff2.birthday = collection[i].birthday;
-      this.staff2.calendarID = collection[i].calendarID;
-      this.staff2.email = collection[i].email;
-      this.staff2.firstName = collection[i].firstName;
-      this.staff2.isActive = collection[i].isActive;
-      this.staff2.lastName = collection[i].lastName;
-      this.staff2.phoneNumber = collection[i].phoneNumber;
-      this.staff2.role = collection[i].role;
-      
-      let copy = Object.assign({}, this.staff2); // push delivers by reference, so we need to copy our object first
-      this.staffUsers.push(copy);
-      
+    /** Update event types array in firestore database */
+    updateEventTypes(types: ActivityTypes){
+      this.eventTypesCollection.add(JSON.parse(JSON.stringify(types)));
     }
     
-    console.log(this.staffUsers);
-    
-  }
-  
-)
-//console.log(this.dbusers);
-console.log(this.staff2);
-}
-/*
-getAll(){
-  this.staffNames = [];
-  
-  this.staffCollection.valueChanges().subscribe(collection =>  {
-    for (var i = 0; i < collection.length ; i++){
-      this.staffNames[i] = collection[i].firstName + " " + collection[i].lastName;
+    /** get all event activity types */
+    getEventTypes(){
+      return new Promise(resolve=>{
+        this.eventTypesCollection.valueChanges().subscribe(collection =>  {
+          this.eventTypes = [];
+          for (var i = 0; i < collection.length ; i++){
+            this.eventType.color = collection[i].color;
+            this.eventType.value = collection[i].value;
+            this.eventType.viewValue = collection[i].viewValue;
+            
+            let copy = Object.assign({}, this.eventType); // push delivers by reference, so we need to copy our object first
+            this.eventTypes.push(copy);
+          }
+          
+          // Option #2 for adding new activity.
+          this.eventType.viewValue = "הוסף אירוע חדש | עודכן מהעורך"
+          this.eventType.color = "white";
+          this.eventType.value = "add";
+          this.eventTypes.unshift(this.eventType)
+          resolve();
+        })}
+      )
     }
+    
+    //**************************** TESTING FUNCTIONS ***************************** //
+    storeAtFirestorme(){
+      
+      this.dataCollections.add({hi:"hi"});
+      this.dc.add(JSON.parse(JSON.stringify(this.staff)));
+      alert("Done");
+    }
+    
+    
+    getDataFromFirestome(){
+      this.dc.valueChanges().subscribe(collection =>  {
+        this.dbusers = "";
+        for (var i = 0; i < collection.length ; i++){
+          
+          this.staff2.birthday = collection[i].birthday;
+          this.staff2.calendarID = collection[i].calendarID;
+          this.staff2.email = collection[i].email;
+          this.staff2.firstName = collection[i].firstName;
+          this.staff2.isActive = collection[i].isActive;
+          this.staff2.lastName = collection[i].lastName;
+          this.staff2.phoneNumber = collection[i].phoneNumber;
+          this.staff2.role = collection[i].role;
+          
+          let copy = Object.assign({}, this.staff2); // push delivers by reference, so we need to copy our object first
+          this.staffUsers.push(copy);
+          
+        }
+        
+        console.log(this.staffUsers);
+        
+      }
+      
+    )
+    //console.log(this.dbusers);
+    console.log(this.staff2);
   }
-)
-//console.log(this.staffNames);
-
-return this.staffNames; 
+  /*
+  getAll(){
+    this.staffNames = [];
+    
+    this.staffCollection.valueChanges().subscribe(collection =>  {
+      for (var i = 0; i < collection.length ; i++){
+        this.staffNames[i] = collection[i].firstName + " " + collection[i].lastName;
+      }
+    }
+  )
+  //console.log(this.staffNames);
+  
+  return this.staffNames; 
 }
 */
 

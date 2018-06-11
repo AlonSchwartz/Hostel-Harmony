@@ -1,6 +1,6 @@
 /**http://javasampleapproach.com/frontend/angular/angular-5-firebase-upload-display-delete-files-storage */
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange } from '@angular/core';
 import { FilesService } from '../../services/files/files.service';
 import { UpFile } from '../../models/up-file.model';
 import { NameSelectService } from '../../services/nameSelect/name-select.service';
@@ -20,15 +20,29 @@ export class FilesComponent implements OnInit {
    constructor(private uploadService: FilesService,private nameSel: NameSelectService) { }
   
    ngOnInit() {
-    this.nameSel.cm.subscribe(selected => this.selected = selected);
-    
-     this.uploadService.getFileUploads(6).snapshotChanges().map(changes => {
-       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      }).subscribe(fileUploads => {
-       this.fileUploads = fileUploads;
-      });
+    this.viewFileList()
    }
-   deleteFileUpload(fileUpload) {
+  
+  ngOnChanges(changes:{[propKey:string]:SimpleChange}){
+    for(let na in changes){
+      let rec=changes[na];
+      let temp=JSON.stringify(rec.currentValue);
+      if(!rec.isFirstChange()){
+        this.viewFileList();
+      }
+    }
+  }
+  public viewFileList(){
+    this.nameSel.cm.subscribe(selected => this.selected = selected);
+    this.uploadService.basePath = this.selected.firstName;
+    this.uploadService.getFileUploads(6).snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+     }).subscribe(fileUploads => {
+      this.fileUploads = fileUploads;
+     });
+  }
+
+  deleteFileUpload(fileUpload) {
     this.uploadService.deleteFileUpload(fileUpload);
   }
 }

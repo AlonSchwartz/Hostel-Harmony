@@ -15,7 +15,7 @@ import { HttpClientModule } from '@angular/common/http'; import { HttpModule, Re
 
 export class TestingComponent implements OnInit {
   
-  constructor(private userService: UserService, private authService: AuthService) {     this.userService.getStaff();  }
+  constructor(private userService: UserService, private authService: AuthService) {     this.userService.getStaff();this.userService.getEventTypes();}
   bla: test;
   resident: resident;
   staff: staff;
@@ -53,17 +53,20 @@ export class TestingComponent implements OnInit {
     //console.log(this.userService.setMetaData());
     //this.staa =this.userService.getStaff();
 
-    console.log(this.userService.getStaff());
-    console.log(this.userService.getResidents());
-    console.log("-----");
-    console.log(this.staa);
-    console.log(this.staa[0])
-    console.log(this.staa[0].firstName)
+    //console.log(this.userService.getStaff());
+    //console.log(this.userService.getResidents());
+    //console.log("-----");
+    // console.log(this.staa);
+    // console.log(this.staa[0])
+    // console.log(this.staa[0].firstName)
     //console.log(this.userService.check());
    // this.userService.updateListing("52");   
     //this.userService.setMetaData();
     //console.log(this.userService.getStaff());
 //this.userService.residentsCollection.doc(JSON.parse(JSON.stringify("zJ0SMqxj43ZaJgz02NPE"))).update(JSON.parse(JSON.stringify(per)));
+
+console.log(this.userService.getEventTypes());
+console.log(this.userService.eventTypes);
   }
   
   passTest(){

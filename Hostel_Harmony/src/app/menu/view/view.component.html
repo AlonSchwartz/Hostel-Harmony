@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <div *ngIf="selected.className=='staff'">
         <h2>איש צוות {{name}}</h2>
         <div class="row">
@@ -76,4 +76,77 @@
             <br>
             <button class="btn btn-primary" (click)="submitted=false">ערוך</button>
         </div>
+</div> -->
+<div class="container">
+  
+    <form id="viewForm" name="viewForm"  method="post" novalidate (ngSubmit)="saveChanges()" #viewForm="ngForm">
+        <div *ngIf="selected.className=='staff'">
+        <p>
+          <label for="nameInput">שם ומשפחה:</label>
+          <input type="text" id="nameInput" name="nameInput"  [ngClass]="pageMode" [(ngModel)]="selected.firstName" required #nameInput="ngModel"/>
+          <input type="text" id="lastInput" name="lastInput"  [ngClass]="pageMode" [(ngModel)]="selected.lastName" required #lastInput="ngModel"/>
+          <span class="error"  [hidden]="nameInput.valid || !nameInput.errors.required">נדרש שם פרטי</span>
+          <span class="error"  [hidden]="lastInput.valid || !lastInput.errors.required">נדרש שם משפחה</span>
+          <span class="displayValue" [ngClass]="pageMode">{{selected.firstName}} {{ selected.lastName }}</span>
+      </p>
+      <p>
+          <label for="accountNumberInput">מספר טלפון :</label>
+          <input type="text" id="accountNumberInput" name="accountNumberInput" #accountNumberInput="ngModel" [ngClass]="pageMode" [(ngModel)]="selected.phoneNumber" required minlength="3" [maxlength]="15"/>
+          <span class="error"  [hidden]="accountNumberInput.valid || !accountNumberInput.errors.required">הזן מספר טלפון</span>
+          <span class="error"   [hidden]="accountNumberInput.valid || (!accountNumberInput.errors.minlength && !accountNumberInput.errors.maxlength)">מספר לא חוקי</span>
+          <span class="displayValue"  [ngClass]="pageMode">{{selected.phoneNumber}}</span>
+      </p>
+      <p>
+          <label for="addressLine1Input">דואר אלקטרוני:</label>
+          <input type="text" id="addressLine1Input" name="addressLine1Input" [ngClass]="pageMode" [(ngModel)]="selected.caretaker"/>
+          <span class="displayValue" [ngClass]="pageMode">{{selected.caretaker}}</span>
+      </p>
+      <p>
+        <label for="ageLine2Input">גיל:</label>
+        <input type="text" id="ageLine2Input" name="ageLine2Input" [ngClass]="pageMode" [(ngModel)]="viewForm.ageLine2Input"/>
+        <span class="displayValue" [ngClass]="pageMode">{{viewForm.ageLine2Input}}</span>
+    </p>
+    <p>
+        <label for="tfkedLine2Input">תפקיד:</label>
+        <input type="text" id="tfkedLine2Input" name="tfkedLine2Input" [ngClass]="pageMode" [(ngModel)]="viewForm.tfkedLine2Input"/>
+        <span class="displayValue" [ngClass]="pageMode">{{viewForm.tfkedLine2Input}}</span>
+    </p>
+    </div>
+    <div *ngIf="selected.className=='resident'">
+        <p>
+            <label for="nameInput1">שם ומשפחה:</label>
+            <input type="text" id="nameInput1" name="nameInput1"  [ngClass]="pageMode" [(ngModel)]="selected.firstName" required #nameInput1="ngModel"/>
+            <input type="text" id="lastInput1" name="lastInput1"  [ngClass]="pageMode" [(ngModel)]="selected.lastName" required #lastInput1="ngModel"/>
+            <span class="error"  [hidden]="nameInput1.valid || !nameInput1.errors.required">נדרש שם פרטי</span>
+            <span class="error"  [hidden]="lastInput1.valid || !lastInput1.errors.required">נדרש שם משפחה</span>
+            <span class="displayValue" [ngClass]="pageMode">{{selected.firstName}} {{ selected.lastName }}</span>
+        </p>
+        <p>
+            <label for="ageLine2Input">גיל:</label>
+            <input type="text" id="ageLine2Input" name="ageLine2Input" [ngClass]="pageMode" [(ngModel)]="viewForm.ageLine2Input"/>
+            <span class="displayValue" [ngClass]="pageMode">{{viewForm.ageLine2Input}}</span>
+        </p>
+        <p>
+            <label for="guideInput">מלווה:</label>
+            <input type="text" id="guideInput" name="guideInput"  [ngClass]="pageMode" [(ngModel)]="viewForm.guideInput" required #guideInput="ngModel"/>
+            <span class="error"  [hidden]="guideInput.valid || !guideInput.errors.required">Name field is required</span>
+            <span class="displayValue" [ngClass]="pageMode">{{viewForm.guideInput}}</span>
+        </p>
+          
+        <p>
+            <label for="mtaemInput">מתאם טיפול:</label>
+            <input type="text" id="mtaemInput" name="mtaemInput"  [ngClass]="pageMode" [(ngModel)]="viewForm.mtaemInput" required #mtaemInput="ngModel"/>
+            <span class="error"  [hidden]="mtaemInput.valid || !mtaemInput.errors.required">Name field is required</span>
+            <span class="displayValue" [ngClass]="pageMode">{{viewForm.mtaemInput}}</span>
+        </p>
+
+
+    </div>
+
+        <button type="submit" class="editButton" [ngClass]="pageMode" form="viewForm"  [disabled]="viewForm.invalid">שמור שינויים</button>
+  <button class="editButton" [ngClass]="pageMode" (click)="cancelEdit()">לביטול</button>
+     
+  </form> 
+  <button class="viewButton" [ngClass]="pageMode" (click)="editUser()">ערוך פרטים</button>
+  
 </div>

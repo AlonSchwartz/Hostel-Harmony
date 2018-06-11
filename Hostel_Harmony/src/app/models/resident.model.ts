@@ -1,5 +1,5 @@
 import { EvalForm } from "./eval-form.model";
-import { CalEvent } from "./event.model";
+import { CalEvent, CALtest } from "./event.model";
 
 export class resident {
     
@@ -21,7 +21,7 @@ export class resident {
         public doctors: {psych:string, gp:string}, // family doctor and 2nd doctor
         public className: string = "resident",
         public evals: EvalForm[]= [],
-        public events?: CalEvent[],
+        public events?: CALtest[],
         public id?: string
 
 

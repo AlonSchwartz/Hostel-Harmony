@@ -47,8 +47,10 @@ export class FilesService {
   }
   //================get list of files=================//
   getFileUploads(numberItems): AngularFireList<UpFile> {
-      return this.db.list(`${this.basePath}/`, ref =>
+     console.log(this.basePath)
+      return this.db.list(this.basePath, ref =>
         ref.limitToLast(numberItems));
+        
   }
   //================DELETE==================//
   public deleteFileUpload(fileUpload: UpFile) {

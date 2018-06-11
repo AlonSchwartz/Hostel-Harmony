@@ -7,7 +7,7 @@ import { isSameMonth, isSameDay } from 'ngx-bootstrap/chronos/utils/date-getters
 import { CustomEventTitleFormatter } from '../provider/custom-event-title-formatter.provider';
 import { CustomDateFormatter } from '../provider/custom-date-formatter.provider';
 import { EventComponent } from '../../event/event.component';
-import {CalEvent} from '../../models/event.model';
+import {CalEvent, CALtest} from '../../models/event.model';
 import { startOfDay, endOfDay,getMonth,startOfMonth,startOfWeek,endOfMonth,endOfWeek} from 'date-fns';
 import { Subject } from 'rxjs';
 import { start } from 'repl';
@@ -53,14 +53,16 @@ export class CalendarComponent implements OnInit,OnChanges {
   '',
   '' 
 );
+date: Date = new Date();
+inpEve1:CALtest= {start: this.date , end: this.date, title: "General-2", issuer: "Elchanan", activity:"General-2", describe: "Something to do"} as CALtest ;
 
-inpEve1:CalEvent=new CalEvent(
-  {start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
-  false, 
-  'General-2',
-  'Someting to do',
-  'Elchanan' 
-);
+// new CALtest(
+//   {start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
+//   false, 
+//   'General-2',
+//   'Someting to do',
+//   'Elchanan' 
+// );
 
 ngOnInit() {
   this.fixdEvent();
@@ -75,6 +77,7 @@ ngOnChanges(changes:{[propKey:string]:SimpleChange}){
     let temp=JSON.stringify(rec.currentValue);
     if(!rec.isFirstChange()){
       this.getUserSelected();
+      this.changeView(this.selected);
     }
   }
 }
@@ -95,9 +98,10 @@ events: CalendarEvent[] = [
     title: 'test event',
   },
   {
-    start: new Date(this.inpEve1.settime.start),
-    end:new Date(this.inpEve1.settime.end),
+    start: new Date(this.inpEve1.start),
+    end:new Date(this.inpEve1.end),
     title: this.inpEve1.activity,
+  
   },
 ];
 //for permnent events
@@ -149,12 +153,12 @@ backToWeekView() {
   this.view = 'week';
 }
   
-addEventToCal(eve:CalEvent[]): void {
+addEventToCal(eve:CALtest[]): void {
   for(let sel of eve){
       this.events.push({
         title: 'database test',
-        start: new Date(sel.settime.start),
-        end:new Date(sel.settime.end),
+        start: new Date(sel.start),
+        end:new Date(sel.end),
       });
     this.refresh.next();
   }
@@ -173,6 +177,42 @@ conflictEvent(): void {
  		// }
 	}
 };
+
+
+// *** PLEASE NOTE *** this method is working, but isn't done yet!
+changeView(per: resident|staff){
+  this.nameSel.cm.subscribe(selected => this.selected = selected);
+//   console.log("====Before changes====")
+//   console.log(this.events);
+//   console.log("====After changes====")
+//   //this.events[0].title = per.events[0].activity;
+// //this.events.push(this.selected.events[0]);
+// //this.events[0].title = this.selected.events[0].describe;
+// console.log(per.events)
+// console.log(this.selected)
+// this.events = this.selected.events;
+// console.log("=========");
+// var start = new Date(this.selected.events[0].start);
+// var end = new Date(this.selected.events[0].end);
+// console.log(start);
+// console.log(start.getDate())
+// console.log(start.valueOf())
+
+
+let d = new Date();
+// console.log(d)
+this.events[0].start = new Date(this.selected.events[0].start);
+// console.log(this.selected.events[0].start);
+this.events[0].end = new Date(this.selected.events[0].end);
+this.events[0].title = this.selected.events[0].describe;
+// console.log(this.selected);
+//this.events[0].start = d;
+//this.events[0].end = d;
+//console.log(this.events);
+this.refresh.next();
+
+
+}
 fixdEvent(): void {}
 chengeCal(): void{}
 
