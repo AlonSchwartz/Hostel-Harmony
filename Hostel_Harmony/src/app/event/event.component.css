@@ -5,21 +5,25 @@
     direction: rtl;
     font-size: 12px;
     text-align: right;
+    margin-top: 10px;
 }
 .mat-form-field{
     text-align: inherit;
 }
 #addButt{
     margin:28px 0px 20px 0px;
+    font-size: 15px;
 }
 h1{
     font-size: 40px;
     text-align: center;
     direction: rtl;
+    margin: 15px;
     
 }
 label {
     float:right;
+    font-size: 20px;
 }
 input,textarea {
     direction: rtl;
