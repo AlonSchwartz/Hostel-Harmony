@@ -1,82 +1,4 @@
-<!-- <div class="container">
-    <div *ngIf="selected.className=='staff'">
-        <h2>איש צוות {{name}}</h2>
-        <div class="row">
-        <div class="col-xs-3">שם+משפחה: </div>
-        <div class="col-xs-9  pull-right">{{ selected.firstName }} {{ selected.lastName }}</div>
-        </div>
-        <div class="row">
-        <div class="col-xs-3">מספר טלפון:</div>
-        <div class="col-xs-9 pull-right">{{ selected.phoneNumber }}</div>
-        </div>
-        <div class="row">
-        <div class="col-xs-3">דואר אלקטרוני:</div>
-        <div class="col-xs-9 pull-right">{{ selected.email }}</div>
-        </div>
-        <div class="row">
-            <div class="col-xs-3">גיל:</div>
-            <div class="col-xs-9 pull-right">{{ getAge(selected.birthday) }}</div>
-        </div>
-        <div class="row">
-            <div class="col-xs-3">תפקיד:</div>
-            <div class="col-xs-9 pull-right">{{ selected.role }}</div>
-        </div>
-        <br>
-        <button class="btn btn-primary" (click)="submitted=false">ערוך</button>
-    </div>
-    <div *ngIf="selected.className=='resident'">
-            <h2>דייר {{name}}</h2>
-            <div class="row">
-            <div class="col-xs-3">שם+משפחה: </div>
-            <div class="col-xs-9  pull-left">{{ selected.firstName }} {{ selected.lastName }}</div>
-            </div>
-            <div class="row">
-            <div class="col-xs-3">מספר טלפון:</div>
-            <div class="col-xs-9 pull-left">{{ selected.phoneNumber }}</div>
-            </div>
-            <div class="row">
-            <div class="col-xs-3">מלווה:</div>
-            <div class="col-xs-9 pull-left">{{ selected.caretaker }}</div>
-            </div>
-            <div class="row">
-                <div class="col-xs-3">גיל:</div>
-                <div class="col-xs-9 pull-left">{{ getAge(selected.birthday) }}</div>
-            </div>
-            <div class="row">
-                <div class="col-xs-3">מתאם טיפול:</div>
-                <div class="col-xs-9 pull-left">{{ selected.metaem }}</div>
-            </div>
-            <div class="row">
-                    <div class="col-xs-3">תאריך כניסה:</div>
-                    <div class="col-xs-9 pull-left">{{ getSince(selected.memberSince) }}</div>
-            </div>
-            <hr>
-            <div class="row">
-                    <div class="col-xs-1">עבודה:</div>
-                    <div class="col-xs-4 pull-right">פרטים:
-                    {{ selected.work.info }}</div>
-                    <div class="col-xs-3 pull-right">מס טלפון:
-                    {{ selected.work.phone }}</div>
-                    <div class="col-xs-4 pull-right">מיקום:
-                    {{ selected.work.location }}</div>
-            </div>
-            <hr>
-            <div class="row">
-                    <div class="col-xs-1">רופאים:</div>
-                    <div class="col-xs-5 pull-right">פסיכיאטר: {{ selected.doctors.psych }}</div>
-                    <div class="col-xs-5 pull-right">רופא משפחה:{{ selected.doctors.gp }}</div>
-            </div>
-            <hr>
-            <div class="row" *ngFor="let item of selected.contacts; let i=index" >
-                    <div class="col-xs-1">אנשי קשר:</div>
-                    <div class="col-xs-4 pull-right">שם:  {{ selected.contacts[i].name }}</div>
-                    <div class="col-xs-4 pull-right">קירבה:  {{ selected.contacts[i].rel }}</div>
-                    <div class="col-xs-3 pull-right">פרטי התקשרות:  {{ selected.contacts[i].phone }}</div>
-            </div>
-            <br>
-            <button class="btn btn-primary" (click)="submitted=false">ערוך</button>
-        </div>
-</div> -->
+
 <div class="container">
   
     <form id="viewForm" name="viewForm"  method="post" novalidate (ngSubmit)="saveChanges()" #viewForm="ngForm">
@@ -97,19 +19,23 @@
           <span class="displayValue"  [ngClass]="pageMode">{{selected.phoneNumber}}</span>
       </p>
       <p>
-          <label for="addressLine1Input">דואר אלקטרוני:</label>
-          <input type="text" id="addressLine1Input" name="addressLine1Input" [ngClass]="pageMode" [(ngModel)]="selected.caretaker"/>
+          <label for="caretaker">דואר אלקטרוני:</label>
+          <input type="text" id="caretaker" name="caretaker" [ngClass]="pageMode" [(ngModel)]="selected.caretaker"/>
           <span class="displayValue" [ngClass]="pageMode">{{selected.caretaker}}</span>
       </p>
       <p>
-        <label for="ageLine2Input">גיל:</label>
-        <input type="text" id="ageLine2Input" name="ageLine2Input" [ngClass]="pageMode" [(ngModel)]="viewForm.ageLine2Input"/>
-        <span class="displayValue" [ngClass]="pageMode">{{viewForm.ageLine2Input}}</span>
+        <label for="birthday">גיל:</label>
+        <mat-form-field *ngIf="pageMode==='editMode'">
+            <input matInput [matDatepicker]="picker" id="birthday" [(ngModel)]="selected.birthday" name="birthday"  required>
+            <mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <span class="displayValue" [ngClass]="pageMode">{{getAge(selected.birthday)}}</span>
     </p>
     <p>
-        <label for="tfkedLine2Input">תפקיד:</label>
-        <input type="text" id="tfkedLine2Input" name="tfkedLine2Input" [ngClass]="pageMode" [(ngModel)]="viewForm.tfkedLine2Input"/>
-        <span class="displayValue" [ngClass]="pageMode">{{viewForm.tfkedLine2Input}}</span>
+        <label for="role">תפקיד:</label>
+        <input type="text" id="role" name="role" [ngClass]="pageMode" [(ngModel)]="selected.role"/>
+        <span class="displayValue" [ngClass]="pageMode">{{selected.role}}</span>
     </p>
     </div>
     <div *ngIf="selected.className=='resident'">
@@ -122,31 +48,91 @@
             <span class="displayValue" [ngClass]="pageMode">{{selected.firstName}} {{ selected.lastName }}</span>
         </p>
         <p>
-            <label for="ageLine2Input">גיל:</label>
-            <input type="text" id="ageLine2Input" name="ageLine2Input" [ngClass]="pageMode" [(ngModel)]="viewForm.ageLine2Input"/>
-            <span class="displayValue" [ngClass]="pageMode">{{viewForm.ageLine2Input}}</span>
+            <label for="birthday">גיל:</label>
+            <mat-form-field *ngIf="pageMode==='editMode'">
+                <input matInput [matDatepicker]="picker" id="birthday" [(ngModel)]="selected.birthday" name="birthday"  required>
+                <mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <span class="displayValue" [ngClass]="pageMode">{{getAge(selected.birthday)}}</span>
         </p>
         <p>
-            <label for="guideInput">מלווה:</label>
-            <input type="text" id="guideInput" name="guideInput"  [ngClass]="pageMode" [(ngModel)]="viewForm.guideInput" required #guideInput="ngModel"/>
-            <span class="error"  [hidden]="guideInput.valid || !guideInput.errors.required">Name field is required</span>
-            <span class="displayValue" [ngClass]="pageMode">{{viewForm.guideInput}}</span>
+            <label for="caretaker">מלווה:</label>
+            <input type="text" id="caretaker" name="caretaker"  [ngClass]="pageMode" [(ngModel)]="selected.caretaker" />
+            
+            <span class="displayValue" [ngClass]="pageMode">{{ selected.caretaker }}</span>
         </p>
           
         <p>
-            <label for="mtaemInput">מתאם טיפול:</label>
-            <input type="text" id="mtaemInput" name="mtaemInput"  [ngClass]="pageMode" [(ngModel)]="viewForm.mtaemInput" required #mtaemInput="ngModel"/>
-            <span class="error"  [hidden]="mtaemInput.valid || !mtaemInput.errors.required">Name field is required</span>
-            <span class="displayValue" [ngClass]="pageMode">{{viewForm.mtaemInput}}</span>
+            <label for="metaem">מתאם טיפול:</label>
+            <input type="text" id="metaem" name="metaem"  [ngClass]="pageMode" [(ngModel)]="selected.metaem" required/>
+            
+            <span class="displayValue" [ngClass]="pageMode">{{selected.metaem}}</span>
         </p>
+        <p>
+            <label for="since">תאריך כניסה:</label>
+            <mat-form-field *ngIf="pageMode==='editMode'">
+                <input matInput [matDatepicker]="picker" id="memberSince" [(ngModel)]="selected.memberSince" name="memberSince"  required>
+                <mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <span class="displayValue" [ngClass]="pageMode">{{ getSince(selected.memberSince) }}</span>
+        </p>
+        <hr>
+            <div class="row">
+                <div class="col-xs-1">עבודה:</div>
+                <label for= "info">פרטים:</label>
+                <input type="text" id="info" name="info"  [ngClass]="pageMode" [(ngModel)]="selected.work.info" />
+                <span class="displayValue" [ngClass]="pageMode" >
+                {{ selected.work.info }}</span>
 
+                <label for= "phone">מס טלפון:</label>
+                <input type="number" id="phone" name="phone"  [ngClass]="pageMode" [(ngModel)]="selected.work.phone" />
+                <span class="displayValue" [ngClass]="pageMode">
+                {{ selected.work.phone }}</span>
 
+                <label for= "location">מיקום:</label>
+                <input type="text" id="location" name="location"  [ngClass]="pageMode" [(ngModel)]="selected.work.location" />
+                <span class="displayValue" [ngClass]="pageMode">
+                {{ selected.work.location }}</span>
+        </div>
+        <hr>
+        <div class="row">
+                <div class="col-xs-1">רופאים:</div>
+                <label for= "psych">פסיכיאטר: </label>
+                <input type="text" id="psych" name="psych"  [ngClass]="pageMode" [(ngModel)]="selected.doctors.psych" />
+                <span class="displayValue" [ngClass]="pageMode">{{ selected.doctors.psych }}</span>
+                
+                <label for= "location">רופא משפחה:</label>
+                <input type="text" id="gp" name="gp"  [ngClass]="pageMode" [(ngModel)]="selected.doctors.gp" />
+                <span class="displayValue" [ngClass]="pageMode"> {{ selected.doctors.gp }}</span>
+        </div>
+        <hr>
+        <div class="row" *ngFor="let item of selected.contacts; let i=index" >
+            <div class="col-xs-1">אנשי קשר:</div>
+
+            <label for= "name">שם:</label>
+            <input type="text" id="name" name="name"  [ngClass]="pageMode" [(ngModel)]="selected.contacts[i].name" />
+            <span class="displayValue" [ngClass]="pageMode" >
+            {{ selected.contacts[i].name }}</span>
+
+            <label for= "rel">קירבה:  </label>
+            <input type="text" id="rel" name="rel"  [ngClass]="pageMode" [(ngModel)]="selected.contacts[i].rel" />
+            <span class="displayValue" [ngClass]="pageMode">
+            {{ selected.contacts[i].rel }}</span>
+
+            <label for= "phone">פרטי התקשרות:  </label>
+            <input type="number" id="phone" name="phone"  [ngClass]="pageMode" [(ngModel)]="selected.contacts[i].phone" />
+            <span class="displayValue" [ngClass]="pageMode">
+            {{ selected.contacts[i].phone }}</span>      
+        </div>
     </div>
 
         <button type="submit" class="editButton" [ngClass]="pageMode" form="viewForm"  [disabled]="viewForm.invalid">שמור שינויים</button>
-  <button class="editButton" [ngClass]="pageMode" (click)="cancelEdit()">לביטול</button>
+  
      
   </form> 
+  <button class="editButton" [ngClass]="pageMode" (click)="cancelEdit()">לביטול</button>
   <button class="viewButton" [ngClass]="pageMode" (click)="editUser()">ערוך פרטים</button>
   
 </div>

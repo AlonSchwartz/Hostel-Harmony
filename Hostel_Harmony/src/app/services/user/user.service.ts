@@ -71,7 +71,7 @@ export class UserService  {
     // Initializing staff & resident with dummy data, so it won't be undefined
     this.staff = new staff("Ot","ron2",6535, true, "2/4/6", 2, "ffda", "supervisor");
     this.staff2 = new staff("","",-1, true, "", -1, "", "","staff",[]);
-    this.resident = new resident("","",-1,true,"",-1,"","","",false,[],{info:null, phone:null, location:""},
+    this.resident = new resident("","",-1,true,"",-1,"","","",false,[],{info:null, phone:null, location:null},
     {psych:null,gp:null},"resident");
     
     this.res = new resident("","",-1,true,"",-1,"","","",false,[],{info:null, phone:null, location:""},
@@ -316,7 +316,10 @@ export class UserService  {
             this.resident.metaem = collection[i].metaem;
             this.resident.evals = collection[i].evals;
             this.resident.events = collection[i].events;
-            this.resident.id = this.residentUsersList[i].id;
+            this.resident.id = this.residentUsersList[i].id;            
+            this.resident.work.info = collection[i].work.info;
+            this.resident.work.location = collection[i].work.location;
+            this.resident.work.phone = collection[i].work.phone;
             
             let copy = Object.assign({}, this.resident); // push delivers by reference, so we need to copy our object first
             this.residentsUsers.push(copy);

@@ -73,7 +73,7 @@ export class EventComponent implements OnInit {
       this.nameSel.cm.subscribe(user => this.user = user);
       if(this.user==null){
         this.router.navigateByUrl('menu');
-      }
+      }      
     }
     addActivity(val:string,color:string){
       if (this.firstAddition){

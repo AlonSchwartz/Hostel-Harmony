@@ -13,18 +13,18 @@ export class ViewComponent implements OnInit {
   @Input()//for getting name wanted
   name:string;
   selected:staff|resident;
-  submitted:boolean
-  model:staff|resident;
+  copy:staff|resident;
+  // selectedCopy:staff|resident;
   pageMode : string;
   constructor(private userService: UserService,private nameSel: NameSelectService) {
    }
 
   ngOnInit() {
     this.nameSel.cm.subscribe(selected => this.selected = selected);
-    this.nameSel.cm.subscribe(selected => this.model = selected);
-
+    console.log(this.selected)
+    //this.nameSel.cm.subscribe(selected => this.selectedCopy = selected);
     this.pageMode = "viewMode";
-    
+    this.copy = Object.assign({}, this.selected);
   }
   getSince(since){
     let ret=new Date(since)
@@ -43,21 +43,20 @@ export class ViewComponent implements OnInit {
       return age.toString();
   }
   editUser() : void {
-    Object.assign(this.model, this.selected);
-  
     this.pageMode = "editMode";
   }
   
   saveChanges() : void {
-      //TODO: change in DB
+      this.userService.update(this.selected)
        this.pageMode = "viewMode";
+       console.log("dsfd")
 
   }
   
   cancelEdit() : void {
-    Object.assign(this.selected, this.model);
+    //this.nameSel.cm.subscribe(selected => this.selected = selected);
+    Object.assign(this.selected,this.copy);
     this.pageMode = "viewMode";
-    
   }
 
 }

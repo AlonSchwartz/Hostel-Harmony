@@ -14,10 +14,9 @@ form label {
   }
   
   form input[type=text] {
-    width: 250px;
+    width: 100px;
     display: inline-block;
   }
-  
   form input.viewMode {
     display: none;
   }
@@ -63,4 +62,10 @@ form label {
   
   .editButton.editMode {
     display:auto;
+  }
+  .editButton , .viewButton{
+    color:black;
+  }
+  ::ng-deep .mat-input-wrapper{
+    width:60px !important;
   }

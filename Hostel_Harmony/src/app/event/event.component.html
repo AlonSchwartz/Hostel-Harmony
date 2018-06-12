@@ -1,56 +1,4 @@
 <div class="container">
-<<<<<<< HEAD
-	<h1>
-	הוספת אירוע עבור {{user?.firstName}}
-	</h1>
-	{{diagnostic}}
-	<form (ngSubmit)="subEvent()" #eventForm="ngForm">
-			<div class="form-group row" style="direction: rtl">
-				<div class="col-sm-3">
-					<label>
-						שעת התחלה:
-						<input placeholder="בחר שעה ותאריך..." [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
-									 [selectMode]="'rangeFrom'" [owlDateTime]="dt4" required [(ngModel)]="model.settime.start" name="start">
-						<owl-date-time #dt12></owl-date-time>
-					</label>
-				</div>
-				<div class="col-sm-3">
-					<label>
-					שעת סיום:
-							<input placeholder="בחר שעה ותאריך..." [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
-									 [selectMode]="'rangeTo'" required [(ngModel)]="model.settime.end" name="end">
-							<owl-date-time #dt13></owl-date-time>
-					</label>
-				</div>
-			</div>  
-					
-			<div class="form-group" >
-				<mat-form-field >
-					<mat-select id="activiti" placeholder="סוג פעילות" (click)="edited=false" [(ngModel)]="model.activity" name="activity">
-						<mat-option [style.background]="type.color" *ngFor="let type of types" [value]="type.value">
-								{{ type.viewValue }}
-						</mat-option>
-					</mat-select>
-				</mat-form-field>
-				<div class="form-group row" style="direction: rtl" *ngIf="model.activity=='add' && !edited">
-						<div class="col-sm-2">
-							<label for="color" >בחר צבע</label>
-							<input [(colorPicker)]="color" [style.background]="color" [cpPosition]="'bottom'" class="form-control" />
-						</div>
-						<div class="col-sm-4 ">
-							<label for="describe" >סוג פעילות</label>
-							<input type="text" class="form-control" id="describe" [(ngModel)]="customActivity" name ="cust" >
-						</div>
-						<div class="col-sm-2" >
-							<button id="addButt" type="button" class="btn btn-primary"
-									(click)="addActivity(customActivity,color)" >לחץ להוספת פעילות</button>
-						</div>
-				</div>
-		</div>  
-		<div class="form-group">
-				<mat-checkbox  [(ngModel)]="model.asign" name ="asign">ליווי</mat-checkbox>
-		</div>
-=======
   
   <h1>
   הוסף אירוע חדש עבור {{user?.firstName}}
@@ -103,7 +51,6 @@
     <div class="form-group">
         <mat-checkbox  [(ngModel)]="model.asign" name ="asign">ליווי</mat-checkbox>
     </div>
->>>>>>> 3f9bade970d498a442e66bc5cba0cec2820e2e5a
 
 		
 

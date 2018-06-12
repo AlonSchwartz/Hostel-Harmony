@@ -199,12 +199,12 @@ changeView(per: resident|staff){
 // console.log(start.valueOf())
 
 
-let d = new Date();
+//let d = new Date();////2
 // console.log(d)
-this.events[0].start = new Date(this.selected.events[0].start);
+//this.events[0].start = new Date(this.selected.events[0].start);///2
 // console.log(this.selected.events[0].start);
-this.events[0].end = new Date(this.selected.events[0].end);
-this.events[0].title = this.selected.events[0].describe;
+//this.events[0].end = new Date(this.selected.events[0].end);///2
+//this.events[0].title = this.selected.events[0].describe;/////2
 // console.log(this.selected);
 //this.events[0].start = d;
 //this.events[0].end = d;

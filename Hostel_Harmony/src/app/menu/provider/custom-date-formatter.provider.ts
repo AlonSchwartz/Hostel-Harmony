@@ -6,7 +6,7 @@ export class CustomDateFormatter extends CalendarDateFormatter {
   public weekViewTitle({ date, locale }: DateFormatterParams): string {
     const year: string = new DatePipe(locale).transform(date, 'y', locale);
     const weekNumber: number = getISOWeek(date);
-    const monthName: number = getMonth(date);// new DatePipe(locale).transform(date, 'm', locale);
+    const monthName: number = getMonth(date)+1;// new DatePipe(locale).transform(date, 'm', locale);
     return `חודש ${monthName} שנה ${year}`;
   }
 }
