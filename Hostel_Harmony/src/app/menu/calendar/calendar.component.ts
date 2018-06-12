@@ -42,7 +42,7 @@ export class CalendarComponent implements OnInit,OnChanges {
   weekStartsOn: number = DAYS_OF_WEEK.SUNDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
   refresh: Subject<any> = new Subject();
-
+  
   @Input()//for getting name wanted
   name:string;
   selected:staff|resident;
@@ -67,7 +67,6 @@ inpEve1:CALtest= {start: this.date , end: this.date, title: "General-2", issuer:
 ngOnInit() {
   this.fixdEvent();
   this.updateCalendarEvents();
-  this.conflictEvent();
   // console.log(new Date(this.inpEve.settime.start))
 }
 /**allow page to wait until a person is passed to calendar, only then will the function run */
@@ -88,8 +87,10 @@ public getUserSelected(){
   if(this.selected==null){
     alert('no user entered')
   }
-  this.addEventToCal(this.selected.events);
+  // this.addEventToCal(this.selected.events);
 }
+bevents: CalendarEvent[] = [];
+allEvents: CalendarEvent[] = [];
 view: string ='week'
 viewDate: Date = new Date();
 events: CalendarEvent[] = [
@@ -101,130 +102,161 @@ events: CalendarEvent[] = [
     start: new Date(this.inpEve1.start),
     end:new Date(this.inpEve1.end),
     title: this.inpEve1.activity,
-  
+    
   },
 ];
 //for permnent events
 recurringEvents: RecurringEvent[] = [
-{
-  title: 'Recurs on the 5th of each month',
-  rrule: {
-  freq: RRule.WEEKLY,
-  byweekday: [RRule.MO],
-  },},
-  {	  title: 'Recurs works? Just a test.',
-  rrule: {
-  freq: RRule.WEEKLY,
-  byweekday: [RRule.SU],
-}
-
+  {
+    title: 'Recurs on the 5th of each month',
+    rrule: {
+      freq: RRule.WEEKLY,
+      byweekday: [RRule.MO],
+    },},
+    {	  title: 'Recurs works? Just a test.',
+    rrule: {
+      freq: RRule.WEEKLY,
+      byweekday: [RRule.SU],
+    }
+    
 	}];
-//add a check if event exists
-updateCalendarEvents(): void {
-  //this.events = [];
-  const startOfPeriod: any = {
-    month: startOfMonth,
-    week: startOfWeek,
-    day: startOfDay
-  };
-  const endOfPeriod: any = {
-    month: endOfMonth,
-    week: endOfWeek,
-    day: endOfDay
-  };
-this.recurringEvents.forEach(event => {
-  const rule: RRule = new RRule(
-    Object.assign({}, event.rrule, {
-    dtstart: startOfPeriod[this.view](this.viewDate),
-    until: endOfPeriod[this.view](this.viewDate)
-})
-		  );
-		  rule.all().forEach(date => {
-			 this.events.push(
-				Object.assign({}, event, {
-				  start: new Date(date)
-				})
-			 );
-		  });
-		});
-	 }
+  //add a check if event exists
+  updateCalendarEvents(): void {
+    //this.events = [];
+    const startOfPeriod: any = {
+      month: startOfMonth,
+      week: startOfWeek,
+      day: startOfDay
+    };
+    const endOfPeriod: any = {
+      month: endOfMonth,
+      week: endOfWeek,
+      day: endOfDay
+    };
+    this.bevents = this.events;
+    this.events = [];
   
-backToWeekView() {
-  this.view = 'week';
-}
+    console.log(this.bevents)
+    console.log(this.events);
+    this.recurringEvents.forEach(event => {
+      const rule: RRule = new RRule(
+        Object.assign({}, event.rrule, {
+          dtstart: startOfPeriod[this.view](this.viewDate),
+          until: endOfPeriod[this.view](this.viewDate)
+        })
+      );
+      
+      console.log(this.recurringEvents)
+      rule.all().forEach(date => {
+        this.events.push(
+          Object.assign({}, event, {
+            start: new Date(date)
+          })
+        );
+      });
+    });
+  }
   
-addEventToCal(eve:CALtest[]): void {
-  for(let sel of eve){
+  backToWeekView() {
+    this.view = 'week';
+  }
+  
+  addEventToCal(eve:CALtest[]): void {
+    for(let sel of eve){
       this.events.push({
         title: 'database test',
         start: new Date(sel.start),
         end:new Date(sel.end),
       });
-    this.refresh.next();
+      this.refresh.next();
+    }
   }
-}
   
-conflictEvent(): void {
-	console.log("inFixedEve");
-  if(this.events[0].start.getHours === this.events[3].start.getHours)
-  {
-		// if(confirm( "כבר יש לך פגישה בשעה "+ this.events[0].start.toLocaleTimeString() )) 
-		// {
-		// 	console.log("אירוע נשמר")
-		// }
-		// else {
-		// 	console.log("אירוע נמחק")
- 		// }
-	}
-};
-
-
-// *** PLEASE NOTE *** this method is working, but isn't done yet!
-changeView(per: resident|staff){
-  this.nameSel.cm.subscribe(selected => this.selected = selected);
-//   console.log("====Before changes====")
-//   console.log(this.events);
-//   console.log("====After changes====")
-//   //this.events[0].title = per.events[0].activity;
-// //this.events.push(this.selected.events[0]);
-// //this.events[0].title = this.selected.events[0].describe;
-// console.log(per.events)
-// console.log(this.selected)
-// this.events = this.selected.events;
-// console.log("=========");
-// var start = new Date(this.selected.events[0].start);
-// var end = new Date(this.selected.events[0].end);
-// console.log(start);
-// console.log(start.getDate())
-// console.log(start.valueOf())
-
-
-//let d = new Date();////2
-// console.log(d)
-//this.events[0].start = new Date(this.selected.events[0].start);///2
-// console.log(this.selected.events[0].start);
-//this.events[0].end = new Date(this.selected.events[0].end);///2
-//this.events[0].title = this.selected.events[0].describe;/////2
-// console.log(this.selected);
-//this.events[0].start = d;
-//this.events[0].end = d;
-//console.log(this.events);
-this.refresh.next();
-
-
-}
-fixdEvent(): void {}
-chengeCal(): void{}
-
+  conflictEvent(): void {
+    console.log("inFixedEve");
+    // if(this.events[0].start.getHours === this.events[3].start.getHours)
+    //{
+    // if(confirm( "כבר יש לך פגישה בשעה "+ this.events[0].start.toLocaleTimeString() )) 
+    // {
+    // 	console.log("אירוע נשמר")
+    // }
+    // else {
+    // 	console.log("אירוע נמחק")
+    // }
+    //}
+  };
+  
+  
+  // *** PLEASE NOTE *** this method is working, but isn't done yet!
+  changeView(per: resident|staff){
+    this.nameSel.cm.subscribe(selected => this.selected = selected);
+    //   console.log("====Before changes====")
+    //   console.log(this.events);
+    //   console.log("====After changes====")
+    //   //this.events[0].title = per.events[0].activity;
+    // //this.events.push(this.selected.events[0]);
+    // //this.events[0].title = this.selected.events[0].describe;
+    // console.log(per.events)
+    // console.log(this.selected)
+    // this.events = this.selected.events;
+    // console.log("=========");
+    // var start = new Date(this.selected.events[0].start);
+    // var end = new Date(this.selected.events[0].end);
+    // console.log(start);
+    // console.log(start.getDate())
+    // console.log(start.valueOf())
+    console.log(this.selected);
+    let d = new Date();////2
+    // console.log(d)
+    let i = 0;
+    
+    if (this.selected.events.length == 0){
+      this.events = [];
+    }
+    else {
+      this.events = this.selected.events;
+      console.log(this.events.length)
+      for (i=0; i<this.events.length ; i++)
+      {
+        if (this.events[i].start == null || this.events[i].end == null){
+          console.log("");
+        }
+        this.events[i].start = new Date(this.events[i].start);///2
+        //console.log(this.selected.events[0].start);
+        this.events[i].end = new Date(this.events[i].end);///2
+        this.events[i].title = this.selected.events[i].describe;/////2
+        //console.log(this.selected[i].events);
+        //this.events[0].start = d;
+        //this.events[0].end = d;
+        //console.log(this.events);
+      }
+    }
+    this.updateCalendarEvents();
+    console.log(this.bevents);
+    let j =0;
+    for (j=0; j<this.bevents.length;j++){
+    this.events.push(this.bevents[j]);
+    console.log(this.bevents[j])
+    }
+    console.log("---------")
+    console.log(this.events)
+    this.allEvents = this.events;
+    this.refresh.next();
+    
+    
+  }
+  fixdEvent(): void {}
+  chengeCal(): void{}
+  
 }
 
 interface RecurringEvent {
-	title: string;
-	rrule?: {
-	  freq: RRule.Frequency;
-	  bymonth?: number;
-	  bymonthday?: number;
+  title: string;
+  rrule?: {
+    freq: RRule.Frequency;
+    bymonth?: number;
+    bymonthday?: number;
     byweekday?: RRule.Weekday[];
-	};
- }
+  };
+}
 

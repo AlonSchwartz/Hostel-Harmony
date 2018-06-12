@@ -23,6 +23,7 @@
 						class="btn btn-outline-secondary font-weight-bold text-right text-white"
 						mwlCalendarToday
 						[(viewDate)]="viewDate"
+						(viewDateChange)="activeDayIsOpen = false; updateCalendarEvents()"
 						>
 						היום
 					</div>
