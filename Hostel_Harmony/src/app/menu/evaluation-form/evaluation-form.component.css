@@ -22,3 +22,38 @@ input[type="text"],textarea[type="text"]
     text-align: right;
     width: 100%;
 }
+
+form input[type=text] {
+    display: inline-block;
+  }
+  form input.viewMode {
+    display: none;
+  }
+  
+  form input.editMode {
+    display:auto;
+    color:black;
+  }
+  form textarea.editMode {
+    display:auto;
+    color:black;
+  }
+  form textarea.viewMode {
+    display: none;
+  }
+  
+  form select.viewMode {
+    display:none;
+  }
+  
+  form select.editMode {
+    display:auto;
+  }
+  
+  form .displayValue.viewMode{
+    display:auto;
+  }
+  
+  form .displayValue.editMode {
+    display:none;
+  }

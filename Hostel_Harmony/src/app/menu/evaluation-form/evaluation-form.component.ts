@@ -14,14 +14,14 @@ export class EvaluationFormComponent implements OnInit {
   @Input()//for getting name wanted
   name:string;
   myForm: FormGroup;
+  pageMode:string;
   private model: EvalForm ;
-  private submitted: boolean;
   resident:resident;
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model); }
 
   constructor(private fb:FormBuilder, private userService: UserService, private nameSel: NameSelectService ) {
-    this.submitted = false;
+   
     this.model = new EvalForm(
       '', 
       '',
@@ -30,13 +30,15 @@ export class EvaluationFormComponent implements OnInit {
   }
   ngOnInit() {
     this.nameSel.feval.subscribe(resident => this.resident = resident);
-    console.log(this.resident);
+    this.pageMode = "viewMode";//"editMode" 
+    this.enterExistingEvents(this.resident.evals[0])
+
     this.myForm = this.fb.group({
       semiGoal: this.fb.array(
         [this.buildSemiGoal('')])
     })
   }
-  public buildSemiGoal(val: string) {
+  public buildSemiGoal(val: any) {
     return new FormGroup({
       goal:new FormControl(val),
       acts:this.fb.array(
@@ -54,11 +56,18 @@ export class EvaluationFormComponent implements OnInit {
     
   }
   subGoal(obj:object) {
-    this.submitted = true;/*do something*/
-    alert(this.submitted);
     this.userService.addEvalForm(this.resident,this.model)// Not working for all of the residents now because not all of them have eval field in firebase
     alert("תוכנית שיקום נוספה בהצלחה")
     
+  }
+
+  /**enter existing values in form */
+  public enterExistingEvents(value:any):void{
+    this.model.mainGoal=value.mainGoal;
+    this.model.name=value.name;
+    for( let i=0;i<value.semiGoal.length;i++){
+      this.model.semiGoal[i]=value.semiGoal[i];
+    }
   }
 
 }

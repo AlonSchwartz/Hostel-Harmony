@@ -8,8 +8,10 @@
     <form (ngSubmit)="subGoal(evalForm.value)" #evalForm="ngForm">
       <div class="form-group">
         <label for="mainGoal">מטרת העל: (גם כמדד ליכולת ראייה ותכנון קדימה)</label>
-        <input type="text" class="form-control" id="mainGoal" required [(ngModel)]="model.mainGoal" name="mainGoal">
-      </div>
+        <input type="text" [ngClass]="pageMode" class="form-control" id="mainGoal" [(ngModel)]="model.mainGoal" name="mainGoal">
+        <br>
+        <span class="displayValue" [ngClass]="pageMode">{{ model.mainGoal }}</span>
+        </div>
       <hr>
 
       <div [formGroup]="myForm" class="form-group">
@@ -21,7 +23,9 @@
                 <h4>{{i+1}}:</h4>
                 <div class="form-group">
                     <label [attr.for]="'goal'+i">מטרה</label>
-                    <input [attr.id]="'goal'+i" formControlName="goal" type="text" class="form-control" id="goal" required [(ngModel)]="model.semiGoal[i].goal" name="goal">
+                    <input [ngClass]="pageMode" [attr.id]="'goal'+i" formControlName="goal" type="text" class="form-control" id="goal" [(ngModel)]="model.semiGoal[i].goal" name="goal">
+                    <br>
+                    <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].goal }}</span>
                 </div>
     <hr>
         <fieldset formArrayName="acts" class="form-group">
@@ -31,12 +35,16 @@
                 <h4>{{j+1}}:</h4>
                 <div class="form-group">
                 <label [attr.for]="'action'+j">פעולה</label>
-                <textarea [attr.id]="'action'+j" formControlName="action" type="text" class="form-control" id="action" required [(ngModel)]="model.semiGoal[i].acts[j].action" name="action"></textarea>
+                <textarea [ngClass]="pageMode" [attr.id]="'action'+j" formControlName="action" type="text" class="form-control" id="action" [(ngModel)]="model.semiGoal[i].acts[j].action" name="action"></textarea>
+                <br>
+                <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].acts[j].action }}</span>
                 </div>
                 <div class="form-group">
-                <label [attr.for]="'caretaker'+j">יום ושעה + מלווה</label>
-                <input [attr.id]="'caretaker'+j" formControlName="caretaker" type="text" class="form-control" id="caretaker" [(ngModel)]="model.semiGoal[i].acts[j].caretaker" name="caretaker">
-                 </div>
+                    <label [attr.for]="'caretaker'+j">יום ושעה + מלווה</label>
+                    <input [ngClass]="pageMode" [attr.id]="'caretaker'+j" formControlName="caretaker" type="text" class="form-control" id="caretaker" [(ngModel)]="model.semiGoal[i].acts[j].caretaker" name="caretaker">
+                    <br>
+                    <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].acts[j].action.caretaker }}</span>
+                </div>
                  <div class="col-sm-1 py-1">
                         <button type="button" class="btn" style="color:black"
                                 (click)="myForm.get('semiGoal').at(i).get('acts').removeAt(j);model.semiGoal[i].acts.splice(j,1)">הסר</button>
@@ -49,7 +57,9 @@
         <hr>
         <div class="form-group">
             <label [attr.for]="'how'+i">איך נדע שהמטרה הושגה? (מבחן התוצאה/גילה יוזמה בתחום ללא תזכורת וכו'</label>
-            <input [attr.id]="'how'+i" formControlName="how" type="text" class="form-control" id="caretaker" [(ngModel)]="model.semiGoal[i].how" name="how">
+            <input [ngClass]="pageMode" [attr.id]="'how'+i" formControlName="how" type="text" class="form-control" id="caretaker" [(ngModel)]="model.semiGoal[i].how" name="how">
+            <br>
+            <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].how }}</span>
         </div>
         <div class="col-sm-1 py-1">
                 <button type="button" class="btn" style="color:black"

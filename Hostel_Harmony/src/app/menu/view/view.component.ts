@@ -1,4 +1,4 @@
-import { Component, OnInit , Input } from '@angular/core';
+import { Component, OnInit , Input, SimpleChange, OnChanges } from '@angular/core';
 import {staff} from '../../models/staff.model'
 import {resident} from '../../models/resident.model'
 import { NgModel,FormGroup } from '@angular/forms'
@@ -9,22 +9,30 @@ import { NameSelectService } from '../../services/nameSelect/name-select.service
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.css']
 })
-export class ViewComponent implements OnInit {
+export class ViewComponent implements OnInit,OnChanges {
   @Input()//for getting name wanted
   name:string;
   selected:staff|resident;
   copy:staff|resident;
-  // selectedCopy:staff|resident;
   pageMode : string;
   constructor(private userService: UserService,private nameSel: NameSelectService) {
    }
 
   ngOnInit() {
     this.nameSel.cm.subscribe(selected => this.selected = selected);
-    console.log(this.selected)
     //this.nameSel.cm.subscribe(selected => this.selectedCopy = selected);
     this.pageMode = "viewMode";
     this.copy = Object.assign({}, this.selected);
+  }
+  ngOnChanges(changes:{[propKey:string]:SimpleChange}){
+    for(let na in changes){
+      let rec=changes[na];
+      let temp=JSON.stringify(rec.currentValue);
+      if(!rec.isFirstChange()){
+        this.nameSel.cm.subscribe(selected => this.selected = selected);
+        this.copy = Object.assign({}, this.selected);
+      }
+    }
   }
   getSince(since){
     let ret=new Date(since)
@@ -49,7 +57,6 @@ export class ViewComponent implements OnInit {
   saveChanges() : void {
       this.userService.update(this.selected)
        this.pageMode = "viewMode";
-       console.log("dsfd")
 
   }
   
