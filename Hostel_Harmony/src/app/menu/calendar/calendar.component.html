@@ -16,13 +16,14 @@
 						[(view)]="view"
 						[(viewDate)]="viewDate"
 						(viewChange)="updateCalendarEvents()"
-						(viewDateChange)="activeDayIsOpen = false; updateCalendarEvents()">
+						(viewDateChange)="activeDayIsOpen = false; changeView()">
 						הבא
 					</div>
 					<div id="nextbar"
 						class="btn btn-outline-secondary font-weight-bold text-right text-white"
 						mwlCalendarToday
 						[(viewDate)]="viewDate"
+						(viewDateChange)="activeDayIsOpen = false; changeView()"
 						>
 						היום
 					</div>
@@ -31,7 +32,7 @@
 					mwlCalendarPreviousView
 					[view]="view"
 					[(viewDate)]="viewDate"
-					(viewDateChange)="activeDayIsOpen = false;updateCalendarEvents()">
+					(viewDateChange)="activeDayIsOpen = false;changeView()">
 					קודם
 					</div>
 					
