@@ -42,7 +42,7 @@ export class CalendarComponent implements OnInit,OnChanges {
   weekStartsOn: number = DAYS_OF_WEEK.SUNDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
   refresh: Subject<any> = new Subject();
-  
+    
   @Input()//for getting name wanted
   name:string;
   selected:staff|resident;
@@ -135,7 +135,7 @@ recurringEvents: RecurringEvent[] = [
     };
     this.bevents = this.events;
     this.events = [];
-  
+    
     console.log(this.bevents)
     console.log(this.events);
     this.recurringEvents.forEach(event => {
@@ -146,7 +146,7 @@ recurringEvents: RecurringEvent[] = [
         })
       );
       
-      console.log(this.recurringEvents)
+      //console.log(this.recurringEvents)
       rule.all().forEach(date => {
         this.events.push(
           Object.assign({}, event, {
@@ -155,6 +155,10 @@ recurringEvents: RecurringEvent[] = [
         );
       });
     });
+    console.log("---1---")
+    console.log(this.events)
+    console.log("---1---")
+    
   }
   
   backToWeekView() {
@@ -190,7 +194,11 @@ recurringEvents: RecurringEvent[] = [
   // *** PLEASE NOTE *** this method is working, but isn't done yet!
   changeView(per: resident|staff){
     this.nameSel.cm.subscribe(selected => this.selected = selected);
-    //   console.log("====Before changes====")
+    console.log(this.selected)
+    if (this.selected == null){
+      this.updateCalendarEvents()
+      return;
+    }    //   console.log("====Before changes====")
     //   console.log(this.events);
     //   console.log("====After changes====")
     //   //this.events[0].title = per.events[0].activity;
@@ -215,7 +223,7 @@ recurringEvents: RecurringEvent[] = [
     }
     else {
       this.events = this.selected.events;
-      console.log(this.events.length)
+      // console.log(this.events.length)
       for (i=0; i<this.events.length ; i++)
       {
         if (this.events[i].start == null || this.events[i].end == null){
@@ -235,11 +243,13 @@ recurringEvents: RecurringEvent[] = [
     console.log(this.bevents);
     let j =0;
     for (j=0; j<this.bevents.length;j++){
-    this.events.push(this.bevents[j]);
-    console.log(this.bevents[j])
+      this.events.push(this.bevents[j]);
+      //console.log(this.bevents[j])
     }
-    console.log("---------")
+    console.log("----2-----")
     console.log(this.events)
+    console.log("----2-----")
+
     this.allEvents = this.events;
     this.refresh.next();
     
