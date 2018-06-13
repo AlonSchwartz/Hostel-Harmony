@@ -15,6 +15,10 @@ import { RRule } from 'rrule';
 import {NameSelectService} from '../../services/nameSelect/name-select.service';
 import { staff } from '../../models/staff.model';
 import { resident } from '../../models/resident.model';
+import {MatDialog, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
+import { dialogPopup } from './dialogPopup.component';
+
+
 
 @Component({
   selector: 'app-calendar',
@@ -29,13 +33,17 @@ import { resident } from '../../models/resident.model';
     {
       provide: CalendarDateFormatter,
       useClass: CustomDateFormatter
+    },
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS, 
+      useValue: {hasBackdrop: false}
     }
   ]
 })
 
 export class CalendarComponent implements OnInit,OnChanges {
   
-  constructor(private nameSel: NameSelectService){
+  constructor(private nameSel: NameSelectService,public dialog: MatDialog ){
     // console.log(this.events);
   }
   locale: string = 'he';
@@ -53,19 +61,12 @@ export class CalendarComponent implements OnInit,OnChanges {
   '',
   '' 
 );
+
 date: Date = new Date();
 inpEve1:CALtest= {start: this.date , end: this.date, title: "General-2", issuer: "Elchanan", activity:"General-2", describe: "Something to do"} as CALtest ;
 
-// new CALtest(
-//   {start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
-//   false, 
-//   'General-2',
-//   'Someting to do',
-//   'Elchanan' 
-// );
 
 ngOnInit() {
-  this.fixdEvent();
   this.updateCalendarEvents();
   // console.log(new Date(this.inpEve.settime.start))
 }
@@ -255,10 +256,37 @@ recurringEvents: RecurringEvent[] = [
     
     
   }
-  fixdEvent(): void {}
-  chengeCal(): void{}
+  eventClicked({ event }: { event: CALtest }): void {
+    console.log('Event clicked', event);
+    var dialogRef = this.dialog.open(dialogPopup, {
+      data: {
+        header: "אירע:",
+        title: event.title,
+        start: event.start,
+        end: event.end,
+        type: event.activity
+      }
+      
+    });
+    
+  }
+  // openDialog({ eventClick }: { eventClick: CalendarEvent }): void {
+  //   console.log(eventClick);
+  //   console.log(this.dialog);
+    // this.dialog.open(dialogPopup, {
+    //   data: {
+    //     events: eventClick
+    //   }
+    // });
+  // }
+ 
+   
+   
+  }
   
-}
+    
+    
+
 
 interface RecurringEvent {
   title: string;
