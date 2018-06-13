@@ -51,7 +51,8 @@
 	[locale]="locale"
 	[weekStartsOn]="weekStartsOn"
 	[weekendDays]="weekendDays"
-	(dayHeaderClicked)="viewDate = $event.day.date; view = 'day'">
+	(dayHeaderClicked)="viewDate = $event.day.date; view = 'day'"
+	(eventClicked)="eventClicked($event)">
 </mwl-calendar-week-view>
 <mwl-calendar-day-view
 	*ngSwitchCase="'day'"
@@ -60,7 +61,8 @@
 	[refresh]="refresh"
 	[hourSegments]=1
 	[hourSegmentTemplate]="hourSegmentTemplate"
-	[dayStartHour]="6">
+	[dayStartHour]="6"
+	(eventClicked)="eventClicked($event)">
 </mwl-calendar-day-view>
 </div>
 </div>

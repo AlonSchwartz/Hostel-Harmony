@@ -141,7 +141,7 @@ export class UserService  {
       
       this.getResidents();
       this.res = this.residentsUsers[0];   
-      if (this.feasibilityCheck()){
+      if (this.feasibilityCheck(event,per)){
         for (let i = 0; i < this.residentUsersList.length ; i++){        
           if (this.residentUsersList[i].id == per.id){
             console.log("id equals, resident");
@@ -157,7 +157,7 @@ export class UserService  {
     if (per.className == "staff"){
       this.getStaff();
       this.sta = this.staffUsers[0];  
-      if (this.feasibilityCheck()){
+      if (this.feasibilityCheck(event,per)){
         for (let i = 0; i < this.staffUsersList.length ; i++){        
           if (this.staffUsersList[i].id == per.id){
             console.log("id equals, staff");
@@ -174,10 +174,10 @@ export class UserService  {
   /**
   * Checks that we can really add this event without any collision
   */
-  feasibilityCheck(){
+  feasibilityCheck(event: CALtest,per:resident|staff){
+    let answer = this.calendar.conflictEvent(event,per);
     
-    
-    return true;
+    return answer;
   }
   
   /** Updated a resdient or a staff profile at Firestore Database. Used mostly for saving data changes to profile */
