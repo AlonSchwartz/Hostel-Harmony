@@ -1,10 +1,10 @@
 <div>
     <div id="head">
         <h2>{{ data.title }}</h2> 
-       <h4>מתחיל בשעה:  {{ data.start}}</h4>
-       <h4>נגמר בשעה: {{ data.start}}</h4>
+       <h4>מתחיל בשעה:  {{ data.start.getHours()}}:{{ data.start.getMinutes()}}</h4>
+       <h4>נגמר בשעה: {{ data.end.getHours()}}:{{ data.end.getMinutes()}}</h4>
        <h4>סוג: <font color= {{data.type.color}} > {{ data.type.viewValue}} </font></h4> 
-     
+
        <button (click)="test(data)"><h4>PRINT DATA</h4></button> <!-- TODO: Delete after this box is done-->
     </div>
 </div>

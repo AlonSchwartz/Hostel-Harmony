@@ -272,6 +272,7 @@ public getUserSelected(){
   eventClicked({ event }: { event: CALtest }): void {
     console.log('Event clicked', event);
     var dialogRef = this.dialog.open(dialogPopup, {
+      height: '350px',
       data: {
         header: "אירוע:",
         title: event.title,
