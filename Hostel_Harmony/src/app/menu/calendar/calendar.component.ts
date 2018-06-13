@@ -54,7 +54,7 @@ export class CalendarComponent implements OnInit,OnChanges {
   '' 
 );
 date: Date = new Date();
-inpEve1:CALtest= {start: this.date , end: this.date, title: "General-2", issuer: "Elchanan", activity:"General-2", describe: "Something to do"} as CALtest ;
+inpEve1:CALtest= {start: this.date , end: this.date, title: "General-2", issuer: "Elchanan", activity:{value:"",viewValue:"",color:""}} as CALtest ;
 
 // new CALtest(
 //   {start:'2018-05-30T22:00:00.000Z',end:'2018-05-30T22:00:00.000Z'},
@@ -98,12 +98,7 @@ events: CalendarEvent[] = [
     start: new Date(),
     title: 'test event',
   },
-  {
-    start: new Date(this.inpEve1.start),
-    end:new Date(this.inpEve1.end),
-    title: this.inpEve1.activity,
-    
-  },
+  
 ];
 //for permnent events
 recurringEvents: RecurringEvent[] = [
@@ -233,6 +228,11 @@ recurringEvents: RecurringEvent[] = [
         //console.log(this.selected.events[0].start);
         this.events[i].end = new Date(this.events[i].end);///2
         this.events[i].title = this.selected.events[i].describe;/////2
+        console.log(this.events[i])
+        //console.log("--5---")
+        //console.log(this.selected.events[i].activity)
+        //console.log("--5---")
+
         //console.log(this.selected[i].events);
         //this.events[0].start = d;
         //this.events[0].end = d;

@@ -27,7 +27,7 @@ import { CalendarEvent } from 'angular-calendar';
 export class EventComponent implements OnInit {
   private date: Date = new Date();
 
-  private model = {start: this.date, end: this.date, title: "", issuer: "", activity: "", describe: ""} as CALtest ;
+  private model = {start: this.date, end: this.date, title: "", issuer: "", activity:{value:"", viewValue:"", color:""}} as CALtest ;
   private submitted: boolean;
   private customActivity:string;
   private newEventTypeSubmited:boolean=false;
@@ -99,7 +99,6 @@ export class EventComponent implements OnInit {
         
         // this.userService.updateEventTypes(this.types[2]);
       }
-      console.log("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ")
       console.log(this.model)
       this.model.start = new Date(this.model.start);
       this.model.end = new Date(this.model.end);

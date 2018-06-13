@@ -1,4 +1,5 @@
 import { CalendarEvent } from "angular-calendar";
+import { ActivityTypes } from "./activity-types.model";
 
 export class CalEvent{
     constructor(
@@ -17,6 +18,6 @@ export interface CALtest extends CalendarEvent{
 
     asign: boolean,
     issuer:string,
-    activity?: string,
+    activity?: ActivityTypes,
     describe?: string
     }
