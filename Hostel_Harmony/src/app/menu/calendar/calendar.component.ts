@@ -46,11 +46,14 @@ export class CalendarComponent implements OnInit,OnChanges {
   constructor(private nameSel: NameSelectService,public dialog: MatDialog ){
     // console.log(this.events);
   }
+
+
+// Declarations & Initializations
   locale: string = 'he';
   weekStartsOn: number = DAYS_OF_WEEK.SUNDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
   refresh: Subject<any> = new Subject();
-    
+  
   @Input()//for getting name wanted
   name:string;
   selected:staff|resident;
@@ -65,6 +68,33 @@ export class CalendarComponent implements OnInit,OnChanges {
 date: Date = new Date();
 inpEve1:CALtest= {start: this.date , end: this.date, title: "General-2", issuer: "Elchanan", activity:{value:"",viewValue:"",color:""}} as CALtest ;
 
+bevents: CalendarEvent[] = [];
+allEvents: CalendarEvent[] = [];
+view: string ='week'
+viewDate: Date = new Date();
+events: CalendarEvent[] = [
+  {
+    start: new Date(),
+    title: 'test event',
+  },
+  
+];
+
+//for permanent events
+recurringEvents: RecurringEvent[] = [
+  {
+    title: 'Recurs on the 5th of each month',
+    rrule: {
+      freq: RRule.WEEKLY,
+      byweekday: [RRule.MO],
+    },},
+    {	  title: 'Recurs works? Just a test.',
+    rrule: {
+      freq: RRule.WEEKLY,
+      byweekday: [RRule.SU],
+    }
+    
+	}];
 
 ngOnInit() {
   this.updateCalendarEvents();
@@ -81,7 +111,8 @@ ngOnChanges(changes:{[propKey:string]:SimpleChange}){
     }
   }
 }
-/**Fixed!!*/
+
+/**Saves the information of selected person*/
 public getUserSelected(){
   //this.events=[];//empty arrey of current user, need to keep reaccuring events(from database!)
   this.nameSel.cm.subscribe(selected => this.selected = selected);
@@ -90,33 +121,9 @@ public getUserSelected(){
   }
   // this.addEventToCal(this.selected.events);
 }
-bevents: CalendarEvent[] = [];
-allEvents: CalendarEvent[] = [];
-view: string ='week'
-viewDate: Date = new Date();
-events: CalendarEvent[] = [
-  {
-    start: new Date(),
-    title: 'test event',
-  },
-  
-];
-//for permnent events
-recurringEvents: RecurringEvent[] = [
-  {
-    title: 'Recurs on the 5th of each month',
-    rrule: {
-      freq: RRule.WEEKLY,
-      byweekday: [RRule.MO],
-    },},
-    {	  title: 'Recurs works? Just a test.',
-    rrule: {
-      freq: RRule.WEEKLY,
-      byweekday: [RRule.SU],
-    }
-    
-	}];
-  //add a check if event exists
+
+
+  /** Updating the events view according to selected person */
   updateCalendarEvents(): void {
     //this.events = [];
     const startOfPeriod: any = {
@@ -132,8 +139,6 @@ recurringEvents: RecurringEvent[] = [
     this.bevents = this.events;
     this.events = [];
     
-    console.log(this.bevents)
-    console.log(this.events);
     this.recurringEvents.forEach(event => {
       const rule: RRule = new RRule(
         Object.assign({}, event.rrule, {
@@ -151,9 +156,6 @@ recurringEvents: RecurringEvent[] = [
         );
       });
     });
-    console.log("---1---")
-    console.log(this.events)
-    console.log("---1---")
     
   }
   
@@ -172,44 +174,52 @@ recurringEvents: RecurringEvent[] = [
     }
   }
   /**Checking for conflict events for same person */
-  conflictEvent(event:CALtest,per:staff|resident): boolean {
-    console.log("inFixedEve");
-    let existingEventLengt = event.end.getMinutes();
-    let newEventLength = event.start.getHours() - event.end.getHours() 
-    console.log(existingEventLengt);
+  conflictEvent(event:CALtest,per:staff|resident): boolean {   
+    
     let i=0;
+    console.log(per);
     for(i=0; i<per.events.length;i++)
     {
+     
+      per.events[i].start = new Date(per.events[i].start)
+      per.events[i].end = new Date(per.events[i].end)
+
       if(event.start.getDay() ==  per.events[i].start.getDay() ) // In case starting days is equals
       {
-        if(event.start.getHours() ==  per.events[i].start.getHours()  )// In case starting hours is equals
+        // In case the new event coincides with (at least) the starting time of existing event. 
+        // In case the new event starting before (or at) starting time of an existing event and ending after the existing event starts.
+        // (NewEvent Starting time <= ExisitingEvent Starting time) AND (NewEvent Ending time > ExisitingEvent Starting time)
+        if ((event.start.getTime() <= per.events[i].start.getTime()) && event.end.getTime() > per.events[i].start.getTime() ) 
         {
-          if (event.start.getMinutes() == per.events[i].start.getMinutes())
+          let answer = confirm("האירוע שהינך מנסה להוסיף חופף עם אירוע אחר. לתאם בכל זאת? \n פרטי האירוע: " + per.events[i].title + "\n משעה: " + per.events[i].start.getHours() + ":" + per.events[i].end.getMinutes() + " עד שעה: " + per.events[i].end.getHours() + ":" + per.events[i].end.getHours())
+          if (answer)
           {
-            alert("CONFILCT!");
+            return true;
+          }
+          else
+          {
             return false;
           }
         }
-        if(event.start.getHours() > per.events[i].start.getHours() && event.end.getHours() < per.events[i].end.getHours()   )
+        // In case the new event coincides with (at least) the ending time of existing event.
+        // In case the new event starting after (or at) starting time of an existing event and also starting before existing event ends.
+        // ((NewEvent Starting time >= ExisitingEvent Starting time) AND (NewEvent Starting time < ExistingEvent Ending time))
+        if ((event.start.getTime() >= per.events[i].start.getTime()) && event.start.getTime() < per.events[i].end.getTime() ) 
         {
-          if(event.start.getHours() ==  per.events[i].start.getHours()  )
+          let answer = confirm("האירוע שהינך מנסה להוסיף חופף עם אירוע אחר. לתאם בכל זאת? \n פרטי האירוע: " + per.events[i].title + "\n משעה: " + per.events[i].start.getHours() + ":" + per.events[i].end.getMinutes() + " עד שעה: " + per.events[i].end.getHours() + ":" + per.events[i].end.getHours())
+          if (answer)
           {
-
+            return true;
+          }
+          else
+          {
+            return false;
           }
         }
+        
       }
     }
-    if(this.events[0].start.getHours === this.events[3].start.getHours)
-    {
-
-    // if(confirm( "כבר יש לך פגישה בשעה "+ this.events[0].start.toLocaleTimeString() )) 
-    // {
-    // 	console.log("אירוע נשמר")
-    // }
-    // else {
-    // 	console.log("אירוע נמחק")
-    // }
-    }
+    return true;
   };
   
   
@@ -217,27 +227,14 @@ recurringEvents: RecurringEvent[] = [
   changeView(per: resident|staff){
     this.nameSel.cm.subscribe(selected => this.selected = selected);
     console.log(this.selected)
+    console.log("HELLOoooo")
     if (this.selected == null){
       this.updateCalendarEvents()
       return;
-    }    //   console.log("====Before changes====")
-    //   console.log(this.events);
-    //   console.log("====After changes====")
-    //   //this.events[0].title = per.events[0].activity;
-    // //this.events.push(this.selected.events[0]);
-    // //this.events[0].title = this.selected.events[0].describe;
-    // console.log(per.events)
-    // console.log(this.selected)
-    // this.events = this.selected.events;
-    // console.log("=========");
-    // var start = new Date(this.selected.events[0].start);
-    // var end = new Date(this.selected.events[0].end);
-    // console.log(start);
-    // console.log(start.getDate())
-    // console.log(start.valueOf())
+    }    
     console.log(this.selected);
     let d = new Date();////2
-    // console.log(d)
+
     let i = 0;
     
     if (this.selected.events.length == 0){
@@ -248,45 +245,35 @@ recurringEvents: RecurringEvent[] = [
       // console.log(this.events.length)
       for (i=0; i<this.events.length ; i++)
       {
-        if (this.events[i].start == null || this.events[i].end == null){
-          console.log("");
+        if (this.events[i].start == null || this.events[i].end == null){// TODO: Deleted after changes persons in firebase!
+          console.log("this is null");
         }
         this.events[i].start = new Date(this.events[i].start);///2
-        //console.log(this.selected.events[0].start);
+        //console.log(this.selected.events[i].start);
         this.events[i].end = new Date(this.events[i].end);///2
-        this.events[i].title = this.selected.events[i].describe;/////2
-        console.log(this.events[i])
-        //console.log("--5---")
-        //console.log(this.selected.events[i].activity)
-        //console.log("--5---")
-
-        //console.log(this.selected[i].events);
-        //this.events[0].start = d;
-        //this.events[0].end = d;
-        //console.log(this.events);
+        this.events[i].title = this.selected.events[i].describe;/////2 
+       console.log(this.events[i])
+       //this.events[i].color.primary = this.selected.events[i].activity.color;
       }
     }
     this.updateCalendarEvents();
-    console.log(this.bevents);
+    console.log(this.bevents); //TODO: Delete this line after testing is complete
     let j =0;
     for (j=0; j<this.bevents.length;j++){
       this.events.push(this.bevents[j]);
       //console.log(this.bevents[j])
     }
-    console.log("----2-----")
-    console.log(this.events)
-    console.log("----2-----")
-
+    
     this.allEvents = this.events;
     this.refresh.next();
-    
-    
   }
+
+  /** Shows a popup with event details */
   eventClicked({ event }: { event: CALtest }): void {
     console.log('Event clicked', event);
     var dialogRef = this.dialog.open(dialogPopup, {
       data: {
-        header: "אירע:",
+        header: "אירוע:",
         title: event.title,
         start: event.start,
         end: event.end,
@@ -296,11 +283,7 @@ recurringEvents: RecurringEvent[] = [
     });
     
   } 
-  }
-  
-    
-    
-
+}
 
 interface RecurringEvent {
   title: string;

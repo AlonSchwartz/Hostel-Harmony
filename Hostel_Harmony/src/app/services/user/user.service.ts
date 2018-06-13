@@ -134,9 +134,9 @@ export class UserService  {
   }
   
   // Needs testing
-  addEvent(per: resident | staff, event: CALtest ){
+  addEvent(per: resident | staff, event: CALtest ): boolean{
     this.setMetaData();
-    
+   
     if (per.className == "resident"){
       
       this.getResidents();
@@ -148,23 +148,35 @@ export class UserService  {
             per.events.push(event);
             console.log(per.events)
             this.residentsCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
+            return true;
           }
         }
       }
-      
+      else {
+        return false;
+      }
       
     }
     if (per.className == "staff"){
       this.getStaff();
-      this.sta = this.staffUsers[0];  
+      this.sta = this.staffUsers[0]; 
+      console.log("=====Debugging====") 
+      console.log(event)
+      console.log(per.events)
+      console.log("=====Debugging====") 
+
       if (this.feasibilityCheck(event,per)){
         for (let i = 0; i < this.staffUsersList.length ; i++){        
           if (this.staffUsersList[i].id == per.id){
             console.log("id equals, staff");
             per.events.push(event);
             this.staffCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
+            return true;
           }
         }
+      }
+      else {
+        return false;
       }
     }
     

@@ -26,8 +26,8 @@ import { CalendarEvent } from 'angular-calendar';
 //       try to extract time or date from ISO format in json - use Date function!
 export class EventComponent implements OnInit {
   private date: Date = new Date();
-
-  private model = {start: this.date, end: this.date, title: "", issuer: "", activity:{value:"", viewValue:"", color:""}} as CALtest ;
+  
+  private model = {start: this.date, end: this.date, title: "", issuer: "", activity:{value:"", viewValue:"",color:""}} as CALtest ;
   private submitted: boolean;
   private customActivity:string;
   private newEventTypeSubmited:boolean=false;
@@ -38,33 +38,14 @@ export class EventComponent implements OnInit {
   private firstAddition:boolean=true;
   private test: CalendarEvent;
   test2: CALtest;
+  
 
-  /*
-  [
-    {value: 'general-0', viewValue: 'כללי',color:'green'},
-    {value: 'staff-1', viewValue: 'איש צוות',color: 'blue'},
-    {value: 'res-2', viewValue: 'דייר', color:'yellow'},
-    public edited:boolean=false;
-    user:staff|resident;
-    types :ActivityTypes[]=[
-      {value: 'add', viewValue: ' הוסף אירוע חדש  +',color:'white'},
-    ];
-    */
     
     constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
       this.userService.getEventTypes().then(()=> this.types = this.userService.eventTypes);
       this.submitted = false;
       this.customActivity=null;
       console.log(this.model);
-      /*
-      new CalEvent(
-        {start:'',end:''},
-        false, 
-        '',
-        '',
-        '' 
-      );
-*/
       
     }
     ngOnInit() {
@@ -99,13 +80,16 @@ export class EventComponent implements OnInit {
         
         // this.userService.updateEventTypes(this.types[2]);
       }
-      console.log(this.model)
+      //console.log(this.model)
       this.model.start = new Date(this.model.start);
       this.model.end = new Date(this.model.end);
-      console.log(this.model)
-      this.userService.addEvent(this.user, this.model);
-      alert("האירוע נוסף בהצלחה");
-      this.router.navigateByUrl('menu');
+      //console.log(this.model)
+      let answer = this.userService.addEvent(this.user, this.model);
+      if (answer)
+      {
+        alert("האירוע נוסף בהצלחה");
+        this.router.navigateByUrl('menu');
+      }
     }
     
   }
