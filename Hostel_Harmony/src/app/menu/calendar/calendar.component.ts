@@ -176,11 +176,37 @@ recurringEvents: RecurringEvent[] = [
       this.refresh.next();
     }
   }
-  
-  conflictEvent(): void {
+  /**Checking for conflict events for same person */
+  conflictEvent(event:CALtest,per:staff|resident): boolean {
     console.log("inFixedEve");
-    // if(this.events[0].start.getHours === this.events[3].start.getHours)
-    //{
+    let existingEventLengt = event.end.getMinutes();
+    let newEventLength = event.start.getHours() - event.end.getHours() 
+    console.log(existingEventLengt);
+    let i=0;
+    for(i=0; i<per.events.length;i++)
+    {
+      if(event.start.getDay() ==  per.events[i].start.getDay() ) // In case starting days is equals
+      {
+        if(event.start.getHours() ==  per.events[i].start.getHours()  )// In case starting hours is equals
+        {
+          if (event.start.getMinutes() == per.events[i].start.getMinutes())
+          {
+            alert("CONFILCT!");
+            return false;
+          }
+        }
+        if(event.start.getHours() > per.events[i].start.getHours() && event.end.getHours() < per.events[i].end.getHours()   )
+        {
+          if(event.start.getHours() ==  per.events[i].start.getHours()  )
+          {
+
+          }
+        }
+      }
+    }
+    if(this.events[0].start.getHours === this.events[3].start.getHours)
+    {
+
     // if(confirm( "כבר יש לך פגישה בשעה "+ this.events[0].start.toLocaleTimeString() )) 
     // {
     // 	console.log("אירוע נשמר")
@@ -188,7 +214,7 @@ recurringEvents: RecurringEvent[] = [
     // else {
     // 	console.log("אירוע נמחק")
     // }
-    //}
+    }
   };
   
   
@@ -269,19 +295,7 @@ recurringEvents: RecurringEvent[] = [
       
     });
     
-  }
-  // openDialog({ eventClick }: { eventClick: CalendarEvent }): void {
-  //   console.log(eventClick);
-  //   console.log(this.dialog);
-    // this.dialog.open(dialogPopup, {
-    //   data: {
-    //     events: eventClick
-    //   }
-    // });
-  // }
- 
-   
-   
+  } 
   }
   
     
