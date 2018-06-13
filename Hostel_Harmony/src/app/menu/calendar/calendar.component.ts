@@ -15,7 +15,7 @@ import { RRule } from 'rrule';
 import {NameSelectService} from '../../services/nameSelect/name-select.service';
 import { staff } from '../../models/staff.model';
 import { resident } from '../../models/resident.model';
-import {MatDialog, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
+import {MatDialog, MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig} from '@angular/material';
 import { dialogPopup } from './dialogPopup.component';
 
 
@@ -270,21 +270,27 @@ public getUserSelected(){
 
   /** Shows a popup with event details */
   eventClicked({ event }: { event: CALtest }): void {
+
     console.log('Event clicked', event);
-    var dialogRef = this.dialog.open(dialogPopup, {
-      height: '350px',
-      data: {
-        header: "אירוע:",
-        title: event.title,
-        start: event.start,
-        end: event.end,
-        type: event.activity
-      }
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.height = "250px";
+    dialogConfig.width = "250px";
+    dialogConfig.data = {
+
+      header: "אירוע:",
+      title: event.title,
+      start: event.start,
+      end: event.end,
+      type: event.activity
+
+    }
+    var dialogRef = this.dialog.open(dialogPopup, dialogConfig) 
       
-    });
-    
+    };
+
   } 
-}
+
 
 interface RecurringEvent {
   title: string;
