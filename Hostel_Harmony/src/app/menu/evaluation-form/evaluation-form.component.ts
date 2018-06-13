@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, SimpleChange } from '@angular/core';
+import { Component, OnInit,Input, SimpleChange, OnChanges } from '@angular/core';
 import { EvalForm} from '../../models/eval-form.model'
 import {NgModel,FormGroup,FormArray,FormBuilder ,FormControl} from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
@@ -10,7 +10,7 @@ import { resident } from '../../models/resident.model';
   templateUrl: './evaluation-form.component.html',
   styleUrls: ['./evaluation-form.component.css']
 })
-export class EvaluationFormComponent implements OnInit {
+export class EvaluationFormComponent implements OnInit,OnChanges {
   @Input()//for getting name wanted
   name:string;
   myForm: FormGroup;
@@ -29,17 +29,16 @@ export class EvaluationFormComponent implements OnInit {
     );
   }
   ngOnInit() {
+    this.myForm = this.fb.group({
+      semiGoal: this.fb.array(
+        [this.buildSemiGoal('')])
+    })
     this.btnview=false;
     this.nameSel.feval.subscribe(resident => this.resident = resident);
 
     this.copy = Object.assign({}, this.resident);
     this.pageMode = "viewMode"; 
     this.enterExistingEvents(this.resident.evals[0])
-
-    this.myForm = this.fb.group({
-      semiGoal: this.fb.array(
-        [this.buildSemiGoal('')])
-    })
   }
   ngOnChanges(changes:{[propKey:string]:SimpleChange}){
     for(let na in changes){

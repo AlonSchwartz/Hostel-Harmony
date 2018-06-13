@@ -9,6 +9,11 @@
     padding-bottom: 10px;
     padding-top: 10px;
 }
+.grp{
+  border: 1px solid white;
+  border-radius: 15px;
+  padding:5px;
+}
 label {
     /* float:right; */
     direction: rtl;

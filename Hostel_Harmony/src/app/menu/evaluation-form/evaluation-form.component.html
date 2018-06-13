@@ -13,7 +13,7 @@
         </div>
         <hr>
 
-        <div [formGroup]="myForm" class="form-group">
+        <div [formGroup]="myForm" class="form-group grp">
             <fieldset formArrayName="semiGoal"  >
                 <div class="form-group" 
                 *ngFor="let item of myForm.get('semiGoal').controls; let i=index"
@@ -27,7 +27,7 @@
                         <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].goal }}</span>
                     </div>
                     <hr>
-                    <fieldset formArrayName="acts" class="form-group">
+                    <fieldset formArrayName="acts" class="form-group grp">
                         <div class="form-group" 
                         *ngFor="let item of myForm.get('semiGoal').at(i).get('acts').controls; let j=index"
                         [formGroup]="item">
@@ -42,7 +42,7 @@
                                 <label [attr.for]="'caretaker'+j">יום ושעה + מלווה</label>
                                 <input [ngClass]="pageMode" [attr.id]="'caretaker'+j" formControlName="caretaker" type="text" class="form-control" id="caretaker" [(ngModel)]="model.semiGoal[i].acts[j].caretaker" name="caretaker">
                                 <br>
-                                <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].acts[j].action.caretaker }}</span>
+                                <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].acts[j].caretaker }}</span>
                             </div>
                             <div class="col-sm-1 py-1">
                                 <button *ngIf="btnview" type="button" class="btn" style="color:black"
