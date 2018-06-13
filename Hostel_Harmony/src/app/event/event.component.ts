@@ -50,8 +50,6 @@ export class EventComponent implements OnInit {
       {value: 'add', viewValue: ' הוסף אירוע חדש  +',color:'white'},
     ];
     */
-    // TODO: Remove this when we're done
-    get diagnostic() { return JSON.stringify(this.model); }
     
     constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
       this.userService.getEventTypes().then(()=> this.types = this.userService.eventTypes);

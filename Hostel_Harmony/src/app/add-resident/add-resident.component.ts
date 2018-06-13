@@ -20,8 +20,6 @@ export class AddResidentComponent implements OnInit {
   private model: resident ;
   private submitted: boolean;
   myForm: FormGroup;
-  // TODO: Remove this when we're done--->testing purposes
-  get diagnostic() { return JSON.stringify(this.model); }
 
   constructor(private fb:FormBuilder, private userService: UserService, public router: Router ) {
     this.submitted = false;

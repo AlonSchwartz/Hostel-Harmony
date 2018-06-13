@@ -2,9 +2,12 @@
 .container{
     background: rgba(34,34,34,0.75);
     border-radius: 15px;
+    font-size: 12px;
     color:white;
     direction: rtl;
     text-align: right;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 label {
     /* float:right; */
@@ -57,3 +60,27 @@ form input[type=text] {
   form .displayValue.editMode {
     display:none;
   }
+  
+  .viewButton.viewMode {
+    display:auto;
+  
+  }
+  
+  .viewButton.editMode {
+    display:none;
+  
+  }
+  
+  .editButton.viewMode {
+    display:none;
+  }
+  
+  .editButton.editMode {
+    display:auto;
+  }
+  .editButton , .viewButton{
+    color:black;
+    border-radius: 15px;
+
+  }
+  

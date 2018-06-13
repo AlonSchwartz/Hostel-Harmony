@@ -35,8 +35,6 @@ export class AddStaffComponent implements OnInit {
   
   private model: staff ;
   private submitted: boolean;
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
   
   constructor(private userService: UserService, public router: Router ) {
     this.submitted = false;
