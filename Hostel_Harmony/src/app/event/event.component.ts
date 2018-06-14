@@ -27,7 +27,7 @@ import { CalendarEvent } from 'angular-calendar';
 export class EventComponent implements OnInit {
   private date: Date = new Date();
   
-  private model = {start: this.date, end: this.date, title: "", issuer: "", activity:{value:"", viewValue:"",color:""}} as CALtest ;
+  private model = {start: this.date, end: this.date, title: "", issuer: "", activity:{value:"", viewValue:"",color:""}, color: {primary: '', secondary: ''}} as CALtest ;
   private submitted: boolean;
   private customActivity:string;
   private newEventTypeSubmited:boolean=false;
@@ -39,15 +39,17 @@ export class EventComponent implements OnInit {
   private test: CalendarEvent;
   test2: CALtest;
   
-
     
     constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
       this.userService.getEventTypes().then(()=> this.types = this.userService.eventTypes);
       this.submitted = false;
       this.customActivity=null;
       console.log(this.model);
-      
     }
+
+     // TODO: Remove this when we're done
+   get diagnostic() { return JSON.stringify(this.model); }
+   
     ngOnInit() {
       this.nameSel.cm.subscribe(user => this.user = user);
       if(this.user==null){

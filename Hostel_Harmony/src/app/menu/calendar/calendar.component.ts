@@ -18,7 +18,20 @@ import { resident } from '../../models/resident.model';
 import {MatDialog, MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig} from '@angular/material';
 import { dialogPopup } from './dialogPopup.component';
 
-
+// const colors: any = {
+//   red: {
+//     primary: '#ad2121',
+//     secondary: '#FAE3E3'
+//   },
+//   blue: {
+//     primary: '#1e90ff',
+//     secondary: '#D1E8FF'
+//   },
+//   yellow: {
+//     primary: '#e3bc08',
+//     secondary: '#FDF1BA'
+//   }
+// };
 
 @Component({
   selector: 'app-calendar',
@@ -46,9 +59,9 @@ export class CalendarComponent implements OnInit,OnChanges {
   constructor(private nameSel: NameSelectService,public dialog: MatDialog ){
     // console.log(this.events);
   }
-
-
-// Declarations & Initializations
+  
+  
+  // Declarations & Initializations
   locale: string = 'he';
   weekStartsOn: number = DAYS_OF_WEEK.SUNDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
@@ -87,6 +100,7 @@ recurringEvents: RecurringEvent[] = [
     rrule: {
       freq: RRule.WEEKLY,
       byweekday: [RRule.MO],
+      
     },},
     {	  title: 'Recurs works? Just a test.',
     rrule: {
@@ -95,34 +109,34 @@ recurringEvents: RecurringEvent[] = [
     }
     
 	}];
-
-ngOnInit() {
-  this.updateCalendarEvents();
-  // console.log(new Date(this.inpEve.settime.start))
-}
-/**allow page to wait until a person is passed to calendar, only then will the function run */
-ngOnChanges(changes:{[propKey:string]:SimpleChange}){
-  for(let na in changes){
-    let rec=changes[na];
-    let temp=JSON.stringify(rec.currentValue);
-    if(!rec.isFirstChange()){
-      this.getUserSelected();
-      this.changeView(this.selected);
+  
+  ngOnInit() {
+    this.updateCalendarEvents();
+    // console.log(new Date(this.inpEve.settime.start))
+  }
+  /**allow page to wait until a person is passed to calendar, only then will the function run */
+  ngOnChanges(changes:{[propKey:string]:SimpleChange}){
+    for(let na in changes){
+      let rec=changes[na];
+      let temp=JSON.stringify(rec.currentValue);
+      if(!rec.isFirstChange()){
+        this.getUserSelected();
+        this.changeView(this.selected);
+      }
     }
   }
-}
-
-/**Saves the information of selected person*/
-public getUserSelected(){
-  //this.events=[];//empty arrey of current user, need to keep reaccuring events(from database!)
-  this.nameSel.cm.subscribe(selected => this.selected = selected);
-  if(this.selected==null){
-    alert('no user entered')
+  
+  /**Saves the information of selected person*/
+  public getUserSelected(){
+    //this.events=[];//empty arrey of current user, need to keep reaccuring events(from database!)
+    this.nameSel.cm.subscribe(selected => this.selected = selected);
+    if(this.selected==null){
+      alert('no user entered')
+    }
+    // this.addEventToCal(this.selected.events);
   }
-  // this.addEventToCal(this.selected.events);
-}
-
-
+  
+  
   /** Updating the events view according to selected person */
   updateCalendarEvents(): void {
     //this.events = [];
@@ -180,10 +194,10 @@ public getUserSelected(){
     console.log(per);
     for(i=0; i<per.events.length;i++)
     {
-     
+      
       per.events[i].start = new Date(per.events[i].start)
       per.events[i].end = new Date(per.events[i].end)
-
+      
       if(event.start.getDay() ==  per.events[i].start.getDay() ) // In case starting days is equals
       {
         // In case the new event coincides with (at least) the starting time of existing event. 
@@ -234,7 +248,7 @@ public getUserSelected(){
     }    
     console.log(this.selected);
     let d = new Date();////2
-
+    
     let i = 0;
     
     if (this.selected.events.length == 0){
@@ -252,8 +266,12 @@ public getUserSelected(){
         //console.log(this.selected.events[i].start);
         this.events[i].end = new Date(this.events[i].end);///2
         this.events[i].title = this.selected.events[i].describe;/////2 
-       console.log(this.events[i])
-       //this.events[i].color.primary = this.selected.events[i].activity.color;
+        console.log(this.events[i])
+        if (this.events[i].color != null){ // delete this line after changing persons on Database
+
+       this.events[i].color.secondary = this.selected.events[i].activity.color;
+        this.events[i].color.primary = this.selected.events[i].activity.color;
+        }
       }
     }
     this.updateCalendarEvents();
@@ -267,29 +285,34 @@ public getUserSelected(){
     this.allEvents = this.events;
     this.refresh.next();
   }
-
+  
   /** Shows a popup with event details */
   eventClicked({ event }: { event: CALtest }): void {
-
+    
     console.log('Event clicked', event);
+  
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.height = "250px";
     dialogConfig.width = "250px";
-    dialogConfig.data = {
 
+    dialogConfig.data = {
+    
       header: "אירוע:",
       title: event.title,
       start: event.start,
       end: event.end,
-      type: event.activity
-
+      type: event.activity,
+      issuer: event.issuer,
+      
     }
     var dialogRef = this.dialog.open(dialogPopup, dialogConfig) 
-      
-    };
+    // this.dialog.open(MyDialogComponent, { panelClass: 'custom-dialog-container' })
 
-  } 
+    
+  };
+  
+} 
 
 
 interface RecurringEvent {

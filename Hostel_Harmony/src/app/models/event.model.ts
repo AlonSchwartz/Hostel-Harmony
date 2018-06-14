@@ -20,5 +20,5 @@ export interface CALtest extends CalendarEvent{
     asign: boolean,
     issuer:string,
     activity?: ActivityTypes,
-    describe?: string,
+    describe?: string
     }
