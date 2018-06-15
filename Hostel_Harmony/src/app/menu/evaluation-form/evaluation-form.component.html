@@ -1,78 +1,86 @@
 
 <div class="container">
         <h2>טופס הערכה עבור: {{name}}</h2>
-    {{diagnostic}}
     <h1>מטרות ויעדי התוכנית השיקומית</h1>
     <hr>
 
-    <form (ngSubmit)="subGoal(evalForm.value)" #evalForm="ngForm">
-      <div class="form-group">
-        <label for="mainGoal">מטרת העל: (גם כמדד ליכולת ראייה ותכנון קדימה)</label>
-        <input type="text" [ngClass]="pageMode" class="form-control" id="mainGoal" [(ngModel)]="model.mainGoal" name="mainGoal">
-        <br>
-        <span class="displayValue" [ngClass]="pageMode">{{ model.mainGoal }}</span>
+    <form (ngSubmit)="subGoal()" #evalForm="ngForm">
+        <div class="form-group">
+            <label for="mainGoal">מטרת העל: (גם כמדד ליכולת ראייה ותכנון קדימה)</label>
+            <input type="text" [ngClass]="pageMode" class="form-control" id="mainGoal" [(ngModel)]="model.mainGoal" name="mainGoal">
+            <br>
+            <span class="displayValue" [ngClass]="pageMode">{{ model.mainGoal }}</span>
         </div>
-      <hr>
+        <hr>
 
-      <div [formGroup]="myForm" class="form-group">
-        <fieldset formArrayName="semiGoal"  >
+        <div [formGroup]="myForm" class="form-group grp">
+            <fieldset formArrayName="semiGoal"  >
                 <div class="form-group" 
                 *ngFor="let item of myForm.get('semiGoal').controls; let i=index"
                 [formGroup]="item">
-                <h2>מטרות לטווח קצר ויעדים להשגת המטרה:</h2>
-                <h4>{{i+1}}:</h4>
-                <div class="form-group">
-                    <label [attr.for]="'goal'+i">מטרה</label>
-                    <input [ngClass]="pageMode" [attr.id]="'goal'+i" formControlName="goal" type="text" class="form-control" id="goal" [(ngModel)]="model.semiGoal[i].goal" name="goal">
-                    <br>
-                    <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].goal }}</span>
-                </div>
-    <hr>
-        <fieldset formArrayName="acts" class="form-group">
-                <div class="form-group" 
-                    *ngFor="let item of myForm.get('semiGoal').at(i).get('acts').controls; let j=index"
-                    [formGroup]="item">
-                <h4>{{j+1}}:</h4>
-                <div class="form-group">
-                <label [attr.for]="'action'+j">פעולה</label>
-                <textarea [ngClass]="pageMode" [attr.id]="'action'+j" formControlName="action" type="text" class="form-control" id="action" [(ngModel)]="model.semiGoal[i].acts[j].action" name="action"></textarea>
-                <br>
-                <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].acts[j].action }}</span>
-                </div>
-                <div class="form-group">
-                    <label [attr.for]="'caretaker'+j">יום ושעה + מלווה</label>
-                    <input [ngClass]="pageMode" [attr.id]="'caretaker'+j" formControlName="caretaker" type="text" class="form-control" id="caretaker" [(ngModel)]="model.semiGoal[i].acts[j].caretaker" name="caretaker">
-                    <br>
-                    <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].acts[j].action.caretaker }}</span>
-                </div>
-                 <div class="col-sm-1 py-1">
-                        <button type="button" class="btn" style="color:black"
-                                (click)="myForm.get('semiGoal').at(i).get('acts').removeAt(j);model.semiGoal[i].acts.splice(j,1)">הסר</button>
-                </div> 
-                </div>
-                <button type="button" class="btn btn-primary"
-                (click)="myForm.get('semiGoal').at(i).get('acts').push(buildActs('')); model.semiGoal[i].acts.push(this.buildActs('').value)">לחץ להוספה</button> 
+                    <h2>מטרות לטווח קצר ויעדים להשגת המטרה:</h2>
+                    <h4>{{i+1}}:</h4>
+                    <div class="form-group">
+                        <label [attr.for]="'goal'+i">מטרה</label>
+                        <input [ngClass]="pageMode" [attr.id]="'goal'+i" formControlName="goal" type="text" class="form-control" id="goal" [(ngModel)]="model.semiGoal[i].goal" name="goal">
+                        <br>
+                        <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].goal }}</span>
+                    </div>
+                    <hr>
+                    <fieldset formArrayName="acts" class="form-group grp">
+                        <div class="form-group" 
+                        *ngFor="let item of myForm.get('semiGoal').at(i).get('acts').controls; let j=index"
+                        [formGroup]="item">
+                            <h4>{{j+1}}-></h4>
+                            <div class="form-group">
+                                <label [attr.for]="'action'+j">פעולה</label>
+                                <textarea [ngClass]="pageMode" [attr.id]="'action'+j" formControlName="action" type="text" class="form-control" id="action" [(ngModel)]="model.semiGoal[i].acts[j].action" name="action"></textarea>
+                                <br>
+                                <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].acts[j].action }}</span>
+                            </div>
+                            <div class="form-group">
+                                <label [attr.for]="'caretaker'+j">יום ושעה + מלווה</label>
+                                <input [ngClass]="pageMode" [attr.id]="'caretaker'+j" formControlName="caretaker" type="text" class="form-control" id="caretaker" [(ngModel)]="model.semiGoal[i].acts[j].caretaker" name="caretaker">
+                                <br>
+                                <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].acts[j].caretaker }}</span>
+                            </div>
+                            <div class="col-sm-1 py-1">
+                                <button *ngIf="btnview && checkSizeAct" type="button" class="btn" style="color:black"
+                                (click)="myForm.get('semiGoal').at(i).get('acts').removeAt(j);model.semiGoal[i].acts.splice(j,1)">הסר פעולה</button>
+                            </div> 
+                        </div>
+                        <button *ngIf="btnview" type="button" class="btn btn-primary"
+                        (click)="myForm.get('semiGoal').at(i).get('acts').push(buildActs('')); model.semiGoal[i].acts.push(this.buildActs('').value)">לחץ להוספת פעולה</button> 
                 
-        </fieldset>
-        <hr>
-        <div class="form-group">
-            <label [attr.for]="'how'+i">איך נדע שהמטרה הושגה? (מבחן התוצאה/גילה יוזמה בתחום ללא תזכורת וכו'</label>
-            <input [ngClass]="pageMode" [attr.id]="'how'+i" formControlName="how" type="text" class="form-control" id="caretaker" [(ngModel)]="model.semiGoal[i].how" name="how">
-            <br>
-            <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].how }}</span>
-        </div>
-        <div class="col-sm-1 py-1">
-                <button type="button" class="btn" style="color:black"
-                        (click)="myForm.get('semiGoal').removeAt(i);model.semiGoal.splice(i,1)">הסר</button>
-        </div>
-        <button type="button" class="btn btn-primary"
-        (click)="myForm.get('semiGoal').push(buildSemiGoal('')); model.semiGoal.push(this.buildSemiGoal('').value)">לחץ להוספה</button>
+                    </fieldset>
+                    <hr>
+                    <div class="form-group">
+                        <label [attr.for]="'how'+i">איך נדע שהמטרה הושגה? (מבחן התוצאה/גילה יוזמה בתחום ללא תזכורת וכו')</label>
+                        <input [ngClass]="pageMode" [attr.id]="'how'+i" formControlName="how" type="text" class="form-control" id="caretaker" [(ngModel)]="model.semiGoal[i].how" name="how">
+                        <br>
+                        <span class="displayValue" [ngClass]="pageMode">{{ model.semiGoal[i].how }}</span>
+                    </div>
+                    <div class="col-sm-1 py-1">
+                        <button *ngIf="btnview && checkSizeSem" type="button" class="btn" style="color:black"
+                        (click)="myForm.get('semiGoal').removeAt(i);model.semiGoal.splice(i,1)">הסר מטרה</button>
+                    </div>
+                    <button *ngIf="btnview" type="button" class="btn btn-primary"
+                    (click)="myForm.get('semiGoal').push(buildSemiGoal('')); model.semiGoal.push(this.buildSemiGoal('').value)">לחץ להוספת מטרה</button>
          
-    </div>
-    </fieldset>
-</div>
-
-    <hr>  
-    <button type="submit" class="btn btn-success" [disabled]="!evalForm.valid ">שמור</button>
+                </div>
+            </fieldset>
+        </div>
+        <hr>
+        
+            <button [ngClass]="pageMode" type="submit" class="editButton btn-block " >שמור</button>
+        
+        
     </form>
+   
+        <button class="viewButton btn-block" [ngClass]="pageMode" (click)="edit()">ערוך</button>
+        
+    
+        <button class="editButton btn-block" [ngClass]="pageMode" (click)="cancelEdit()">בטל</button>
+  
+    
   </div>

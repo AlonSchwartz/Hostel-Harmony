@@ -1,0 +1,15 @@
+   <div>
+    <div id="head">
+        <h2>{{ data.title }}</h2> 
+        <h4> ב{{ data.start | date:'fullDate':'':'he'}}  </h4>
+        <h4>מתחיל בשעה:   {{ data.start | date:' HH:mm'}} </h4>
+        <h4>נגמר בשעה:  {{ data.end | date:' HH:mm'}}</h4>
+        <h4>סוג: <font color= {{data.type.color}} > {{ data.type.viewValue}} </font></h4> 
+        <br>
+        <h4>האירוע הוזן ע"י {{ data.issuer }} </h4>
+        
+        <button (click)="test(data)"><h4>PRINT DATA</h4></button> <!-- TODO: Delete after this box is done-->
+    </div>
+</div>
+
+<style> #head {text-align: right;} </style>

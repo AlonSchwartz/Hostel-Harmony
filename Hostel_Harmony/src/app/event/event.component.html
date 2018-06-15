@@ -1,9 +1,9 @@
 <div class="container">
-  
-  <h1>
+    {{ diagnostic }}
+
+    <h1>
   הוסף אירוע חדש עבור {{user?.firstName}}
   </h1>
-  {{diagnostic}}
   
   <form (ngSubmit)="subEvent()" #eventForm="ngForm">
       <div class="form-group row" style="direction: rtl">
@@ -28,7 +28,7 @@
       <div class="form-group" >
         <mat-form-field>
           <mat-select  placeholder="סוג פעילות" (click)="edited=false" [(ngModel)]="model.activity" name="activity">
-            <mat-option [style.background]="type.color" *ngFor="let type of types" [value]="type.value">
+            <mat-option [style.background]="type.color" *ngFor="let type of types; let index=i" [value]="type">
                 {{ type.viewValue }}
             </mat-option>
           </mat-select>

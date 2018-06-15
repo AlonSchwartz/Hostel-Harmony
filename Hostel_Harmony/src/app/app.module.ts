@@ -41,7 +41,8 @@ import { FilesComponent } from './menu/files/files.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { DialogFiComponent } from './menu/dialog-fi/dialog-fi.component';
 import { MatDialogModule } from '@angular/material'
-
+import { dialogPopup } from './menu/calendar/dialogPopup.component';
+import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
 
 registerLocaleData(localeFr);
 
@@ -58,7 +59,8 @@ registerLocaleData(localeFr);
     EvaluationFormComponent,
     ViewComponent,
     FilesComponent,
-    DialogFiComponent
+    DialogFiComponent,
+    dialogPopup
   ],
   imports: [BrowserModule,FormsModule,HttpModule,
     MatSelectModule,
@@ -85,6 +87,7 @@ registerLocaleData(localeFr);
     AppRoutingModule,
     HttpModule,
     HttpClientModule,
+    MatDialogModule
   ],
   providers: [
     NameSelectService,
@@ -95,9 +98,11 @@ registerLocaleData(localeFr);
     CalendarComponent,
     HttpModule,
     HttpClientModule,
-    CanActivateRouteGuard],
+    CanActivateRouteGuard,
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}} ],
     entryComponents: [
-      DialogFiComponent
+      DialogFiComponent,
+      dialogPopup
     ],
   bootstrap: [AppComponent]
 })

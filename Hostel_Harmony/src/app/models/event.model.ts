@@ -1,4 +1,6 @@
 import { CalendarEvent } from "angular-calendar";
+import { ActivityTypes } from "./activity-types.model";
+import { EventColor } from "calendar-utils";
 
 export class CalEvent{
     constructor(
@@ -17,6 +19,6 @@ export interface CALtest extends CalendarEvent{
 
     asign: boolean,
     issuer:string,
-    activity?: string,
+    activity?: ActivityTypes,
     describe?: string
     }
