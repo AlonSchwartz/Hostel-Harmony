@@ -10,7 +10,7 @@
             </div>
         </div>
         <hr>
-        <form class="form-signin" >
+        <form class="form-signin" #viewForm="ngForm" (ngSubmit)="viewForm.form.valid && login()" novalidate>
             <span id="reauth-email" class="reauth-email"></span>
             <p class="input_title">Email</p>
             <mat-form-field style = "width: 100%">
@@ -20,9 +20,9 @@
             <p class="input_title">Password</p>
             <mat-form-field style = "width: 100%">
                 <input matInput type="password" id="inputPassword"  [(ngModel)]="pass" name="pass" required>
-                <mat-error *ngIf="wrongPass" >שגיאה,נסה סיסמה אחרת</mat-error>
+                <span class="error"  [hidden]="!wrongPass" > שגיאה,נסה סיסמה אחרת</span>
             </mat-form-field>
-            <button (click)="login()" class="btn btn-lg btn-primary" type="submit">Login</button>
+            <button  class="btn btn-lg btn-primary" type="submit">Login</button>
         </form><!-- /form -->
     </div><!-- /card-container -->
 </div><!-- /container -->

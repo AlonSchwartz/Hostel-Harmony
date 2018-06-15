@@ -16,11 +16,11 @@ export class LoginComponent implements OnInit {
   email:string;
   pass:string;
 
-  wrongPass:boolean;
+  public wrongPass:boolean;
   emailErr = new FormControl('', [Validators.required, Validators.email]);
   getEmailErrorMessage() {
     return this.emailErr.hasError('required') ? 'הכנס כתובת אימייל' :
-    this.emailErr.hasError('email') ? 'אינה כתובת אימייל' :
+    this.emailErr.hasError('email') ? 'כתובת אימייל לא נכונה' :
     '';
   }
   constructor(public authService: AuthService, public router: Router) {this.wrongPass=true }
@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit {
       
   }
   
-  ngOnInit() {    
+  ngOnInit() { 
+    this.wrongPass=false;   
     this.email=null;
     this.pass=null;
     if (this.authService.isLoggedIn){
