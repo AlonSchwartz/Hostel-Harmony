@@ -92,7 +92,7 @@ export class UserService  {
     ];
     
     this.eventType = new ActivityTypes("", "", "");
-    this.recurringEvent = {title:"", describe:"", rrule:{bymonth:-1,bymonthday:-1,freq:RRule.YEARLY }}
+    this.recurringEvent = {title:"", describe:"",color:"", rrule:{bymonth:-1,bymonthday:-1,freq:RRule.YEARLY }}
 
 
     //this.generalSettings.eventTypes = [];

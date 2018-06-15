@@ -319,6 +319,7 @@ recurringEvents: RecurringEvent[] = [
 export interface RecurringEvent {
   title: string;
   describe?: string;
+  color?: any;
   rrule?: {
     freq: RRule.Frequency;
     bymonth?: number;

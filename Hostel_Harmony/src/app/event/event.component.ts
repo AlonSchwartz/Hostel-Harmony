@@ -40,7 +40,7 @@ export class EventComponent implements OnInit {
   private firstAddition:boolean=true;
   private test: CalendarEvent;
   test2: CALtest;
-  private recEvent = {title:"", describe:"", rrule:{bymonth:-1,bymonthday:-1,freq:RRule.YEARLY }} as RecurringEvent;
+  private recEvent = {title:"", describe:"", color:"", rrule:{bymonth:-1,bymonthday:-1,freq:RRule.YEARLY }} as RecurringEvent;
 
   
     
