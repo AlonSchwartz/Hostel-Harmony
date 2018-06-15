@@ -1,6 +1,8 @@
    <div>
     <div id="head">
         <h2>{{ data.title }}</h2> 
+        <div *ngIf="data.asign==true"><h4> <font color= "red"> שים לב! אירוע זה דורש מלווה </font></h4><br></div>
+
         <h4> ב{{ data.start | date:'fullDate':'':'he'}}  </h4>
         <h4>מתחיל בשעה:   {{ data.start | date:' HH:mm'}} </h4>
         <h4>נגמר בשעה:  {{ data.end | date:' HH:mm'}}</h4>

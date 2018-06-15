@@ -7,7 +7,7 @@ import { firebase } from '../../../environments/environment.prod';
 import { FirebaseDatabase } from '@firebase/database-types';
 import { AngularFireDatabase, snapshotChanges } from 'angularfire2/database';
 import { EventComponent } from '../../event/event.component';
-import { CalendarComponent } from '../../menu/calendar/calendar.component';
+import { CalendarComponent, RecurringEvent } from '../../menu/calendar/calendar.component';
 import { CalEvent, CALtest } from '../../models/event.model';
 import { HttpClient } from '@angular/common/http';
 import { Response } from '@angular/http';
@@ -16,6 +16,7 @@ import { LowerCasePipe } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { EvalForm } from '../../models/eval-form.model';
 import { ActivityTypes } from '../../models/activity-types.model';
+import RRule = require('rrule');
 
 
 @Injectable()
@@ -30,7 +31,8 @@ export class UserService  {
   residentNames: string[][] = [[""],["",""]];
   eventTypes: ActivityTypes[] = [];
   eventType: ActivityTypes;
-  
+  recurringEvents: RecurringEvent[]= [];
+  recurringEvent: RecurringEvent;
   
   private testArray: test 
   testing: test[] = []
@@ -43,6 +45,8 @@ export class UserService  {
   public residentsCollection;
   public staffCollection;
   public eventTypesCollection;
+  public RecurringEventsCollection;
+  
   listingDoc: AngularFirestoreDocument<resident>;
   public dcTest;
   res:resident;
@@ -67,6 +71,7 @@ export class UserService  {
     this.residentsCollection = af.collection<any>("residents"); 
     this.staffCollection = af.collection<any>("staff"); 
     this.eventTypesCollection = af.collection<any>("eventTypes");
+    this.RecurringEventsCollection = af.collection<any>("recurringEvents");
     
     // Initializing staff & resident with dummy data, so it won't be undefined
     this.staff = new staff("Ot","ron2",6535, true, "2/4/6", 2, "ffda", "supervisor");
@@ -87,8 +92,9 @@ export class UserService  {
     ];
     
     this.eventType = new ActivityTypes("", "", "");
-    
-    
+    this.recurringEvent = {title:"", describe:"", rrule:{bymonth:-1,bymonthday:-1,freq:RRule.YEARLY }}
+
+
     //this.generalSettings.eventTypes = [];
     /*
     [{value: 'general-0', viewValue: 'כללי',color:'green'},  {value: 'staff-1', viewValue: 'איש צוות',color: 'blue'},
@@ -136,50 +142,58 @@ export class UserService  {
   // Needs testing
   addEvent(per: resident | staff, event: CALtest ): boolean{
     this.setMetaData();
-   
-    if (per.className == "resident"){
-      
-      this.getResidents();
-      this.res = this.residentsUsers[0];   
-      if (this.feasibilityCheck(event,per)){
-        for (let i = 0; i < this.residentUsersList.length ; i++){        
-          if (this.residentUsersList[i].id == per.id){
-            console.log("id equals, resident");
-            per.events.push(event);
-            console.log(per.events)
-            this.residentsCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
-            return true;
-          }
-        }
-      }
-      else {
-        return false;
-      }
-      
-    }
-    if (per.className == "staff"){
-      this.getStaff();
-      this.sta = this.staffUsers[0]; 
-      console.log("=====Debugging====") 
-      console.log(event)
-      console.log(per.events)
-      console.log("=====Debugging====") 
-
-      if (this.feasibilityCheck(event,per)){
-        for (let i = 0; i < this.staffUsersList.length ; i++){        
-          if (this.staffUsersList[i].id == per.id){
-            console.log("id equals, staff");
-            per.events.push(event);
-            this.staffCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
-            return true;
-          }
-        }
-      }
-      else {
-        return false;
-      }
+    
+     if (event.activity.value == "general-0")
+    {
+     this.addRecurringEvent(event)
+     return true;
     }
     
+     else
+    {
+      if (per.className == "resident"){
+        
+        this.getResidents();
+        this.res = this.residentsUsers[0];   
+        if (this.feasibilityCheck(event,per)){
+          for (let i = 0; i < this.residentUsersList.length ; i++){        
+            if (this.residentUsersList[i].id == per.id){
+              console.log("id equals, resident");
+              per.events.push(event);
+              console.log(per.events)
+              this.residentsCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
+              return true;
+            }
+          }
+        }
+        else {
+          return false;
+        }
+        
+      }
+      if (per.className == "staff"){
+        this.getStaff();
+        this.sta = this.staffUsers[0]; 
+        console.log("=====Debugging====") 
+        console.log(event)
+        console.log(per.events)
+        console.log("=====Debugging====") 
+        
+        if (this.feasibilityCheck(event,per)){
+          for (let i = 0; i < this.staffUsersList.length ; i++){        
+            if (this.staffUsersList[i].id == per.id){
+              console.log("id equals, staff");
+              per.events.push(event);
+              this.staffCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
+              return true;
+            }
+          }
+        }
+        else {
+          return false;
+        }
+      }
+    }
     
   }
   
@@ -328,7 +342,7 @@ export class UserService  {
             this.resident.metaem = collection[i].metaem;
             this.resident.evals = collection[i].evals;
             this.resident.events = collection[i].events;
-            this.resident.id = this.residentUsersList[i].id;            
+            this.resident.id = this.residentUsersList[i].id;    
             this.resident.work.info = collection[i].work.info;
             this.resident.work.location = collection[i].work.location;
             this.resident.work.phone = collection[i].work.phone;
@@ -380,111 +394,139 @@ export class UserService  {
       )
     }
     
-    //**************************** TESTING FUNCTIONS ***************************** //
-    storeAtFirestorme(){
-      
-      this.dataCollections.add({hi:"hi"});
-      this.dc.add(JSON.parse(JSON.stringify(this.staff)));
-      alert("Done");
+    /** Adds a new Recurring Event to database */
+    addRecurringEvent(recEvent: RecurringEvent){
+      this.RecurringEventsCollection.add(JSON.parse(JSON.stringify(recEvent)));
     }
     
-    
-    getDataFromFirestome(){
-      this.dc.valueChanges().subscribe(collection =>  {
-        this.dbusers = "";
-        for (var i = 0; i < collection.length ; i++){
+    /** Gets all Recurring Events from database */
+    getrecurringEvents(){
+      return new Promise(resolve=>{
+        this.RecurringEventsCollection.valueChanges().subscribe(collection =>  {
+          this.recurringEvents = [];
+          for (var i = 0; i < collection.length ; i++){
+            
+            this.recurringEvent.title = collection[i].title;
+            console.log(this.recurringEvent);
+            console.log(collection[i]);
+            this.recurringEvent.rrule.bymonth = collection[i].rrule.bymonth;
+            this.recurringEvent.rrule.bymonthday = collection[i].rrule.bymonthday;
+            this.recurringEvent.rrule.byweekday = collection[i].rrule.byweekday;
+            this.recurringEvent.rrule.freq = collection[i].rrule.freq;
+            let copy = Object.assign({}, this.recurringEvent); // push delivers by reference, so we need to copy our object first
+            this.recurringEvents.push(copy);
+          }
+          resolve();    
+        })})
+        
+        
+      }
+      
+      //**************************** TESTING FUNCTIONS ***************************** //
+      storeAtFirestorme(){
+        
+        this.dataCollections.add({hi:"hi"});
+        this.dc.add(JSON.parse(JSON.stringify(this.staff)));
+        alert("Done");
+      }
+      
+      
+      getDataFromFirestome(){
+        this.dc.valueChanges().subscribe(collection =>  {
+          this.dbusers = "";
+          for (var i = 0; i < collection.length ; i++){
+            
+            this.staff2.birthday = collection[i].birthday;
+            this.staff2.calendarID = collection[i].calendarID;
+            this.staff2.email = collection[i].email;
+            this.staff2.firstName = collection[i].firstName;
+            this.staff2.isActive = collection[i].isActive;
+            this.staff2.lastName = collection[i].lastName;
+            this.staff2.phoneNumber = collection[i].phoneNumber;
+            this.staff2.role = collection[i].role;
+            
+            let copy = Object.assign({}, this.staff2); // push delivers by reference, so we need to copy our object first
+            this.staffUsers.push(copy);
+            
+          }
           
-          this.staff2.birthday = collection[i].birthday;
-          this.staff2.calendarID = collection[i].calendarID;
-          this.staff2.email = collection[i].email;
-          this.staff2.firstName = collection[i].firstName;
-          this.staff2.isActive = collection[i].isActive;
-          this.staff2.lastName = collection[i].lastName;
-          this.staff2.phoneNumber = collection[i].phoneNumber;
-          this.staff2.role = collection[i].role;
-          
-          let copy = Object.assign({}, this.staff2); // push delivers by reference, so we need to copy our object first
-          this.staffUsers.push(copy);
+          console.log(this.staffUsers);
           
         }
         
-        console.log(this.staffUsers);
+      )
+      //console.log(this.dbusers);
+      console.log(this.staff2);
+    }
+    /*
+    getAll(){
+      this.staffNames = [];
+      
+      this.staffCollection.valueChanges().subscribe(collection =>  {
+        for (var i = 0; i < collection.length ; i++){
+          this.staffNames[i] = collection[i].firstName + " " + collection[i].lastName;
+        }
+      }
+    )
+    //console.log(this.staffNames);
+    
+    return this.staffNames; 
+  }
+  */
+  
+  check(){
+    this.setMetaData();
+    this.getResidents();
+    this.res = this.residentsUsers[0];
+    let r:string;
+    console.log(this.res);
+    console.log(this.residentUsersList);
+    console.log("=1=1=1=1=1==1")
+    for (let i = 0; i < this.residentUsersList.length ; i++){
+      console.log(this.residentUsersList[i].id);   
+      
+      if (this.residentUsersList[i].caretaker == this.res.caretaker){
+        console.log("00000");
+        
+        console.log(this.residentUsersList[i].id);
+        r = this.residentUsersList[i].id;
+        this.res.birthday = "12/2/05";
+        console.log("-1-");
+        console.log(r);
+        this.dc.doc(JSON.parse(JSON.stringify(r))).update(JSON.parse(JSON.stringify(this.res)));
+        break;
         
       }
-      
-    )
-    //console.log(this.dbusers);
-    console.log(this.staff2);
-  }
-  /*
-  getAll(){
-    this.staffNames = [];
-    
-    this.staffCollection.valueChanges().subscribe(collection =>  {
-      for (var i = 0; i < collection.length ; i++){
-        this.staffNames[i] = collection[i].firstName + " " + collection[i].lastName;
-      }
     }
-  )
-  //console.log(this.staffNames);
-  
-  return this.staffNames; 
-}
-*/
-
-check(){
-  this.setMetaData();
-  this.getResidents();
-  this.res = this.residentsUsers[0];
-  let r:string;
-  console.log(this.res);
-  console.log(this.residentUsersList);
-  console.log("=1=1=1=1=1==1")
-  for (let i = 0; i < this.residentUsersList.length ; i++){
-    console.log(this.residentUsersList[i].id);   
+    console.log(this.residentUsersList);   
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    this.dcTest.update({calendarID: "24"}); // Will change calendarID to 24
+    this.getDataFromFirestome();
+    //this.res = this.getResidents[1];
+    //console.log(this.res);
+    //this.res.birthday = "1/2/3";
+    //this.res.caretaker = "None."
+    //console.log(this.res);
+    console.log("----");
     
-    if (this.residentUsersList[i].caretaker == this.res.caretaker){
-      console.log("00000");
-      
-      console.log(this.residentUsersList[i].id);
-      r = this.residentUsersList[i].id;
-      this.res.birthday = "12/2/05";
-      console.log("-1-");
-      console.log(r);
-      this.dc.doc(JSON.parse(JSON.stringify(r))).update(JSON.parse(JSON.stringify(this.res)));
-      break;
-      
-    }
+    //console.log(this.residentsUsers);
+    console.log("----");
+    //this.res = this.residentsUsers[0];
+    console.log(this.res);
+    console.log("----");
+    this.res.caretaker = "Danny";
+    
+    
+    //this.res.caretaker = "Danny";
+    
+    //this.dcTest.update(JSON.parse(JSON.stringify(this.res)));
+    //this.residentsCollection.doc("").update(JSON.parse(JSON.stringify(this.res))); // TESTEST
+    
+    //console.log(this.dcTest);
+    return this.residentUsersList;
   }
-  console.log(this.residentUsersList);   
-  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-  this.dcTest.update({calendarID: "24"}); // Will change calendarID to 24
-  this.getDataFromFirestome();
-  //this.res = this.getResidents[1];
-  //console.log(this.res);
-  //this.res.birthday = "1/2/3";
-  //this.res.caretaker = "None."
-  //console.log(this.res);
-  console.log("----");
+  //**************************** TESTING FUNCTIONS ***************************** //
   
-  //console.log(this.residentsUsers);
-  console.log("----");
-  //this.res = this.residentsUsers[0];
-  console.log(this.res);
-  console.log("----");
-  this.res.caretaker = "Danny";
-  
-  
-  //this.res.caretaker = "Danny";
-  
-  //this.dcTest.update(JSON.parse(JSON.stringify(this.res)));
-  //this.residentsCollection.doc("").update(JSON.parse(JSON.stringify(this.res))); // TESTEST
-  
-  //console.log(this.dcTest);
-  return this.residentUsersList;
-}
-//**************************** TESTING FUNCTIONS ***************************** //
-
 }
 
 

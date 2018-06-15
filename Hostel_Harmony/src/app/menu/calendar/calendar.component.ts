@@ -293,8 +293,8 @@ recurringEvents: RecurringEvent[] = [
   
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
-    dialogConfig.height = "250px";
-    dialogConfig.width = "250px";
+    //dialogConfig.height = "250px";
+    //dialogConfig.width = "250px";
 
     dialogConfig.data = {
     
@@ -304,6 +304,7 @@ recurringEvents: RecurringEvent[] = [
       end: event.end,
       type: event.activity,
       issuer: event.issuer,
+      asign: event.asign
       
     }
     var dialogRef = this.dialog.open(dialogPopup, dialogConfig) 
@@ -315,8 +316,9 @@ recurringEvents: RecurringEvent[] = [
 } 
 
 
-interface RecurringEvent {
+export interface RecurringEvent {
   title: string;
+  describe?: string;
   rrule?: {
     freq: RRule.Frequency;
     bymonth?: number;

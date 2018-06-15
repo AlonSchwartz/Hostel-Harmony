@@ -16,6 +16,8 @@ import { ActivityTypes } from '../models/activity-types.model'
 import { staff } from '../models/staff.model';
 import { resident } from '../models/resident.model';
 import { CalendarEvent } from 'angular-calendar';
+import { RecurringEvent } from '../menu/calendar/calendar.component';
+import RRule = require('rrule');
 
 @Component({
   selector: 'app-event',
@@ -38,6 +40,8 @@ export class EventComponent implements OnInit {
   private firstAddition:boolean=true;
   private test: CalendarEvent;
   test2: CALtest;
+  private recEvent = {title:"", describe:"", rrule:{bymonth:-1,bymonthday:-1,freq:RRule.YEARLY }} as RecurringEvent;
+
   
     
     constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
@@ -48,7 +52,7 @@ export class EventComponent implements OnInit {
     }
 
      // TODO: Remove this when we're done
-   get diagnostic() { return JSON.stringify(this.model); }
+   get diagnostic() { return JSON.stringify(this.recEvent); }
    
     ngOnInit() {
       this.nameSel.cm.subscribe(user => this.user = user);

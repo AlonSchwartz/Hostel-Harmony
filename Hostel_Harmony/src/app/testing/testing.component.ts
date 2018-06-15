@@ -65,8 +65,10 @@ export class TestingComponent implements OnInit {
     //console.log(this.userService.getStaff());
 //this.userService.residentsCollection.doc(JSON.parse(JSON.stringify("zJ0SMqxj43ZaJgz02NPE"))).update(JSON.parse(JSON.stringify(per)));
 
-console.log(this.userService.getEventTypes());
-console.log(this.userService.eventTypes);
+// console.log(this.userService.getEventTypes());
+// console.log(this.userService.eventTypes);
+console.log(this.userService.getrecurringEvents());
+console.log(this.userService.recurringEvents)
   }
   
   passTest(){
