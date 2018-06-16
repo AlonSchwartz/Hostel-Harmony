@@ -99,7 +99,16 @@ recurringEvents: RecurringEvent[] = [
     title: 'Recurs on the 5th of each month',
     rrule: {
       freq: RRule.WEEKLY,
-      byweekday: [RRule.MO],
+      byweekday: [RRule.TU],
+      //bymonthday: 30,
+      //  bymonth: 0,
+      // interval: 24,
+      byhour: 14,
+      byminute: 32,
+      count: 5,
+      // dtstart: new Date(2018, 5, 12, 18, 10, 0),
+      //until: new Date(2018, 8, 19, 19, 0, 0)
+      
       
     },},
     {	  title: 'Recurs works? Just a test.',
@@ -241,7 +250,7 @@ recurringEvents: RecurringEvent[] = [
   changeView(per: resident|staff){
     this.nameSel.cm.subscribe(selected => this.selected = selected);
     console.log(this.selected)
-    console.log("HELLOoooo")
+    
     if (this.selected == null){
       this.updateCalendarEvents()
       return;
@@ -268,9 +277,9 @@ recurringEvents: RecurringEvent[] = [
         this.events[i].title = this.selected.events[i].describe;/////2 
         console.log(this.events[i])
         if (this.events[i].color != null){ // delete this line after changing persons on Database
-
-       this.events[i].color.secondary = this.selected.events[i].activity.color;
-        this.events[i].color.primary = this.selected.events[i].activity.color;
+          
+          this.events[i].color.secondary = this.selected.events[i].activity.color;
+          this.events[i].color.primary = this.selected.events[i].activity.color;
         }
       }
     }
@@ -290,14 +299,14 @@ recurringEvents: RecurringEvent[] = [
   eventClicked({ event }: { event: CALtest }): void {
     
     console.log('Event clicked', event);
-  
+    
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     //dialogConfig.height = "250px";
     //dialogConfig.width = "250px";
-
-    dialogConfig.data = {
     
+    dialogConfig.data = {
+      
       header: "אירוע:",
       title: event.title,
       start: event.start,
@@ -309,7 +318,7 @@ recurringEvents: RecurringEvent[] = [
     }
     var dialogRef = this.dialog.open(dialogPopup, dialogConfig) 
     // this.dialog.open(MyDialogComponent, { panelClass: 'custom-dialog-container' })
-
+    
     
   };
   
@@ -325,6 +334,17 @@ export interface RecurringEvent {
     bymonth?: number;
     bymonthday?: number;
     byweekday?: RRule.Weekday[];
+    byhour?: number;
+    interval?: number,
+    dtstart?: Date,
+    byminute?: number,
+    count?: number, // How many occurrences will be generated overall
+    until?: Date
+
+    // RRule arugments can be null.
+    
+    
+    
   };
 }
 

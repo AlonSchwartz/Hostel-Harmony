@@ -33,7 +33,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div class="form-group row" style="direction: rtl" *ngIf="model.activity=='add' && !edited">
+        <div class="form-group row" style="direction: rtl" *ngIf="model.activity.value=='add' && !edited">
             <div class="col-sm-2">
               <label for="color" >בחר צבע</label>
               <input [(colorPicker)]="color" [style.background]="color" [cpPosition]="'bottom'" class="form-control" />
