@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     this.emailErr.hasError('email') ? 'כתובת אימייל לא נכונה' :
     '';
   }
-  constructor(public authService: AuthService, public router: Router) {this.wrongPass=true }
+  constructor(public authService: AuthService, public router: Router) { }
   
   async login(){  
     await this.authService.loginWithEmailAndPassword(this.email,this.pass).then((res)=>{this.router.navigateByUrl('menu');}).catch((err)=>this.wrongPass=true);
