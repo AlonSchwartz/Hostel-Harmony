@@ -10,16 +10,16 @@
         <div class="col-sm-3">
           <label>
             שעת התחלה:
-            <input placeholder="בחר שעה ותאריך..." [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
-                   [selectMode]="'rangeFrom'" [owlDateTime]="dt4" required [(ngModel)]="model.start" name="start">
+            <input placeholder="בחר שעה ותאריך..." [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12" (click)="enableEndDatePicker()"
+                   [selectMode]="'rangeFrom'" [owlDateTime]="dt4" required [(ngModel)]="model.start" name="start" [(ngModel)] = "min"  >
             <owl-date-time #dt12></owl-date-time>
           </label>
         </div>
         <div class="col-sm-3">
           <label>
           שעת סיום:
-              <input placeholder="בחר שעה ותאריך..." [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
-                   [selectMode]="'rangeTo'" required [(ngModel)]="model.end" name="end">
+              <input placeholder="בחר שעה ותאריך..."  (click)="blockPrevTime()" [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"  [disabled]="disabledDateButton"
+                   [selectMode]="'rangeTo'" required [(ngModel)]="model.end" name="end" [min]="min">
               <owl-date-time #dt13></owl-date-time>
           </label>
         </div>
