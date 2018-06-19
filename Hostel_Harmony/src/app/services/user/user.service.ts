@@ -354,11 +354,12 @@ export class UserService  {
       )
     }
     /**works only when users are loaded to components */
-    public getSelectedUser(selected:string,names:string[], user:resident[]|staff[]){
+    public getSelectedUser(selected:string[],names:string[][], user:resident[]|staff[]){
       let sel=null;
+      
       for (var i=0; i<user.length; i++)
       {
-        if(selected===names[i] ){
+        if(selected[1]=== user[i].id ){
           sel=user[i];
         }
       }

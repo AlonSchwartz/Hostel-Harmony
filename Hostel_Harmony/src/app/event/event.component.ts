@@ -51,7 +51,8 @@ export class EventComponent implements OnInit {
 
   private recEvent = {title:"", color:"skyblue", rrule:{bymonth:-1,bymonthday:-1,byhour:-1, byweekday:[],until:new Date(),byminute:-1 ,freq:RRule.YEARLY }} as RecurringEvent;
 
-  
+  public min: Date;
+  public disabledDateButton: boolean=true;
   
     
   constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
@@ -68,22 +69,35 @@ export class EventComponent implements OnInit {
       {name:'שבת', value:RRule.SA, checked:false}
     ];
     this.monthNday();
-    }
+  }
+  
+  // TODO: Remove this when we're done
+  get diagnostic() { return JSON.stringify(this.recEvent); }
+  
+  /** Blocking the option to select days that are earlier that selected start time (day+exact time in hours, minutes)
+  * @param min: selected start day
+  */
+  blockPrevTime(){
+    this.min= new Date(this.min);
+    this.min.setMinutes(this.min.getMinutes()+1); //An event must be at least 1 minute, so we're adding it here
+  }
+  
+  enableEndDatePicker(){
+      this.disabledDateButton = false;
+  }
+  
+  ngOnInit() {
+    this.nameSel.cm.subscribe(user => this.user = user);
+    if(this.user==null){
+      this.router.navigateByUrl('menu');
+    }      
+  }
 
-     // TODO: Remove this when we're done
-   get diagnostic() { return JSON.stringify(this.recEvent); }
-   
-    ngOnInit() {
-      this.nameSel.cm.subscribe(user => this.user = user);
-      if(this.user==null){
-        this.router.navigateByUrl('menu');
-      }      
+  addActivity(val:string,color:string){
+    if (this.firstAddition){
+      this.newEventIndex = this.types.length;
+      this.firstAddition=false;
     }
-    addActivity(val:string,color:string){
-      if (this.firstAddition){
-        this.newEventIndex = this.types.length;
-        this.firstAddition=false;
-      }
       this.types.push(new ActivityTypes(val,val,color));
       this.newEventTypeSubmited=true;
       this.edited=true;
@@ -124,7 +138,7 @@ export class EventComponent implements OnInit {
         alert("האירוע נוסף בהצלחה");
         this.router.navigateByUrl('menu');
       }
-    }
+  }
     monthNday(){
       for(let i=0;i<=30;i++){
         if(i<12){
