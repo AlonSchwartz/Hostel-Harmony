@@ -1,7 +1,7 @@
 .container{
     background: rgba(34,34,34,0.75);
     border-radius: 15px;
-    font-size: 12px;
+    font-size: 16px;
     color:white;
     direction: rtl;
     text-align: right;
@@ -66,6 +66,9 @@ form label {
   }
   .editButton , .viewButton{
     color:black;
+    border-radius: 15px;
+  
+    
   }
   ::ng-deep .mat-input-wrapper{
     width:60px !important;

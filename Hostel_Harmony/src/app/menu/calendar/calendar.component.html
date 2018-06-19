@@ -1,9 +1,9 @@
-<h2 [hidden] = "name=='יומנים'"> היומן של {{name}}</h2>
+<h2 style="text-align: right" [hidden] = "name=='יומנים'"> היומן של {{name}}</h2>
 <div id="calendar" >
 	<div id = "backToWeek">
 		<div  class="row text-center">
 			<div  class="col-md-4">
-				<button class="BTNbackToWeek btn font-weight-bold text-right text-white" (click)="backToWeekView()">תצוגה שבועית</button>
+				<button class="BTNbackToWeek btn font-weight-bold text-right text-white" *ngIf="view!='week'" (click)="backToWeekView()">תצוגה שבועית</button>
 			</div>
 			<div class="col-md-4">
 				<h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'he' }}</h3>

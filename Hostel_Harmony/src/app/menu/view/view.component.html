@@ -5,11 +5,7 @@
         <div *ngIf="selected.className=='staff'">
         <p>
           <label for="nameInput">שם ומשפחה:</label>
-          <input type="text" id="nameInput" name="nameInput"  [ngClass]="pageMode" [(ngModel)]="selected.firstName" required #nameInput="ngModel"/>
-          <input type="text" id="lastInput" name="lastInput"  [ngClass]="pageMode" [(ngModel)]="selected.lastName" required #lastInput="ngModel"/>
-          <span class="error"  [hidden]="nameInput.valid || !nameInput.errors.required">נדרש שם פרטי</span>
-          <span class="error"  [hidden]="lastInput.valid || !lastInput.errors.required">נדרש שם משפחה</span>
-          <span class="displayValue" [ngClass]="pageMode">{{selected.firstName}} {{ selected.lastName }}</span>
+          <span class="displayValue" >{{selected.firstName}} {{ selected.lastName }}</span>
       </p>
       <p>
           <label for="accountNumberInput">מספר טלפון :</label>
@@ -41,11 +37,8 @@
     <div *ngIf="selected.className=='resident'">
         <p>
             <label for="nameInput1">שם ומשפחה:</label>
-            <input type="text" id="nameInput1" name="nameInput1"  [ngClass]="pageMode" [(ngModel)]="selected.firstName" required #nameInput1="ngModel"/>
-            <input type="text" id="lastInput1" name="lastInput1"  [ngClass]="pageMode" [(ngModel)]="selected.lastName" required #lastInput1="ngModel"/>
-            <span class="error"  [hidden]="nameInput1.valid || !nameInput1.errors.required">נדרש שם פרטי</span>
-            <span class="error"  [hidden]="lastInput1.valid || !lastInput1.errors.required">נדרש שם משפחה</span>
-            <span class="displayValue" [ngClass]="pageMode">{{selected.firstName}} {{ selected.lastName }}</span>
+            
+            <span class="displayValue" >{{selected.firstName}} {{ selected.lastName }}</span>
         </p>
         <p>
             <label for="birthday">גיל:</label>
@@ -130,14 +123,18 @@
             {{ selected.contacts[i].phone }}</span>      
         </div>
     </fieldset>
-</div>
     </div>
-
-        <button type="submit" class="editButton" [ngClass]="pageMode" form="viewForm"  [disabled]="viewForm.invalid">שמור שינויים</button>
+</div>
+<p>
+        <label for="isActive">האם פעיל:</label>
+        <button type="button" *ngIf="pageMode==='editMode' && selected.isActive===true" (click)="alertUser()" class="btn btn-danger">הסר</button>
+        <span class="displayValue" [ngClass]="pageMode" >{{ checkActive }}</span>
+</p>
+        <button type="submit" class="editButton btn-block" [ngClass]="pageMode" form="viewForm"  [disabled]="viewForm.invalid">שמור שינויים</button>
   
      
   </form> 
-  <button class="editButton" [ngClass]="pageMode" (click)="cancelEdit()">לביטול</button>
-  <button class="viewButton" [ngClass]="pageMode" (click)="editUser()">ערוך פרטים</button>
+  <button class="editButton btn-block" [ngClass]="pageMode" (click)="cancelEdit()">לביטול</button>
+  <button class="viewButton btn-block" [ngClass]="pageMode" (click)="editUser()">ערוך פרטים</button>
   
 </div>

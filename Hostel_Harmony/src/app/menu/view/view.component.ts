@@ -24,7 +24,6 @@ export class ViewComponent implements OnInit,OnChanges {
     this.nameSel.cm.subscribe(selected => this.selected = selected);
     this.pageMode = "viewMode";
     this.enterCont();
-    
   }
   ngOnChanges(changes:{[propKey:string]:SimpleChange}){
     for(let na in changes){
@@ -33,6 +32,7 @@ export class ViewComponent implements OnInit,OnChanges {
       if(!rec.isFirstChange()){
         this.nameSel.cm.subscribe(selected => this.selected = selected);
         this.enterCont();
+        this.pageMode = "viewMode";
       }
     }
   }
@@ -78,8 +78,6 @@ export class ViewComponent implements OnInit,OnChanges {
   }
   
   editUser() : void {
-    
-    
     console.log(this.copy)
     this.pageMode = "editMode";
   }
@@ -93,6 +91,18 @@ export class ViewComponent implements OnInit,OnChanges {
   cancelEdit() : void {
     this.selected=JSON.parse(JSON.stringify(this.copy))
     this.pageMode = "viewMode";
+  }
+  alertUser(){
+    if(confirm('האם אתה בטוח שברצונך להסיר? \n אם כן- אשר ושמור שינויים')){
+      this.selected.isActive=false;
+    }
+  }
+  get checkActive(){
+    
+    if(this.selected.isActive){
+      return 'כן';
+    }
+    return 'לא' ;
   }
 
 }

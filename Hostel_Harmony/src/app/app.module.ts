@@ -43,6 +43,8 @@ import { DialogFiComponent } from './menu/dialog-fi/dialog-fi.component';
 import { MatDialogModule } from '@angular/material'
 import { dialogPopup } from './menu/calendar/dialogPopup.component';
 import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCardModule } from '@angular/material/card';
 
 registerLocaleData(localeFr);
 
@@ -63,6 +65,8 @@ registerLocaleData(localeFr);
     dialogPopup
   ],
   imports: [BrowserModule,FormsModule,HttpModule,
+    MatRadioModule,
+    MatCardModule,
     MatSelectModule,
     MatDialogModule,
     ColorPickerModule,

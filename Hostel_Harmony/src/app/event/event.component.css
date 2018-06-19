@@ -3,10 +3,13 @@
     border-radius: 7px;
     color:rgb(10, 4, 4);
     direction: rtl;
-    font-size: 12px;
+    font-size: 16px;
     text-align: right;
     margin-top: 10px;
 }
+.error {
+    color:red;
+  }
 .mat-form-field{
     text-align: inherit;
 }
@@ -38,3 +41,15 @@ input,textarea {
     direction: rtl;
     margin-left: 75%;
 }
+.example-radio-group {
+    display: inline-flex;
+    flex-direction: row;
+  }
+  
+  .example-radio-button {
+    margin: 5px;
+  }
+  
+  .example-selected-value {
+    margin: 15px 0;
+  }

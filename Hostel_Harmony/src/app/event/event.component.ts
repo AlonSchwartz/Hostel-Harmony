@@ -18,14 +18,15 @@ import { resident } from '../models/resident.model';
 import { CalendarEvent } from 'angular-calendar';
 import { RecurringEvent } from '../menu/calendar/calendar.component';
 import RRule = require('rrule');
+ import { MatRadioButton }  from '@angular/material/radio' ;
 
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
-  styleUrls: ['./event.component.css']
+  styleUrls: ['./event.component.css'],
+  moduleId:module.id
 })
 // TODO: check required fields
-//       try to extract time or date from ISO format in json - use Date function!
 export class EventComponent implements OnInit {
   private date: Date = new Date();
   
@@ -35,20 +36,38 @@ export class EventComponent implements OnInit {
   private newEventTypeSubmited:boolean=false;
   user:staff|resident;
   types :ActivityTypes[]=[];
+
+  days:number[]=[];
+  months:number[]=[];
   private newEventIndex = -1;
   public edited:boolean=false;
   private firstAddition:boolean=true;
   private test: CalendarEvent;
   test2: CALtest;
-  private recEvent = {title:"", describe:"", color:"", rrule:{bymonth:-1,bymonthday:-1,freq:RRule.YEARLY }} as RecurringEvent;
+  weekdayArr:any[]=[];
+  selRecc: string='';
+  repeating = ['יומי','שבועי','חודשי',];
+
+
+  private recEvent = {title:"", color:"skyblue", rrule:{bymonth:-1,bymonthday:-1,byhour:-1, byweekday:[],until:new Date(),byminute:-1 ,freq:RRule.YEARLY }} as RecurringEvent;
 
   
+  
     
-    constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
-      this.userService.getEventTypes().then(()=> this.types = this.userService.eventTypes);
-      this.submitted = false;
-      this.customActivity=null;
-      console.log(this.model);
+  constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
+    this.userService.getEventTypes().then(()=> this.types = this.userService.eventTypes);
+    this.submitted = false;
+    this.customActivity=null;
+    this.weekdayArr=[
+      {name:'ראשון', value:RRule.SU, checked:false},
+      {name:'שני', value:RRule.MO, checked:false},
+      {name:'שלישי', value:RRule.TU, checked:false},
+      {name:'רביעי', value:RRule.WE, checked:false},
+      {name:'חמישי', value:RRule.TH, checked:false},
+      {name:'שישי', value:RRule.FR, checked:false},
+      {name:'שבת', value:RRule.SA, checked:false}
+    ];
+    this.monthNday();
     }
 
      // TODO: Remove this when we're done
@@ -86,10 +105,19 @@ export class EventComponent implements OnInit {
         
         // this.userService.updateEventTypes(this.types[2]);
       }
-      //console.log(this.model)
+
+
+      
       this.model.start = new Date(this.model.start);
       this.model.end = new Date(this.model.end);
-      //console.log(this.model)
+      /**input values in recEvent */
+      this.chooseFreq();
+      this.recEvent.rrule.byhour = this.model.start.getHours();
+      this.recEvent.rrule.byminute = this.model.start.getMinutes();
+      this.recEvent.title=this.model.describe;
+      this.recEvent.rrule.until=this.model.end;
+      this.recEvent.rrule.byweekday=this.selectedOptions;
+      /** */
       let answer = this.userService.addEvent(this.user, this.model);
       if (answer)
       {
@@ -97,5 +125,29 @@ export class EventComponent implements OnInit {
         this.router.navigateByUrl('menu');
       }
     }
-    
+    monthNday(){
+      for(let i=0;i<=30;i++){
+        if(i<12){
+          this.months.push(i+1);
+        }
+        this.days.push(i+1);
+      }
+    }
+    chooseFreq(){
+      if(this.selRecc==='יומי'){
+        this.recEvent.rrule.freq=RRule.DAILY;
+      }
+      else if(this.selRecc==='שבועי'){
+        this.recEvent.rrule.freq=RRule.WEEKLY;
+      }
+      else if(this.selRecc==='חודשי'){
+        this.recEvent.rrule.freq=RRule.MONTHLY;
+      }
+    }
+
+    get selectedOptions() {
+      return this.weekdayArr
+                .filter(opt => opt.checked)
+                .map(opt => opt.value)
+    }
   }

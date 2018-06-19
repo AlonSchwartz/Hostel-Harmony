@@ -15,7 +15,6 @@ export class resident {
         public metaem:string,
         public memberSince: string, // Need to check this type... 
         public hasWork: boolean,
-        //public hasLegalGuardian: boolean, // does this resident have Apotropus
         public contacts: {rel:string,name:string,phone:number}[],
         public work: {info:string,phone:number,location:string}, // only if hasWork is TRUE
         public doctors: {psych:string, gp:string}, // family doctor and 2nd doctor
