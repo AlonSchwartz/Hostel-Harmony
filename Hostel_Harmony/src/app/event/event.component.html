@@ -10,7 +10,7 @@
         <div class="col-sm-3">
           <label>
             שעת התחלה:
-            <input placeholder="בחר שעה ותאריך..." [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12" (click)="enableEndDatePicker()"
+            <input placeholder="*בחר שעה ותאריך..." [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12" (click)="enableEndDatePicker()"
                    [selectMode]="'rangeFrom'" [owlDateTime]="dt4" required [(ngModel)]="model.start" name="start" [(ngModel)] = "min"  >
             <owl-date-time #dt12></owl-date-time>
           </label>
@@ -18,7 +18,7 @@
         <div class="col-sm-3">
           <label>
           שעת סיום:
-              <input placeholder="בחר שעה ותאריך..."  (click)="blockPrevTime()" [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"  [disabled]="disabledDateButton"
+              <input placeholder="*בחר שעה ותאריך..."  (click)="blockPrevTime()" [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"  [disabled]="disabledDateButton"
                    [selectMode]="'rangeTo'" required [(ngModel)]="model.end" name="end" [min]="min">
               <owl-date-time #dt13></owl-date-time>
           </label>
@@ -27,7 +27,7 @@
           
       <div class="form-group" *ngIf="model.activity!='general-0'">
         <mat-form-field>
-          <mat-select  placeholder="סוג פעילות" (click)="edited=false" [(ngModel)]="model.activity" name="activity">
+          <mat-select  placeholder="סוג פעילות" (click)="edited=false" [(ngModel)]="model.activity" name="activity" required>
             <mat-option [style.background]="type.color" *ngFor="let type of types" [value]="type">
                 {{ type.viewValue }}
             </mat-option>
@@ -53,7 +53,7 @@
     </div>
     <div class="form-group" *ngIf="model.activity.value==='general-0'">
       <mat-radio-group class="example-radio-group" [(ngModel)]="selRecc" name="selRecc" required>
-        <label for= "repeat">בחר תדירות האירוע: </label>
+        <label for= "repeat">*בחר תדירות האירוע: </label>
         <mat-radio-button class="example-radio-button" *ngFor="let repeat of repeating" [value]="repeat">
               {{repeat}}
         </mat-radio-button>
@@ -76,11 +76,6 @@
             </div>
         </div>
       </div>
-    
-    <!-- <input type="text" id="nameInput1" name="nameInput1"  [ngClass]="pageMode" [(ngModel)]="selected.firstName" required #nameInput1="ngModel"/>
-    <input type="text" id="lastInput1" name="lastInput1"  [ngClass]="pageMode" [(ngModel)]="selected.lastName" required #lastInput1="ngModel"/>
-    <span class="error"  [hidden]="nameInput1.valid || !nameInput1.errors.required">נדרש שם פרטי</span>
-    <span class="error"  [hidden]="lastInput1.valid || !lastInput1.errors.required">נדרש שם משפחה</span> -->
 
     <div class="form-group" >
       <label for="describe" >תיאור</label>
@@ -88,11 +83,12 @@
     </div>
     <div class="form-group" >
       <div class="col-sm-2 col-sm-offset-10">
-        <label for="issuer" >שם ממלא הטופס</label>
+        <label for="issuer" >*שם ממלא הטופס</label>
         <input type="text" class="form-control col" id="issuer" required #iss="ngModel" [(ngModel)]="model.issuer" name="issuer">
         <span class="error"  [hidden]="iss.valid || !iss.errors.required">נדרש ממלא טופס</span>
       </div>
     </div>
+    <p><span style="font-size:10px">חובה למלא שדות שמסומנים ב- *</span></p>
     <button  type="submit" class="btn btn-success btn-block" [disabled]="!eventForm.valid">הזן אירוע</button>
     <button type="button" class="btn btn-success btn-block" routerLink="/menu">חזור לעמוד הראשי</button>
   </form>
