@@ -28,12 +28,12 @@
       <div class="form-group" *ngIf="model.activity!='general-0'">
         <mat-form-field>
           <mat-select  placeholder="סוג פעילות" (click)="edited=false" [(ngModel)]="model.activity" name="activity">
-            <mat-option [style.background]="type.color" *ngFor="let type of types" [value]="type.value">
+            <mat-option [style.background]="type.color" *ngFor="let type of types" [value]="type">
                 {{ type.viewValue }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div class="form-group row" style="direction: rtl" *ngIf="model.activity=='add' && !edited">
+        <div class="form-group row" style="direction: rtl" *ngIf="model.activity.value=='add' && !edited">
             <div class="col-sm-2">
               <label for="color" >בחר צבע</label>
               <input [(colorPicker)]="color" [style.background]="color" [cpPosition]="'bottom'" class="form-control" />
@@ -51,7 +51,7 @@
     <div class="form-group" >
         <mat-checkbox  [(ngModel)]="model.asign" name ="asign">ליווי</mat-checkbox>
     </div>
-    <div class="form-group" *ngIf="model.activity==='general-0'">
+    <div class="form-group" *ngIf="model.activity.value==='general-0'">
       <mat-radio-group class="example-radio-group" [(ngModel)]="selRecc" name="selRecc" required>
         <label for= "repeat">בחר תדירות האירוע: </label>
         <mat-radio-button class="example-radio-button" *ngFor="let repeat of repeating" [value]="repeat">
