@@ -17,13 +17,10 @@ export class CanActivateRouteGuard{
   constructor(private authService: AuthService, private router: Router) {}
   
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean{
-    //console.log("First check");
-    if (this.authService.isLoggedIn == true){
-      console.log('hi, you are authenticated');  
+    if (this.authService.isLoggedIn == true){  
       return true;
     }
     this.authService.redirectUrl = state.url;    
-    console.log("You're not logged in, so you're going to Login page!");
     //this.router.navigateByUrl('login')
     return false;
     

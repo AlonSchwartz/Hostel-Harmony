@@ -41,61 +41,76 @@ export class EventComponent implements OnInit {
   private test: CalendarEvent;
   test2: CALtest;
   private recEvent = {title:"", describe:"", color:"", rrule:{bymonth:-1,bymonthday:-1,freq:RRule.YEARLY }} as RecurringEvent;
-
   
-    
-    constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
-      this.userService.getEventTypes().then(()=> this.types = this.userService.eventTypes);
-      this.submitted = false;
-      this.customActivity=null;
-      console.log(this.model);
-    }
-
-     // TODO: Remove this when we're done
-   get diagnostic() { return JSON.stringify(this.recEvent); }
-   
-    ngOnInit() {
-      this.nameSel.cm.subscribe(user => this.user = user);
-      if(this.user==null){
-        this.router.navigateByUrl('menu');
-      }      
-    }
-    addActivity(val:string,color:string){
-      if (this.firstAddition){
-        this.newEventIndex = this.types.length;
-        this.firstAddition=false;
-      }
-      this.types.push(new ActivityTypes(val,val,color));
-      this.newEventTypeSubmited=true;
-      this.edited=true;
-    }  
-    subEvent() {
-      this.submitted = true;/*do something*/
-      //alert(this.submitted);
-      // console.log(obj);
-      //console.log(this.user)
-      if (this.newEventTypeSubmited){
-        for (let i=this.newEventIndex; i < this.types.length ; i++){
-          console.log[i];
-          this.userService.updateEventTypes(this.types[i]);
-        }
-        
-        //console.log(this.types.values());
-        // console.log(this.types.filter(type => this.types[3] != this.types[4]));
-        //console.log(this.userService.getEventTypes());
-        
-        // this.userService.updateEventTypes(this.types[2]);
-      }
-      //console.log(this.model)
-      this.model.start = new Date(this.model.start);
-      this.model.end = new Date(this.model.end);
-      //console.log(this.model)
-      let answer = this.userService.addEvent(this.user, this.model);
-      if (answer)
-      {
-        alert("האירוע נוסף בהצלחה");
-        this.router.navigateByUrl('menu');
-      }
-    }
-    
+  
+  public min: Date;
+  public disabledDateButton: boolean=true;
+  
+  constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
+    this.userService.getEventTypes().then(()=> this.types = this.userService.eventTypes);
+    this.submitted = false;
+    this.customActivity=null;
+    console.log(this.model);
   }
+  
+  // TODO: Remove this when we're done
+  get diagnostic() { return JSON.stringify(this.recEvent); }
+  
+  /** Blocking the option to select days that are earlier that selected start time (day+exact time in hours, minutes)
+  * @param min: selected start day
+  */
+  blockPrevTime(){
+    this.min= new Date(this.min);
+    this.min.setMinutes(this.min.getMinutes()+1); //An event must be at least 1 minute, so we're adding it here
+  }
+  
+  enableEndDatePicker(){
+      this.disabledDateButton = false;
+  }
+  
+  ngOnInit() {
+    this.nameSel.cm.subscribe(user => this.user = user);
+    if(this.user==null){
+      this.router.navigateByUrl('menu');
+    }      
+  }
+
+  addActivity(val:string,color:string){
+    if (this.firstAddition){
+      this.newEventIndex = this.types.length;
+      this.firstAddition=false;
+    }
+    this.types.push(new ActivityTypes(val,val,color));
+    this.newEventTypeSubmited=true;
+    this.edited=true;
+  }  
+  subEvent() {
+    this.submitted = true;/*do something*/
+    //alert(this.submitted);
+    // console.log(obj);
+    //console.log(this.user)
+    if (this.newEventTypeSubmited){
+      for (let i=this.newEventIndex; i < this.types.length ; i++){
+        console.log[i];
+        this.userService.updateEventTypes(this.types[i]);
+      }
+      
+      //console.log(this.types.values());
+      // console.log(this.types.filter(type => this.types[3] != this.types[4]));
+      //console.log(this.userService.getEventTypes());
+      
+      // this.userService.updateEventTypes(this.types[2]);
+    }
+    //console.log(this.model)
+    this.model.start = new Date(this.model.start);
+    this.model.end = new Date(this.model.end);
+    //console.log(this.model)
+    let answer = this.userService.addEvent(this.user, this.model);
+    if (answer)
+    {
+      alert("האירוע נוסף בהצלחה");
+      this.router.navigateByUrl('menu');
+    }
+  }
+  
+}

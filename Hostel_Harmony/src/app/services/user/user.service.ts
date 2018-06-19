@@ -93,8 +93,8 @@ export class UserService  {
     
     this.eventType = new ActivityTypes("", "", "");
     this.recurringEvent = {title:"", describe:"",color:"", rrule:{bymonth:-1,bymonthday:-1,freq:RRule.YEARLY }}
-
-
+    
+    
     //this.generalSettings.eventTypes = [];
     /*
     [{value: 'general-0', viewValue: 'כללי',color:'green'},  {value: 'staff-1', viewValue: 'איש צוות',color: 'blue'},
@@ -143,13 +143,13 @@ export class UserService  {
   addEvent(per: resident | staff, event: CALtest ): boolean{
     this.setMetaData();
     
-     if (event.activity.value == "general-0")
+    if (event.activity.value == "general-0")
     {
-     this.addRecurringEvent(event)
-     return true;
+      this.addRecurringEvent(event)
+      return true;
     }
     
-     else
+    else
     {
       if (per.className == "resident"){
         
@@ -342,24 +342,24 @@ export class UserService  {
             this.resident.metaem = collection[i].metaem;
             this.resident.evals = collection[i].evals;
             this.resident.events = collection[i].events;
+            this.resident.work = collection[i].work;
             this.resident.id = this.residentUsersList[i].id;    
-            this.resident.work.info = collection[i].work.info;
-            this.resident.work.location = collection[i].work.location;
-            this.resident.work.phone = collection[i].work.phone;
             
             let copy = Object.assign({}, this.resident); // push delivers by reference, so we need to copy our object first
             this.residentsUsers.push(copy);
+            
           }
           resolve();    
         })}
       )
     }
     /**works only when users are loaded to components */
-    public getSelectedUser(selected:string,names:string[], user:resident[]|staff[]){
+    public getSelectedUser(selected:string[],names:string[][], user:resident[]|staff[]){
       let sel=null;
+      
       for (var i=0; i<user.length; i++)
       {
-        if(selected===names[i] ){
+        if(selected[1]=== user[i].id ){
           sel=user[i];
         }
       }

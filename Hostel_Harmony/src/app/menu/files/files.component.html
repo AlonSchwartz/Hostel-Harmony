@@ -1,6 +1,6 @@
 
 <div class="panel panel-primary">
-	<div class="panel-heading" style="text-align:right">רשימת הקבצים עבור: {{name}}</div>
+	<div class="panel-heading" style="text-align:right">רשימת הקבצים עבור: {{selected?.firstName}}</div>
 	<div *ngFor="let file of fileUploads">
 		<div class="panel-body">
             <a href="{{file.url}}">{{file.name}}</a>

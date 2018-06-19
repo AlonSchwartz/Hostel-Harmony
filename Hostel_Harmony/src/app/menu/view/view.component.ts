@@ -1,7 +1,7 @@
 import { Component, OnInit , Input, SimpleChange, OnChanges } from '@angular/core';
 import {staff} from '../../models/staff.model'
 import {resident} from '../../models/resident.model'
-import { NgModel,FormGroup } from '@angular/forms'
+import { NgModel,FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms'
 import { UserService } from '../../services/user/user.service';
 import { NameSelectService } from '../../services/nameSelect/name-select.service';
 @Component({
@@ -14,15 +14,17 @@ export class ViewComponent implements OnInit,OnChanges {
   name:string;
   selected:staff|resident;
   copy:staff|resident;
+  
+  myForm: FormGroup;
   pageMode : string;
-  constructor(private userService: UserService,private nameSel: NameSelectService) {
+  constructor(private fb:FormBuilder,private userService: UserService,private nameSel: NameSelectService) {
    }
 
   ngOnInit() {
     this.nameSel.cm.subscribe(selected => this.selected = selected);
-    //this.nameSel.cm.subscribe(selected => this.selectedCopy = selected);
     this.pageMode = "viewMode";
-    this.copy = Object.assign({}, this.selected);
+    this.enterCont();
+    
   }
   ngOnChanges(changes:{[propKey:string]:SimpleChange}){
     for(let na in changes){
@@ -30,9 +32,26 @@ export class ViewComponent implements OnInit,OnChanges {
       let temp=JSON.stringify(rec.currentValue);
       if(!rec.isFirstChange()){
         this.nameSel.cm.subscribe(selected => this.selected = selected);
-        this.copy = Object.assign({}, this.selected);
+        this.enterCont();
       }
     }
+  }
+  arr:resident;
+  public enterCont(){
+    /**enter contacts to view */
+    if(this.selected.className==='resident'){
+      this.myForm = this.fb.group({
+        items: this.fb.array(
+          [])
+      });
+      this.arr=this.selected as resident;
+      const item=this.myForm.get('items') as FormArray;
+      for( let i=0;i<this.arr.contacts.length;i++){
+        item.push(this.editItem(this.arr.contacts[i]));
+      }
+    }
+    /**deep copy*/
+    this.copy=JSON.parse(JSON.stringify(this.selected)) 
   }
   getSince(since){
     let ret=new Date(since)
@@ -50,7 +69,18 @@ export class ViewComponent implements OnInit,OnChanges {
       }
       return age.toString();
   }
+  public editItem(inp:any) {
+    return new FormGroup({
+      rel:new FormControl(inp.rel),
+      name: new FormControl(inp.name),
+      phone: new FormControl(inp.phone),
+    })
+  }
+  
   editUser() : void {
+    
+    
+    console.log(this.copy)
     this.pageMode = "editMode";
   }
   
@@ -61,8 +91,7 @@ export class ViewComponent implements OnInit,OnChanges {
   }
   
   cancelEdit() : void {
-    //this.nameSel.cm.subscribe(selected => this.selected = selected);
-    Object.assign(this.selected,this.copy);
+    this.selected=JSON.parse(JSON.stringify(this.copy))
     this.pageMode = "viewMode";
   }
 

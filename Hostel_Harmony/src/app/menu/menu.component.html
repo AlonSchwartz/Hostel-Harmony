@@ -6,10 +6,10 @@
                 <select class="text-white dropdown-toggle font-weight-bold text-sm-center" title="יומנים" #diary  (change)="sendVal(diary.value);" >
                     <option   disabled hidden >יומנים</option> 
                     <optgroup label="איש צוות">
-                        <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
+                        <option  [value]="user" *ngFor = "let user of staff" >{{user[0]}}</option>
                     </optgroup>
                     <optgroup label="דיירים">
-                        <option  [value]="user"  *ngFor = "let user of residents" >{{user}}</option>
+                        <option  [value]="user"  *ngFor = "let user of residents" >{{user[0]}}</option>
                     </optgroup>
                 </select>
             </a>
@@ -17,10 +17,10 @@
                 <select  class="dropdown-toggle font-weight-bold text-white" title="קבע אירוע" #event (change)="navigateTo('/event');sendVal(event.value);" >
                     <option selected disabled hidden>הוסף אירוע</option>
                     <optgroup label="איש צוות">
-                        <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
+                        <option  [value]="user" *ngFor = "let user of staff" >{{user[0]}}</option>
                     </optgroup>
                     <optgroup label="דיירים">
-                        <option  [value]="user" *ngFor = "let user of residents" >{{user}}</option>
+                        <option  [value]="user" *ngFor = "let user of residents" >{{user[0]}}</option>
                     </optgroup>
                 </select>
             </a>
@@ -31,10 +31,10 @@
                 <select  class="text-white dropdown-toggle font-weight-bold text-sm-center" title="קבצים" #file (change)="sendVal(file.value);openDialog()" >
                     <option   disabled hidden >הוספת קובץ</option>
                     <optgroup label="איש צוות">
-                        <option  [value]="user" *ngFor = "let user of staff" >{{user}}</option>
+                        <option  [value]="user" *ngFor = "let i = index; let user of staff; " >{{ user[0] }}</option>
                     </optgroup>
                     <optgroup label="דיירים">
-                        <option  [value]="user"  *ngFor = "let user of residents" >{{user}}</option>
+                        <option  [value]="user"  *ngFor = " let i = index; let user of residents;" >{{ user[0] }}</option>
                     </optgroup>
                 </select>
             </a>
