@@ -1,5 +1,4 @@
 import { Component, OnInit,Input, ViewChild, TemplateRef } from '@angular/core';
-//import { CalendarEvent } from 'calendar-utils';
 import { CalendarEvent, CalendarEventTitleFormatter ,CalendarDateFormatter,DAYS_OF_WEEK} from 'angular-calendar';
 import {  ChangeDetectionStrategy, OnChanges, SimpleChange } from '@angular/core';
 import {  CalendarMonthViewDay } from 'angular-calendar';
@@ -18,20 +17,20 @@ import { resident } from '../../models/resident.model';
 import {MatDialog, MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig} from '@angular/material';
 import { dialogPopup } from './dialogPopup.component';
 
-// const colors: any = {
-//   red: {
-//     primary: '#ad2121',
-//     secondary: '#FAE3E3'
-//   },
-//   blue: {
-//     primary: '#1e90ff',
-//     secondary: '#D1E8FF'
-//   },
-//   yellow: {
-//     primary: '#e3bc08',
-//     secondary: '#FDF1BA'
-//   }
-// };
+const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3'
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF'
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA'
+  }
+};
 
 @Component({
   selector: 'app-calendar',
@@ -57,9 +56,7 @@ import { dialogPopup } from './dialogPopup.component';
 export class CalendarComponent implements OnInit,OnChanges {
   
   constructor(private nameSel: NameSelectService,public dialog: MatDialog ){
-    // console.log(this.events);
   }
-  
   
   // Declarations & Initializations
   locale: string = 'he';
@@ -112,8 +109,8 @@ recurringEvents: RecurringEvent[] = [
   
   ngOnInit() {
     this.updateCalendarEvents();
-    // console.log(new Date(this.inpEve.settime.start))
   }
+  
   /**allow page to wait until a person is passed to calendar, only then will the function run */
   ngOnChanges(changes:{[propKey:string]:SimpleChange}){
     for(let na in changes){
