@@ -119,6 +119,9 @@ export class EventComponent implements OnInit {
     this.recEvent.title=this.model.describe;
     this.recEvent.rrule.until=this.model.end;
     this.recEvent.rrule.byweekday=this.selectedOptions;
+    if (this.recEvent.rrule.bymonthday != null){
+    this.recEvent.rrule.bymonthday = this.recEvent.rrule.bymonthday+1;
+    }
     console.log(this.recEvent)
     let answer;
     if (this.model.activity.value == "general-0"){
