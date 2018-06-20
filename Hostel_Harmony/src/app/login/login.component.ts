@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     await this.authService.loginWithEmailAndPassword(this.email,this.pass).then((res)=>{this.router.navigateByUrl('menu');}).catch((err)=>this.wrongPass=true);
       
   }
-  
+
   ngOnInit() { 
     this.wrongPass=false;   
     this.email=null;
@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/menu']);
       console.log("needs to nav to menu");
     }
-   }
-   
+  } 
 }
 

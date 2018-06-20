@@ -5,20 +5,36 @@
     direction: rtl;
     text-align: right;
     font-size: 16px;
+    margin-top: 15px;
+    padding-bottom: 15px;
+}
+h1{
+    font-size: 40px;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 20px;
 }
 label  {
     float:right;
+    font-size: 20px;    
 }
 .error {
     color:red;
-    font-size: 12px;
-  }
+    font-size: 15px;
+}
 input  {
     direction: rtl;
 }
-
 hr{border-color: black ;}
-h4{direction: rtl;text-align: center;}
+
+#contactPerson{
+    direction: rtl;
+    margin-top: 40px;
+    color:blue;
+    margin-right: 10px;
+    font-size: 15px;
+    font-weight:bolder;
+}
 .form-group{
     text-align: right;
     width: 100%;
@@ -29,4 +45,26 @@ mat-form-field.input{
 mat-form-field{
     display:-webkit-inline-box;
     text-align: inherit;
+}
+#endB{
+    height: 40px;
+    font-size: 20px;
+}
+#endA{
+    height: 40px;
+    font-size: 20px;
+}
+#delet
+{
+    font-size: 15px;
+    margin-top: 30px;
+    color: red;
+}
+#contactPersonHead{
+    direction: rtl;
+    padding-bottom: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight:bolder;
 }

@@ -57,10 +57,8 @@ export class AddStaffComponent implements OnInit {
   
   subStaff(staffMember:staff) {
     this.submitted = true;/*do something*/
-    //alert(this.submitted);
     
     this.userService.addToDatabase(this.model);
     this.router.navigateByUrl('menu');
-    //this.userService.addToDatabase(staffMember);
   }
 }

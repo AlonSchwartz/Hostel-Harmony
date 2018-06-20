@@ -6,23 +6,24 @@ import { UpFile } from '../../models/up-file.model';
 import { NameSelectService } from '../../services/nameSelect/name-select.service';
 import { resident } from '../../models/resident.model';
 import { staff } from '../../models/staff.model';
+
 @Component({
   selector: 'app-files',
   templateUrl: './files.component.html',
   styleUrls: ['./files.component.css']
 })
+
 export class FilesComponent implements OnInit {
   @Input()//for getting name wanted
   name:string;
   selected:staff|resident;
   fileUploads: any[];
   
-   constructor(private uploadService: FilesService,private nameSel: NameSelectService) { }
+  constructor(private uploadService: FilesService,private nameSel: NameSelectService) { }
   
    ngOnInit() {
     this.viewFileList()
-   }
-  
+  }
   ngOnChanges(changes:{[propKey:string]:SimpleChange}){
     for(let na in changes){
       let rec=changes[na];
@@ -37,9 +38,9 @@ export class FilesComponent implements OnInit {
     this.uploadService.basePath = this.selected.firstName;
     this.uploadService.getFileUploads(6).snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-     }).subscribe(fileUploads => {
+    }).subscribe(fileUploads => {
       this.fileUploads = fileUploads;
-     });
+    });
   }
 
   deleteFileUpload(fileUpload) {

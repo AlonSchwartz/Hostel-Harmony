@@ -57,10 +57,6 @@ const colors: any = {
 export class CalendarComponent implements OnInit,OnChanges {
   
   constructor(private nameSel: NameSelectService,public dialog: MatDialog ){
-
-    // this.userService.getrecurringEvents().then(()=>{ 
-    //   this.recurringEvents = userService.recurringEvents;
-    // });
   }
   
   // Declarations & Initializations
@@ -103,16 +99,9 @@ recurringEvents: RecurringEvent[]=
     rrule: {
       freq: RRule.WEEKLY,
       byweekday: [RRule.TU],
-      //bymonthday: 30,
-      //  bymonth: 0,
-      // interval: 24,
       byhour: 14,
       byminute: 32,
       count: 5,
-      // dtstart: new Date(2018, 5, 12, 18, 10, 0),
-      //until: new Date(2018, 8, 19, 19, 0, 0)
-      
-      
     },},
     {	  title: 'Recurs works? Just a test.',
     rrule: {
@@ -139,18 +128,13 @@ recurringEvents: RecurringEvent[]=
   
   /**Saves the information of selected person*/
   public getUserSelected(){
-    //this.events=[];//empty arrey of current user, need to keep reaccuring events(from database!)
     this.nameSel.cm.subscribe(selected => this.selected = selected);
     if(this.selected==null){
       alert('no user entered')
     }
-    // this.addEventToCal(this.selected.events);
   }
-  
-  
   /** Updating the events view according to selected person */
   updateCalendarEvents(): void {
-    //this.events = [];
     const startOfPeriod: any = {
       month: startOfMonth,
       week: startOfWeek,
@@ -171,8 +155,6 @@ recurringEvents: RecurringEvent[]=
           until: endOfPeriod[this.view](this.viewDate)
         })
       );
-      
-      //console.log(this.recurringEvents)
       rule.all().forEach(date => {
         this.events.push(
           Object.assign({}, event, {
@@ -180,8 +162,7 @@ recurringEvents: RecurringEvent[]=
           })
         );
       });
-    });
-    
+    }); 
   }
   
   backToWeekView() {
@@ -267,14 +248,12 @@ recurringEvents: RecurringEvent[]=
     }
     else {
       this.events = this.selected.events;
-      // console.log(this.events.length)
       for (i=0; i<this.events.length ; i++)
       {
         if (this.events[i].start == null || this.events[i].end == null){// TODO: Deleted after changes persons in firebase!
           console.log("this is null");
         }
         this.events[i].start = new Date(this.events[i].start);///2
-        //console.log(this.selected.events[i].start);
         this.events[i].end = new Date(this.events[i].end);///2
         this.events[i].title = this.selected.events[i].describe;/////2 
         console.log(this.events[i])
@@ -290,9 +269,7 @@ recurringEvents: RecurringEvent[]=
     let j =0;
     for (j=0; j<this.bevents.length;j++){
       this.events.push(this.bevents[j]);
-      //console.log(this.bevents[j])
     }
-    
     this.allEvents = this.events;
     this.refresh.next();
   }
@@ -304,9 +281,6 @@ recurringEvents: RecurringEvent[]=
     
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
-    //dialogConfig.height = "250px";
-    //dialogConfig.width = "250px";
-    
     dialogConfig.data = {
       
       header: "אירוע:",
@@ -319,13 +293,8 @@ recurringEvents: RecurringEvent[]=
       
     }
     var dialogRef = this.dialog.open(dialogPopup, dialogConfig) 
-    // this.dialog.open(MyDialogComponent, { panelClass: 'custom-dialog-container' })
-    
-    
   };
-  
 } 
-
 
 export interface RecurringEvent {
   title: string;
@@ -342,9 +311,7 @@ export interface RecurringEvent {
     byminute?: number,
     count?: number, // How many occurrences will be generated overall
     until?: Date
-    
-    // RRule arugments can be null.
-    
+    // RRule arugments can be null. 
   };
   id?:string;
 }
