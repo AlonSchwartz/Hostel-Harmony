@@ -62,7 +62,7 @@ export class UserService  {
   recEventsList = []; // //To store all recurring events with ID's
   
   
-  constructor(private calendar: CalendarComponent, af: AngularFirestore) { 
+  constructor(af: AngularFirestore) { 
     
     const settings = { timestampsInSnapshots: true }; // setting up
     af.firestore.app.firestore().settings(settings);
@@ -198,9 +198,56 @@ export class UserService  {
   * Checks that we can really add this event without any collision
   */
   feasibilityCheck(event: CALtest,per:resident|staff){
-    let answer = this.calendar.conflictEvent(event,per);
+
+    /**Checking for conflict events for same person */
+   
     
-    return answer;
+    let i=0;
+    console.log(per);
+    for(i=0; i<per.events.length;i++)
+    {
+      
+      per.events[i].start = new Date(per.events[i].start)
+      per.events[i].end = new Date(per.events[i].end)
+      
+      if(event.start.getDay() ==  per.events[i].start.getDay() ) // In case starting days is equals
+      {
+        // In case the new event coincides with (at least) the starting time of existing event. 
+        // In case the new event starting before (or at) starting time of an existing event and ending after the existing event starts.
+        // (NewEvent Starting time <= ExisitingEvent Starting time) AND (NewEvent Ending time > ExisitingEvent Starting time)
+        if ((event.start.getTime() <= per.events[i].start.getTime()) && event.end.getTime() > per.events[i].start.getTime() ) 
+        {
+          let answer = confirm("האירוע שהינך מנסה להוסיף חופף עם אירוע אחר. לתאם בכל זאת? \n פרטי האירוע: " + per.events[i].title + "\n משעה: " + per.events[i].start.getHours() + ":" + per.events[i].end.getMinutes() + " עד שעה: " + per.events[i].end.getHours() + ":" + per.events[i].end.getHours())
+          if (answer)
+          {
+            return true;
+          }
+          else
+          {
+            return false;
+          }
+        }
+        // In case the new event coincides with (at least) the ending time of existing event.
+        // In case the new event starting after (or at) starting time of an existing event and also starting before existing event ends.
+        // ((NewEvent Starting time >= ExisitingEvent Starting time) AND (NewEvent Starting time < ExistingEvent Ending time))
+        if ((event.start.getTime() >= per.events[i].start.getTime()) && event.start.getTime() < per.events[i].end.getTime() ) 
+        {
+          let answer = confirm("האירוע שהינך מנסה להוסיף חופף עם אירוע אחר. לתאם בכל זאת? \n פרטי האירוע: " + per.events[i].title + "\n משעה: " + per.events[i].start.getHours() + ":" + per.events[i].end.getMinutes() + " עד שעה: " + per.events[i].end.getHours() + ":" + per.events[i].end.getHours())
+          if (answer)
+          {
+            return true;
+          }
+          else
+          {
+            return false;
+          }
+        }
+        
+      }
+    }
+    return true;
+  
+
   }
   
   /** Updated a resdient or a staff profile at Firestore Database. Used mostly for saving data changes to profile */
@@ -424,16 +471,19 @@ export class UserService  {
           this.recurringEvents = [];
           for (var i = 0; i < collection.length ; i++){
             
-            this.recurringEvent.title = collection[i].title;
-            this.recurringEvent.rrule.bymonth = collection[i].rrule.bymonth;
-            this.recurringEvent.rrule.bymonthday = collection[i].rrule.bymonthday;
-            this.recurringEvent.rrule.byweekday = collection[i].rrule.byweekday;
-            this.recurringEvent.rrule.freq = collection[i].rrule.freq;
+            // this.recurringEvent.title = collection[i].title;
+            // this.recurringEvent.rrule.bymonth = collection[i].rrule.bymonth;
+            // this.recurringEvent.rrule.bymonthday = collection[i].rrule.bymonthday;
+            // this.recurringEvent.rrule.byweekday = collection[i].rrule.byweekday;
+            // this.recurringEvent.rrule.freq = collection[i].rrule.freq;
+            // this.recurringEvent.id = this.recEventsList[i].id;
+            this.recurringEvent = JSON.parse(JSON.stringify(collection[i]))
             this.recurringEvent.id = this.recEventsList[i].id;
-            let copy = Object.assign({}, this.recurringEvent); // push delivers by reference, so we need to copy our object first
-            this.recurringEvents.push(copy);
+
+            //  Object.assign({}, this.recurringEvent); // push delivers by reference, so we need to copy our object first
+            this.recurringEvents.push(this.recurringEvent);
           }
-          // resolve();    
+           resolve();    
         })})
         
         

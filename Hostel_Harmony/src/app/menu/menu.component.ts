@@ -49,7 +49,7 @@ export class MenuComponent implements OnInit {
     getNames(){
       this.staa=this.userService.staffUsers;
       this.ress = this.userService.residentsUsers;
-      
+
       for (var i=0; i<this.staa.length; i++)
       {
         this.staff[i] = [this.staa[i].firstName + " " + this.staa[i].lastName,this.staa[i].id];

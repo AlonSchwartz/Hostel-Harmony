@@ -49,7 +49,7 @@ export class EventComponent implements OnInit {
   repeating = ['יומי','שבועי','חודשי',];
   
   
-  private recEvent = {title:"", color:"skyblue", rrule:{bymonth:-1,bymonthday:-1,byhour:-1, byweekday:[],until:new Date(),byminute:-1 ,freq:RRule.YEARLY }} as RecurringEvent;
+  private recEvent = {title:"", color:"skyblue", rrule:{bymonth:null,bymonthday:null,byhour:null, byweekday:[],until:new Date(),byminute:null ,freq:RRule.YEARLY }} as RecurringEvent;
   
   public min: Date;
   public disabledDateButton: boolean=true;
@@ -72,7 +72,7 @@ export class EventComponent implements OnInit {
   }
   
   // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
+  get diagnostic() { return JSON.stringify(this.recEvent); }
   
   /** Blocking the option to select days that are earlier that selected start time (day+exact time in hours, minutes)
   * @param min: selected start day
@@ -131,10 +131,10 @@ export class EventComponent implements OnInit {
     this.recEvent.title=this.model.describe;
     this.recEvent.rrule.until=this.model.end;
     this.recEvent.rrule.byweekday=this.selectedOptions;
-    
+    console.log(this.recEvent)
     let answer;
     if (this.model.activity.value == "general-0"){
-      answer = this.userService.addRecurringEvent(this.recEvent);
+      answer = this.userService.addRecurringEvent(JSON.parse(JSON.stringify(this.recEvent)));
     }
     else {
       answer = this.userService.addEvent(this.user, this.model);
