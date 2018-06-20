@@ -48,12 +48,15 @@ export class EventComponent implements OnInit {
   selRecc: string='';
   repeating = ['יומי','שבועי','חודשי',];
   
+<<<<<<< HEAD
   
   private recEvent = {title:"", color:"skyblue", rrule:{bymonth:null,bymonthday:null,byhour:null, byweekday:[],until:new Date(),byminute:null ,freq:RRule.YEARLY }} as RecurringEvent;
+=======
+  private recEvent = {title:"", color:"skyblue", rrule:{bymonth:-1,bymonthday:-1,byhour:-1, byweekday:[],until:new Date(),byminute:-1 ,freq:RRule.YEARLY }} as RecurringEvent;
+>>>>>>> 18939764d0689d4a18b1adb7c1ce9a245fab446e
   
   public min: Date;
   public disabledDateButton: boolean=true;
-  
   
   constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
     this.userService.getEventTypes().then(()=> this.types = this.userService.eventTypes);
@@ -104,23 +107,12 @@ export class EventComponent implements OnInit {
   }  
   subEvent() {
     this.submitted = true;/*do something*/
-    //alert(this.submitted);
-    // console.log(obj);
-    //console.log(this.user)
     if (this.newEventTypeSubmited){
       for (let i=this.newEventIndex; i < this.types.length ; i++){
         console.log[i];
         this.userService.updateEventTypes(this.types[i]);
       }
-      
-      //console.log(this.types.values());
-      // console.log(this.types.filter(type => this.types[3] != this.types[4]));
-      //console.log(this.userService.getEventTypes());
-      
-      // this.userService.updateEventTypes(this.types[2]);
     }
-    
-    
     
     this.model.start = new Date(this.model.start);
     this.model.end = new Date(this.model.end);

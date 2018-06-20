@@ -63,7 +63,6 @@ export class EvaluationFormComponent implements OnInit,OnChanges {
         [this.buildActs(val)]
       ),
       how:new FormControl(val),
-
     })
   }
   public buildActs(val: string) {
@@ -71,9 +70,7 @@ export class EvaluationFormComponent implements OnInit,OnChanges {
         action:new FormControl(val),
         caretaker: new FormControl(val),
       })
-    
   }
- 
   public editSemiGoal(go: any,ac:FormArray,ho) {
     return new FormGroup({
       goal:new FormControl(go),
@@ -119,31 +116,27 @@ export class EvaluationFormComponent implements OnInit,OnChanges {
         temp,
         this.model.semiGoal[i].how)
       )
-      temp.removeAt(i)
-      
-    }
-    
+      temp.removeAt(i) 
+    } 
   }
   get checkSizeSem(){
-      return (this.model.semiGoal.length>1);
+    return (this.model.semiGoal.length>1);
   }
   get checkSizeAct(){
     for(let i=0;i<this.model.semiGoal.length;i++)
     return (this.model.semiGoal[i].acts.length>1);
-}
-
+  }
   subGoal() {
     this.btnview=false;
     Object.assign(this.resident.evals[0],this.model);
     this.userService.update(this.resident)
-     this.pageMode = "viewMode";
+    this.pageMode = "viewMode";
   }
   edit():void
   {
     this.btnview=true;
     this.pageMode = "editMode";
   }
-  
   cancelEdit() : void {
     this.btnview=false;
     Object.assign(this.resident,this.copy);

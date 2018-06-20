@@ -9,12 +9,12 @@ import { Router ,RouterEvent} from '@angular/router';
 import {NgModel,FormGroup,FormArray,FormBuilder ,FormControl, Validators } from '@angular/forms';
 import { UserService } from '../services/user/user.service';
 
-
 @Component({
   selector: 'app-add-resident',
   templateUrl: './add-resident.component.html',
   styleUrls: ['./add-resident.component.css']
 })
+
 // TODO: check required fields
 export class AddResidentComponent implements OnInit {
   private model: resident ;
@@ -65,6 +65,4 @@ export class AddResidentComponent implements OnInit {
     console.log("2");
     this.router.navigateByUrl('menu');
   }
- 
-
 }

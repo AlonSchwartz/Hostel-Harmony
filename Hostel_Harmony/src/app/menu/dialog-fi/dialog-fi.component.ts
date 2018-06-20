@@ -49,9 +49,6 @@ export class DialogFiComponent implements OnInit {
       this.currentFileUpload=null;
     });
   }
-
- 
-
   save() {
       this.dialogRef.close();
   }
@@ -59,6 +56,4 @@ export class DialogFiComponent implements OnInit {
   close() {
       this.dialogRef.close();
   }
-
-
 }
