@@ -191,9 +191,9 @@ export class UserService  {
   * Checks that we can really add this event without any collision
   */
   feasibilityCheck(event: CALtest,per:resident|staff){
-
+    
     /**Checking for conflict events for same person */
-   
+    
     
     let i=0;
     console.log(per);
@@ -239,8 +239,8 @@ export class UserService  {
       }
     }
     return true;
-  
-
+    
+    
   }
   
   /** Updated a resdient or a staff profile at Firestore Database. Used mostly for saving data changes to profile */
@@ -468,9 +468,15 @@ export class UserService  {
             this.recurringEvent.id = this.recEventsList[i].id;
             this.recurringEvents.push(this.recurringEvent);
           }
-           resolve();    
+          resolve();    
         })})
         
+        
+      }
+      
+      deleteRecurringEvent(id:string): boolean{
+        this.RecurringEventsCollection.doc(JSON.parse(JSON.stringify(id))).delete();
+        return true;
         
       }
       

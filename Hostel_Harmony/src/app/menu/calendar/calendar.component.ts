@@ -264,7 +264,8 @@ eventClicked({ event }: { event: CALtest }): void {
       start: event.start,
       color: event.color,
       recEvent: true,
-      until: event.end
+      until: event.end,
+      id: event.id
       
     }
 
