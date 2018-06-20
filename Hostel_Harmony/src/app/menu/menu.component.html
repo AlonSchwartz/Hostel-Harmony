@@ -39,15 +39,16 @@
                 </select>
             </a>
             <a class="nav-link text-dark" >
-                <!-- <button (click)="logout()" type="button" class="btn pull-left" >התנתק</button> -->
                 <a class="nav-link text-white font-weight-bold" style="cursor:pointer" (click)="logout()" >התנתק</a>
-
             </a>  
         </nav> 
          
     </div> 
-    <div  class="page-header font-weight-bold text-right text-white">
+    <div  class="page-header font-weight-bold text-right text-white" *ngIf="selected==null">
         <h1>,ברוך הבא </h1>
+    </div>  
+    <div  class="page-header font-weight-bold text-right text-white" *ngIf="selected!=null">
+        <h1>היומן של {{selected?.firstName}}</h1>
     </div>   
     <div class='container'>
         <app-calendar [name]="diary.value"></app-calendar>
@@ -55,5 +56,4 @@
         <app-evaluation-form *ngIf="diary.value!='יומנים' && selected.className=='resident'" [name]="diary.value"></app-evaluation-form>
         <app-files *ngIf="diary.value!='יומנים'" [name]="diary.value"></app-files>
     </div>
-    
 </div>
