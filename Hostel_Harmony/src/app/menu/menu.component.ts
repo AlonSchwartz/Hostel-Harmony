@@ -34,6 +34,7 @@ export class MenuComponent implements OnInit {
       userService.getResidents().then(()=>{ 
         this.getNames() 
       }); //this.getNames();
+
     }
     name:string;
     current = new Date();

@@ -7,5 +7,8 @@ import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
   })
   export class dialogPopup {
     constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+    
 }
+
+
 

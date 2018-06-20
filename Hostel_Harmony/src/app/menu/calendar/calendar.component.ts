@@ -57,15 +57,12 @@ const colors: any = {
 export class CalendarComponent implements OnInit,OnChanges {
   
   constructor(private nameSel: NameSelectService,public dialog: MatDialog, private userService: UserService ){
-    console.log(this.userService.recurringEvents)
     this.userService.getrecurringEvents().then(()=>{ 
-      console.log(this.recurringEvents)
       this.getRecEvents();
-      console.log(this.recurringEvents)
-      
+      this.refresh.next();
+      this.updateCalendarEvents()
     });  
-    this.refresh.next();
-    this.updateCalendarEvents()
+
     
     
   }
@@ -96,7 +93,7 @@ view: string ='week'
 viewDate: Date = new Date();
 events: CalendarEvent[] = [
   {
-    start: new Date(),
+    start: new Date(2017, 5, 10),
     title: 'test event',
   },
   
@@ -104,32 +101,10 @@ events: CalendarEvent[] = [
 
 //for permanent events
 recurringEvents: RecurringEvent[];
-// [
-//   {
-//     title: 'Recurs on the 5th of each month',
-//     rrule: {
-//       freq: RRule.WEEKLY,
-//       byweekday: [RRule.TU],
-//       bymonthday: null,
-//         bymonth: null,
-//       // interval: 24,
-//       byhour: 14,
-//       byminute: 32,
-//       count: 5,
-//       // dtstart: new Date(2018, 5, 12, 18, 10, 0),
-//       //until: new Date(2018, 8, 19, 19, 0, 0)
 
-
-//     },},
-//     {	  title: 'Recurs works? Just a test.',
-//     rrule: {
-//       freq: RRule.WEEKLY,
-//       byweekday: [RRule.SU],
-//     }
-//   }];
 
 ngOnInit() {
-  //this.updateCalendarEvents();
+
 }
 
 /**allow page to wait until a person is passed to calendar, only then will the function run */
@@ -157,22 +132,9 @@ public getUserSelected(){
 }
 
 getRecEvents(){
-  //console.log(this.userService.recurringEvents)
-  //this.recurringEvents = [];
+  
   this.recurringEvents = this.userService.recurringEvents;
-  for (var j = 0; j < this.userService.recurringEvents.length ; j++){
-    //  let temp = JSON.stringify(this.userService.recurringEvents[j]);
-    //console.log(this.userService.recurringEvents[j])
-    //this.recurringEvents.push(temp);
-  }
-  //console.log(this.userService.recurringEvents[0])
-  //console.log(this.recurringEvents)
-  //this.recurringEvents[0].color = this.userService.recurringEvents[0].color;
-  //this.recurringEvents[0].title = this.userService.recurringEvents[0].title;
-  //this.recurringEvents[0].rrule = this.userService.recurringEvent[0].rrule;
-  
-  
-  console.log(this.recurringEvents)
+
 }
 
 /** Updating the events view according to selected person */
@@ -226,54 +188,6 @@ addEventToCal(eve:CALtest[]): void {
     this.refresh.next();
   }
 }
-/**Checking for conflict events for same person */
-//conflictEvent(event:CALtest,per:staff|resident): boolean {   
-
-//   let i=0;
-//   console.log(per);
-//   for(i=0; i<per.events.length;i++)
-//   {
-
-//     per.events[i].start = new Date(per.events[i].start)
-//     per.events[i].end = new Date(per.events[i].end)
-
-//     if(event.start.getDay() ==  per.events[i].start.getDay() ) // In case starting days is equals
-//     {
-//       // In case the new event coincides with (at least) the starting time of existing event. 
-//       // In case the new event starting before (or at) starting time of an existing event and ending after the existing event starts.
-//       // (NewEvent Starting time <= ExisitingEvent Starting time) AND (NewEvent Ending time > ExisitingEvent Starting time)
-//       if ((event.start.getTime() <= per.events[i].start.getTime()) && event.end.getTime() > per.events[i].start.getTime() ) 
-//       {
-//         let answer = confirm("האירוע שהינך מנסה להוסיף חופף עם אירוע אחר. לתאם בכל זאת? \n פרטי האירוע: " + per.events[i].title + "\n משעה: " + per.events[i].start.getHours() + ":" + per.events[i].end.getMinutes() + " עד שעה: " + per.events[i].end.getHours() + ":" + per.events[i].end.getHours())
-//         if (answer)
-//         {
-//           return true;
-//         }
-//         else
-//         {
-//           return false;
-//         }
-//       }
-//       // In case the new event coincides with (at least) the ending time of existing event.
-//       // In case the new event starting after (or at) starting time of an existing event and also starting before existing event ends.
-//       // ((NewEvent Starting time >= ExisitingEvent Starting time) AND (NewEvent Starting time < ExistingEvent Ending time))
-//       if ((event.start.getTime() >= per.events[i].start.getTime()) && event.start.getTime() < per.events[i].end.getTime() ) 
-//       {
-//         let answer = confirm("האירוע שהינך מנסה להוסיף חופף עם אירוע אחר. לתאם בכל זאת? \n פרטי האירוע: " + per.events[i].title + "\n משעה: " + per.events[i].start.getHours() + ":" + per.events[i].end.getMinutes() + " עד שעה: " + per.events[i].end.getHours() + ":" + per.events[i].end.getHours())
-//         if (answer)
-//         {
-//           return true;
-//         }
-//         else
-//         {
-//           return false;
-//         }
-//       }
-
-//     }
-//   }
-//   return true;
-// };
 
 
 // *** PLEASE NOTE *** this method is working, but isn't done yet!
@@ -301,10 +215,8 @@ changeView(per: resident|staff){
         console.log("this is null");
       }
       this.events[i].start = new Date(this.events[i].start);///2
-      //console.log(this.selected.events[i].start);
       this.events[i].end = new Date(this.events[i].end);///2
       this.events[i].title = this.selected.events[i].describe;/////2 
-      console.log(this.events[i])
       if (this.events[i].color != null){ // delete this line after changing persons on Database
         
         this.events[i].color.secondary = this.selected.events[i].activity.color;
@@ -313,11 +225,9 @@ changeView(per: resident|staff){
     }
   }
   this.updateCalendarEvents();
-  console.log(this.bevents); //TODO: Delete this line after testing is complete
   let j =0;
   for (j=0; j<this.bevents.length;j++){
     this.events.push(this.bevents[j]);
-    //console.log(this.bevents[j])
   }
   
   this.allEvents = this.events;
@@ -331,8 +241,8 @@ eventClicked({ event }: { event: CALtest }): void {
   
   const dialogConfig = new MatDialogConfig();
   dialogConfig.disableClose = false;
-  //dialogConfig.height = "250px";
-  //dialogConfig.width = "250px";
+
+
   if (event.activity != null){ // regular event
     dialogConfig.data = {
       
@@ -347,7 +257,7 @@ eventClicked({ event }: { event: CALtest }): void {
     }
   }
 
-  else{
+  else{ // recurring event
     dialogConfig.data = {
       header: "אירוע",
       title: event.title,

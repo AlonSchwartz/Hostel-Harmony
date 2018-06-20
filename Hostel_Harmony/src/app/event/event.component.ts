@@ -59,13 +59,13 @@ export class EventComponent implements OnInit {
     this.submitted = false;
     this.customActivity=null;
     this.weekdayArr=[
-      {name:'ראשון', value:RRule.SU, checked:false},
-      {name:'שני', value:RRule.MO, checked:false},
-      {name:'שלישי', value:RRule.TU, checked:false},
-      {name:'רביעי', value:RRule.WE, checked:false},
-      {name:'חמישי', value:RRule.TH, checked:false},
-      {name:'שישי', value:RRule.FR, checked:false},
-      {name:'שבת', value:RRule.SA, checked:false}
+      {name:'ראשון', value:RRule.MO, checked:false},
+      {name:'שני', value:RRule.TU, checked:false},
+      {name:'שלישי', value:RRule.WE, checked:false},
+      {name:'רביעי', value:RRule.TH, checked:false},
+      {name:'חמישי', value:RRule.FR, checked:false},
+      {name:'שישי', value:RRule.SA, checked:false},
+      {name:'שבת', value:RRule.SU, checked:false}
     ];
     this.monthNday();
   }
