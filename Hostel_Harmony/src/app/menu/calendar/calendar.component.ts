@@ -56,15 +56,11 @@ const colors: any = {
 
 export class CalendarComponent implements OnInit,OnChanges {
   
-<<<<<<< HEAD
   constructor(private nameSel: NameSelectService,public dialog: MatDialog, private userService: UserService ){
    
     this.userService.getrecurringEvents().then(()=>{ 
       this.getRecEvents();
     });   
-=======
-  constructor(private nameSel: NameSelectService,public dialog: MatDialog ){
->>>>>>> 18939764d0689d4a18b1adb7c1ce9a245fab446e
   }
   
   // Declarations & Initializations
@@ -100,7 +96,6 @@ events: CalendarEvent[] = [
 ];
 
 //for permanent events
-<<<<<<< HEAD
 recurringEvents: RecurringEvent[] = []; 
 // [
 //   {
@@ -142,23 +137,6 @@ ngOnChanges(changes:{[propKey:string]:SimpleChange}){
       this.getUserSelected();
       this.changeView(this.selected);
       
-=======
-recurringEvents: RecurringEvent[]=
-[
-  {
-    title: 'Recurs on the 5th of each month',
-    rrule: {
-      freq: RRule.WEEKLY,
-      byweekday: [RRule.TU],
-      byhour: 14,
-      byminute: 32,
-      count: 5,
-    },},
-    {	  title: 'Recurs works? Just a test.',
-    rrule: {
-      freq: RRule.WEEKLY,
-      byweekday: [RRule.SU],
->>>>>>> 18939764d0689d4a18b1adb7c1ce9a245fab446e
     }
   }
 }
@@ -170,7 +148,6 @@ public getUserSelected(){
   if(this.selected==null){
     alert('no user entered')
   }
-<<<<<<< HEAD
   // this.addEventToCal(this.selected.events);
 }
 
@@ -216,30 +193,6 @@ updateCalendarEvents(): void {
         until: endOfPeriod[this.view](this.viewDate)
       })
     );
-=======
-  
-  /**Saves the information of selected person*/
-  public getUserSelected(){
-    this.nameSel.cm.subscribe(selected => this.selected = selected);
-    if(this.selected==null){
-      alert('no user entered')
-    }
-  }
-  /** Updating the events view according to selected person */
-  updateCalendarEvents(): void {
-    const startOfPeriod: any = {
-      month: startOfMonth,
-      week: startOfWeek,
-      day: startOfDay
-    };
-    const endOfPeriod: any = {
-      month: endOfMonth,
-      week: endOfWeek,
-      day: endOfDay
-    };
-    this.bevents = this.events;
-    this.events = [];
->>>>>>> 18939764d0689d4a18b1adb7c1ce9a245fab446e
     
     //console.log(this.recurringEvents)
     rule.all().forEach(date => {
@@ -248,20 +201,8 @@ updateCalendarEvents(): void {
           start: new Date(date)
         })
       );
-<<<<<<< HEAD
     });
   });
-=======
-      rule.all().forEach(date => {
-        this.events.push(
-          Object.assign({}, event, {
-            start: new Date(date)
-          })
-        );
-      });
-    }); 
-  }
->>>>>>> 18939764d0689d4a18b1adb7c1ce9a245fab446e
   
 }
 
@@ -390,7 +331,6 @@ eventClicked({ event }: { event: CALtest }): void {
   
   dialogConfig.data = {
     
-<<<<<<< HEAD
     header: "אירוע:",
     title: event.title,
     start: event.start,
@@ -399,67 +339,13 @@ eventClicked({ event }: { event: CALtest }): void {
     issuer: event.issuer,
     asign: event.asign
     
-=======
-    if (this.selected.events.length == 0){
-      this.events = [];
-    }
-    else {
-      this.events = this.selected.events;
-      for (i=0; i<this.events.length ; i++)
-      {
-        if (this.events[i].start == null || this.events[i].end == null){// TODO: Deleted after changes persons in firebase!
-          console.log("this is null");
-        }
-        this.events[i].start = new Date(this.events[i].start);///2
-        this.events[i].end = new Date(this.events[i].end);///2
-        this.events[i].title = this.selected.events[i].describe;/////2 
-        console.log(this.events[i])
-        if (this.events[i].color != null){ // delete this line after changing persons on Database
-          
-          this.events[i].color.secondary = this.selected.events[i].activity.color;
-          this.events[i].color.primary = this.selected.events[i].activity.color;
-        }
-      }
-    }
-    this.updateCalendarEvents();
-    console.log(this.bevents); //TODO: Delete this line after testing is complete
-    let j =0;
-    for (j=0; j<this.bevents.length;j++){
-      this.events.push(this.bevents[j]);
-    }
-    this.allEvents = this.events;
-    this.refresh.next();
->>>>>>> 18939764d0689d4a18b1adb7c1ce9a245fab446e
   }
   var dialogRef = this.dialog.open(dialogPopup, dialogConfig) 
   // this.dialog.open(MyDialogComponent, { panelClass: 'custom-dialog-container' })
   
-<<<<<<< HEAD
   
 };
 
-=======
-  /** Shows a popup with event details */
-  eventClicked({ event }: { event: CALtest }): void {
-    
-    console.log('Event clicked', event);
-    
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.data = {
-      
-      header: "אירוע:",
-      title: event.title,
-      start: event.start,
-      end: event.end,
-      type: event.activity,
-      issuer: event.issuer,
-      asign: event.asign
-      
-    }
-    var dialogRef = this.dialog.open(dialogPopup, dialogConfig) 
-  };
->>>>>>> 18939764d0689d4a18b1adb7c1ce9a245fab446e
 } 
 
 export interface RecurringEvent {
