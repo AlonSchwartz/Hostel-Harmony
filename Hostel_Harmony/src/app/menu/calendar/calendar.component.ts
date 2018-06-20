@@ -65,7 +65,7 @@ export class CalendarComponent implements OnInit,OnChanges {
       
     });  
     this.refresh.next();
-    //this.updateCalendarEvents()
+    this.updateCalendarEvents()
     
     
   }
@@ -353,7 +353,9 @@ eventClicked({ event }: { event: CALtest }): void {
       title: event.title,
       start: event.start,
       color: event.color,
-      recEvent: true
+      recEvent: true,
+      until: event.end
+      
     }
 
   }
