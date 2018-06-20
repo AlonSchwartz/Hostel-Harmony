@@ -5,11 +5,14 @@
 	<div id = "backToWeek">
 		<div  class="row text-center">
 			<div  class="col-md-4">
+					<!-- <button	id="nextbar" class="btn btn-outline-secondary font-weight-bold text-right text-white"
+					(click)="changeView()" *ngIf="recurringEvents[0]==null"> טען אירועים חוזרים</button> -->
 				<button class="BTNbackToWeek btn font-weight-bold text-right text-white" *ngIf="view!='week'" (click)="backToWeekView()">תצוגה שבועית</button>
 			</div>
 			<div class="col-md-4">
 				<h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'he' }}</h3>
 			</div>
+			
 			<div class="col-md-4">
 				<div class="btn-group">
 						<div id="nextbar"
@@ -40,6 +43,7 @@
 					
 			</div>
 		</div>
+		
 		<br>
 	<div  class="col-md-4"></div>
 </div>

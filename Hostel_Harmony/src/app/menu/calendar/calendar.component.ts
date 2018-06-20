@@ -57,10 +57,17 @@ const colors: any = {
 export class CalendarComponent implements OnInit,OnChanges {
   
   constructor(private nameSel: NameSelectService,public dialog: MatDialog, private userService: UserService ){
-   
+    console.log(this.userService.recurringEvents)
     this.userService.getrecurringEvents().then(()=>{ 
+      console.log(this.recurringEvents)
       this.getRecEvents();
-    });   
+      console.log(this.recurringEvents)
+      
+    });  
+    this.refresh.next();
+    //this.updateCalendarEvents()
+    
+    
   }
   
   // Declarations & Initializations
@@ -96,7 +103,7 @@ events: CalendarEvent[] = [
 ];
 
 //for permanent events
-recurringEvents: RecurringEvent[] = []; 
+recurringEvents: RecurringEvent[];
 // [
 //   {
 //     title: 'Recurs on the 5th of each month',
@@ -122,14 +129,12 @@ recurringEvents: RecurringEvent[] = [];
 //   }];
 
 ngOnInit() {
-
-  console.log("-----5-------")
-  console.log(this.recurringEvents)
-  this.updateCalendarEvents();
+  //this.updateCalendarEvents();
 }
 
 /**allow page to wait until a person is passed to calendar, only then will the function run */
 ngOnChanges(changes:{[propKey:string]:SimpleChange}){
+  
   for(let na in changes){
     let rec=changes[na];
     let temp=JSON.stringify(rec.currentValue);
@@ -156,7 +161,7 @@ getRecEvents(){
   //this.recurringEvents = [];
   this.recurringEvents = this.userService.recurringEvents;
   for (var j = 0; j < this.userService.recurringEvents.length ; j++){
-  //  let temp = JSON.stringify(this.userService.recurringEvents[j]);
+    //  let temp = JSON.stringify(this.userService.recurringEvents[j]);
     //console.log(this.userService.recurringEvents[j])
     //this.recurringEvents.push(temp);
   }
@@ -186,24 +191,25 @@ updateCalendarEvents(): void {
   this.bevents = this.events;
   this.events = [];
   
-  this.recurringEvents.forEach(event => {
-    const rule: RRule = new RRule(
-      Object.assign({}, event.rrule, {
-        dtstart: startOfPeriod[this.view](this.viewDate),
-        until: endOfPeriod[this.view](this.viewDate)
-      })
-    );
-    
-    //console.log(this.recurringEvents)
-    rule.all().forEach(date => {
-      this.events.push(
-        Object.assign({}, event, {
-          start: new Date(date)
+  if (this.recurringEvents != null){
+    this.recurringEvents.forEach(event => {
+      const rule: RRule = new RRule(
+        Object.assign({}, event.rrule, {
+          dtstart: startOfPeriod[this.view](this.viewDate),
+          until: endOfPeriod[this.view](this.viewDate)
         })
       );
+      
+      //console.log(this.recurringEvents)
+      rule.all().forEach(date => {
+        this.events.push(
+          Object.assign({}, event, {
+            start: new Date(date)
+          })
+        );
+      });
     });
-  });
-  
+  }
 }
 
 backToWeekView() {
@@ -273,13 +279,12 @@ addEventToCal(eve:CALtest[]): void {
 // *** PLEASE NOTE *** this method is working, but isn't done yet!
 changeView(per: resident|staff){
   this.nameSel.cm.subscribe(selected => this.selected = selected);
-  console.log(this.selected)
   
   if (this.selected == null){
     this.updateCalendarEvents()
     return;
   }    
-  console.log(this.selected);
+  
   let d = new Date();////2
   
   let i = 0;
@@ -328,17 +333,29 @@ eventClicked({ event }: { event: CALtest }): void {
   dialogConfig.disableClose = false;
   //dialogConfig.height = "250px";
   //dialogConfig.width = "250px";
-  
-  dialogConfig.data = {
-    
-    header: "אירוע:",
-    title: event.title,
-    start: event.start,
-    end: event.end,
-    type: event.activity,
-    issuer: event.issuer,
-    asign: event.asign
-    
+  if (event.activity != null){ // regular event
+    dialogConfig.data = {
+      
+      header: "אירוע:",
+      title: event.title,
+      start: event.start,
+      end: event.end,
+      type: event.activity,
+      issuer: event.issuer,
+      asign: event.asign,
+      recEvent: false
+    }
+  }
+
+  else{
+    dialogConfig.data = {
+      header: "אירוע",
+      title: event.title,
+      start: event.start,
+      color: event.color,
+      recEvent: true
+    }
+
   }
   var dialogRef = this.dialog.open(dialogPopup, dialogConfig) 
   // this.dialog.open(MyDialogComponent, { panelClass: 'custom-dialog-container' })

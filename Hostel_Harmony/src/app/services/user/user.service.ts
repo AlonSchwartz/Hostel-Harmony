@@ -449,7 +449,7 @@ export class UserService  {
           }
           
           // Option #2 for adding new activity.
-          this.eventType.viewValue = "הוסף אירוע חדש | עודכן מהעורך"
+          this.eventType.viewValue = "הוסף אירוע חדש +"
           this.eventType.color = "white";
           this.eventType.value = "add";
           this.eventTypes.unshift(this.eventType)
@@ -471,16 +471,8 @@ export class UserService  {
           this.recurringEvents = [];
           for (var i = 0; i < collection.length ; i++){
             
-            // this.recurringEvent.title = collection[i].title;
-            // this.recurringEvent.rrule.bymonth = collection[i].rrule.bymonth;
-            // this.recurringEvent.rrule.bymonthday = collection[i].rrule.bymonthday;
-            // this.recurringEvent.rrule.byweekday = collection[i].rrule.byweekday;
-            // this.recurringEvent.rrule.freq = collection[i].rrule.freq;
-            // this.recurringEvent.id = this.recEventsList[i].id;
             this.recurringEvent = JSON.parse(JSON.stringify(collection[i]))
             this.recurringEvent.id = this.recEventsList[i].id;
-
-            //  Object.assign({}, this.recurringEvent); // push delivers by reference, so we need to copy our object first
             this.recurringEvents.push(this.recurringEvent);
           }
            resolve();    
