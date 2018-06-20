@@ -16,7 +16,8 @@ import { LowerCasePipe } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { EvalForm } from '../../models/eval-form.model';
 import { ActivityTypes } from '../../models/activity-types.model';
-import RRule = require('rrule');
+import * as RRule from 'rrule';
+
 
 
 @Injectable()
