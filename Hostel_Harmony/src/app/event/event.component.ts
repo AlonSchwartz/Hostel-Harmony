@@ -18,7 +18,7 @@ import { resident } from '../models/resident.model';
 import { CalendarEvent } from 'angular-calendar';
 import { RecurringEvent } from '../menu/calendar/calendar.component';
 import RRule = require('rrule');
- import { MatRadioButton }  from '@angular/material/radio' ;
+import { MatRadioButton }  from '@angular/material/radio' ;
 
 @Component({
   selector: 'app-event',
@@ -36,7 +36,7 @@ export class EventComponent implements OnInit {
   private newEventTypeSubmited:boolean=false;
   user:staff|resident;
   types :ActivityTypes[]=[];
-
+  
   days:number[]=[];
   months:number[]=[];
   private newEventIndex = -1;
@@ -47,14 +47,14 @@ export class EventComponent implements OnInit {
   weekdayArr:any[]=[];
   selRecc: string='';
   repeating = ['יומי','שבועי','חודשי',];
-
-
+  
+  
   private recEvent = {title:"", color:"skyblue", rrule:{bymonth:-1,bymonthday:-1,byhour:-1, byweekday:[],until:new Date(),byminute:-1 ,freq:RRule.YEARLY }} as RecurringEvent;
-
+  
   public min: Date;
   public disabledDateButton: boolean=true;
   
-    
+  
   constructor( private nameSel: NameSelectService, private userService: UserService, public router: Router) {
     this.userService.getEventTypes().then(()=> this.types = this.userService.eventTypes);
     this.submitted = false;
@@ -72,7 +72,7 @@ export class EventComponent implements OnInit {
   }
   
   // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.recEvent); }
+  get diagnostic() { return JSON.stringify(this.model); }
   
   /** Blocking the option to select days that are earlier that selected start time (day+exact time in hours, minutes)
   * @param min: selected start day
@@ -83,7 +83,7 @@ export class EventComponent implements OnInit {
   }
   
   enableEndDatePicker(){
-      this.disabledDateButton = false;
+    this.disabledDateButton = false;
   }
   
   ngOnInit() {
@@ -92,76 +92,84 @@ export class EventComponent implements OnInit {
       this.router.navigateByUrl('menu');
     }      
   }
-
+  
   addActivity(val:string,color:string){
     if (this.firstAddition){
       this.newEventIndex = this.types.length;
       this.firstAddition=false;
     }
-      this.types.push(new ActivityTypes(val,val,color));
-      this.newEventTypeSubmited=true;
-      this.edited=true;
-    }  
-    subEvent() {
-      this.submitted = true;/*do something*/
-      //alert(this.submitted);
-      // console.log(obj);
-      //console.log(this.user)
-      if (this.newEventTypeSubmited){
-        for (let i=this.newEventIndex; i < this.types.length ; i++){
-          console.log[i];
-          this.userService.updateEventTypes(this.types[i]);
-        }
-        
-        //console.log(this.types.values());
-        // console.log(this.types.filter(type => this.types[3] != this.types[4]));
-        //console.log(this.userService.getEventTypes());
-        
-        // this.userService.updateEventTypes(this.types[2]);
+    this.types.push(new ActivityTypes(val,val,color));
+    this.newEventTypeSubmited=true;
+    this.edited=true;
+  }  
+  subEvent() {
+    this.submitted = true;/*do something*/
+    //alert(this.submitted);
+    // console.log(obj);
+    //console.log(this.user)
+    if (this.newEventTypeSubmited){
+      for (let i=this.newEventIndex; i < this.types.length ; i++){
+        console.log[i];
+        this.userService.updateEventTypes(this.types[i]);
       }
-
-
       
-      this.model.start = new Date(this.model.start);
-      this.model.end = new Date(this.model.end);
-      /**input values in recEvent */
-      this.chooseFreq();
-      this.recEvent.rrule.byhour = this.model.start.getHours();
-      this.recEvent.rrule.byminute = this.model.start.getMinutes();
-      this.recEvent.title=this.model.describe;
-      this.recEvent.rrule.until=this.model.end;
-      this.recEvent.rrule.byweekday=this.selectedOptions;
-      /** */
-      let answer = this.userService.addEvent(this.user, this.model);
-      if (answer)
-      {
-        alert("האירוע נוסף בהצלחה");
-        this.router.navigateByUrl('menu');
-      }
-  }
-    monthNday(){
-      for(let i=0;i<=30;i++){
-        if(i<12){
-          this.months.push(i+1);
-        }
-        this.days.push(i+1);
-      }
+      //console.log(this.types.values());
+      // console.log(this.types.filter(type => this.types[3] != this.types[4]));
+      //console.log(this.userService.getEventTypes());
+      
+      // this.userService.updateEventTypes(this.types[2]);
     }
-    chooseFreq(){
-      if(this.selRecc==='יומי'){
-        this.recEvent.rrule.freq=RRule.DAILY;
-      }
-      else if(this.selRecc==='שבועי'){
-        this.recEvent.rrule.freq=RRule.WEEKLY;
-      }
-      else if(this.selRecc==='חודשי'){
-        this.recEvent.rrule.freq=RRule.MONTHLY;
-      }
+    
+    
+    
+    this.model.start = new Date(this.model.start);
+    this.model.end = new Date(this.model.end);
+    /**input values in recEvent */
+    this.chooseFreq();
+    this.recEvent.rrule.byhour = this.model.start.getHours();
+    this.recEvent.rrule.byminute = this.model.start.getMinutes();
+    this.recEvent.title=this.model.describe;
+    this.recEvent.rrule.until=this.model.end;
+    this.recEvent.rrule.byweekday=this.selectedOptions;
+    
+    let answer;
+    if (this.model.activity.value == "general-0"){
+      answer = this.userService.addRecurringEvent(this.recEvent);
     }
-
-    get selectedOptions() {
-      return this.weekdayArr
-                .filter(opt => opt.checked)
-                .map(opt => opt.value)
+    else {
+      answer = this.userService.addEvent(this.user, this.model);
+    }
+    
+    /** */
+    if (answer)
+    {
+      alert("האירוע נוסף בהצלחה");
+      this.router.navigateByUrl('menu');
     }
   }
+  monthNday(){
+    for(let i=0;i<=30;i++){
+      if(i<12){
+        this.months.push(i+1);
+      }
+      this.days.push(i+1);
+    }
+  }
+  chooseFreq(){
+    if(this.selRecc==='יומי'){
+      this.recEvent.rrule.freq=RRule.DAILY;
+    }
+    else if(this.selRecc==='שבועי'){
+      this.recEvent.rrule.freq=RRule.WEEKLY;
+    }
+    else if(this.selRecc==='חודשי'){
+      this.recEvent.rrule.freq=RRule.MONTHLY;
+    }
+  }
+  
+  get selectedOptions() {
+    return this.weekdayArr
+    .filter(opt => opt.checked)
+    .map(opt => opt.value)
+  }
+}

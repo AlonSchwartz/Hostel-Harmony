@@ -58,6 +58,8 @@ export class UserService  {
   observableUsers: Observable<resident[]>; //A temp variable that returns metadata. used by usersList
   residentUsersList = []; //To store all residents with ID's
   staffUsersList = []; //To store all staff with ID's
+  recEventsList = []; // //To store all recurring events with ID's
+  
   
   constructor(private calendar: CalendarComponent, af: AngularFirestore) { 
     
@@ -104,6 +106,8 @@ export class UserService  {
     this.setMetaData();
     this.setStaffMetaData();
     this.getResidents();
+    this.setRecEventsMetaData()
+    this.getrecurringEvents();
     
     
   }
@@ -143,57 +147,49 @@ export class UserService  {
   addEvent(per: resident | staff, event: CALtest ): boolean{
     this.setMetaData();
     
-    if (event.activity.value == "general-0")
-    {
-      this.addRecurringEvent(event)
-      return true;
+    if (per.className == "resident"){
+      
+      this.getResidents();
+      this.res = this.residentsUsers[0];   
+      if (this.feasibilityCheck(event,per)){
+        for (let i = 0; i < this.residentUsersList.length ; i++){        
+          if (this.residentUsersList[i].id == per.id){
+            console.log("id equals, resident");
+            per.events.push(event);
+            console.log(per.events)
+            this.residentsCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
+            return true;
+          }
+        }
+      }
+      else {
+        return false;
+      }
+      
+    }
+    if (per.className == "staff"){
+      this.getStaff();
+      this.sta = this.staffUsers[0]; 
+      console.log("=====Debugging====") 
+      console.log(event)
+      console.log(per.events)
+      console.log("=====Debugging====") 
+      
+      if (this.feasibilityCheck(event,per)){
+        for (let i = 0; i < this.staffUsersList.length ; i++){        
+          if (this.staffUsersList[i].id == per.id){
+            console.log("id equals, staff");
+            per.events.push(event);
+            this.staffCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
+            return true;
+          }
+        }
+      }
+      else {
+        return false;
+      }
     }
     
-    else
-    {
-      if (per.className == "resident"){
-        
-        this.getResidents();
-        this.res = this.residentsUsers[0];   
-        if (this.feasibilityCheck(event,per)){
-          for (let i = 0; i < this.residentUsersList.length ; i++){        
-            if (this.residentUsersList[i].id == per.id){
-              console.log("id equals, resident");
-              per.events.push(event);
-              console.log(per.events)
-              this.residentsCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
-              return true;
-            }
-          }
-        }
-        else {
-          return false;
-        }
-        
-      }
-      if (per.className == "staff"){
-        this.getStaff();
-        this.sta = this.staffUsers[0]; 
-        console.log("=====Debugging====") 
-        console.log(event)
-        console.log(per.events)
-        console.log("=====Debugging====") 
-        
-        if (this.feasibilityCheck(event,per)){
-          for (let i = 0; i < this.staffUsersList.length ; i++){        
-            if (this.staffUsersList[i].id == per.id){
-              console.log("id equals, staff");
-              per.events.push(event);
-              this.staffCollection.doc(JSON.parse(JSON.stringify(per.id))).update(JSON.parse(JSON.stringify(per))).catch(function(error){console.log(error)});
-              return true;
-            }
-          }
-        }
-        else {
-          return false;
-        }
-      }
-    }
     
   }
   
@@ -291,6 +287,26 @@ export class UserService  {
   setStaffMetaData() {
     this.getStaffMetaData().subscribe(sta2 => {
       this.staffUsersList = sta2;
+    });
+  }
+  
+  // get metadata for residents
+  getRecEventsMetaData() {
+    this.observableUsers = this.RecurringEventsCollection.snapshotChanges().map(actions => { //all the fields, includes unique hashing key
+      return actions.map(a => {
+        const data = a.payload.doc.data() as RecurringEvent;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      });
+    })
+    //console.log(this.observableUsers);
+    return this.observableUsers;
+  }
+  
+  // set it in residentUsersList
+  setRecEventsMetaData() {
+    this.getRecEventsMetaData().subscribe(rec => {
+      this.recEventsList = rec;
     });
   }
   
@@ -395,8 +411,9 @@ export class UserService  {
     }
     
     /** Adds a new Recurring Event to database */
-    addRecurringEvent(recEvent: RecurringEvent){
-      this.RecurringEventsCollection.add(JSON.parse(JSON.stringify(recEvent)));
+    addRecurringEvent(recEvent: RecurringEvent): boolean{
+      this.RecurringEventsCollection.add(JSON.parse(JSON.stringify(recEvent))).then().catch((err)=>{return false});
+      return true;
     }
     
     /** Gets all Recurring Events from database */
@@ -407,16 +424,15 @@ export class UserService  {
           for (var i = 0; i < collection.length ; i++){
             
             this.recurringEvent.title = collection[i].title;
-            console.log(this.recurringEvent);
-            console.log(collection[i]);
             this.recurringEvent.rrule.bymonth = collection[i].rrule.bymonth;
             this.recurringEvent.rrule.bymonthday = collection[i].rrule.bymonthday;
             this.recurringEvent.rrule.byweekday = collection[i].rrule.byweekday;
             this.recurringEvent.rrule.freq = collection[i].rrule.freq;
+            this.recurringEvent.id = this.recEventsList[i].id;
             let copy = Object.assign({}, this.recurringEvent); // push delivers by reference, so we need to copy our object first
             this.recurringEvents.push(copy);
           }
-          resolve();    
+          // resolve();    
         })})
         
         

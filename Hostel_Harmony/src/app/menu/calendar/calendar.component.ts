@@ -16,6 +16,7 @@ import { staff } from '../../models/staff.model';
 import { resident } from '../../models/resident.model';
 import {MatDialog, MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig} from '@angular/material';
 import { dialogPopup } from './dialogPopup.component';
+import { UserService } from '../../services/user/user.service';
 
 const colors: any = {
   red: {
@@ -56,6 +57,10 @@ const colors: any = {
 export class CalendarComponent implements OnInit,OnChanges {
   
   constructor(private nameSel: NameSelectService,public dialog: MatDialog ){
+
+    // this.userService.getrecurringEvents().then(()=>{ 
+    //   this.recurringEvents = userService.recurringEvents;
+    // });
   }
   
   // Declarations & Initializations
@@ -91,7 +96,8 @@ events: CalendarEvent[] = [
 ];
 
 //for permanent events
-recurringEvents: RecurringEvent[] = [
+recurringEvents: RecurringEvent[]=
+[
   {
     title: 'Recurs on the 5th of each month',
     rrule: {
@@ -113,8 +119,7 @@ recurringEvents: RecurringEvent[] = [
       freq: RRule.WEEKLY,
       byweekday: [RRule.SU],
     }
-    
-	}];
+  }];
   
   ngOnInit() {
     this.updateCalendarEvents();
@@ -337,11 +342,10 @@ export interface RecurringEvent {
     byminute?: number,
     count?: number, // How many occurrences will be generated overall
     until?: Date
-
+    
     // RRule arugments can be null.
     
-    
-    
   };
+  id?:string;
 }
 
