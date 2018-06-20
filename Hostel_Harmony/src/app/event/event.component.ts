@@ -48,12 +48,8 @@ export class EventComponent implements OnInit {
   selRecc: string='';
   repeating = ['יומי','שבועי','חודשי',];
   
-<<<<<<< HEAD
   
   private recEvent = {title:"", color:"skyblue", rrule:{bymonth:null,bymonthday:null,byhour:null, byweekday:[],until:new Date(),byminute:null ,freq:RRule.YEARLY }} as RecurringEvent;
-=======
-  private recEvent = {title:"", color:"skyblue", rrule:{bymonth:-1,bymonthday:-1,byhour:-1, byweekday:[],until:new Date(),byminute:-1 ,freq:RRule.YEARLY }} as RecurringEvent;
->>>>>>> 18939764d0689d4a18b1adb7c1ce9a245fab446e
   
   public min: Date;
   public disabledDateButton: boolean=true;
