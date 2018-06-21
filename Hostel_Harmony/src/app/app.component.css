@@ -7,11 +7,13 @@
     right: 0;
     max-width: 100%;
     max-height: 100%;
+    min-height: 100%;
     margin: auto;
     overflow: auto;
+    margin-bottom: 28px;
 }
 #container #foo{
-    background-color: #322a6673;
+    background-color: #176d66a4;
     font-size:12px;
     width: 100%;
     color:white;
