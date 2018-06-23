@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {NameSelectService} from '../services/nameSelect/name-select.service';
-import {NgModel} from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
 import { UserService } from '../services/user/user.service';
 import { staff } from '../models/staff.model';
@@ -33,7 +32,7 @@ export class MenuComponent implements OnInit {
       
       userService.getResidents().then(()=>{ 
         this.getNames() 
-      }); //this.getNames();
+      }); 
 
     }
     name:string;
@@ -41,7 +40,7 @@ export class MenuComponent implements OnInit {
     selected:staff|resident;
     sel2:resident;
     staff:string[][] = new Array(["",""]);
-    //staffName:any= this.userService.getStaff();
+
     residents:string[][] =new Array(["",""]);
     ress:resident[] = [];
     
@@ -80,7 +79,7 @@ export class MenuComponent implements OnInit {
       return false;
     }
     ngOnInit() {
-      //this.data.cm.subscribe(message =>this.name=message);
+
     }
     sendVal(selval:string[][]){
 

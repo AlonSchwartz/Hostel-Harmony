@@ -1,4 +1,4 @@
-import { CalEvent, CALtest } from '../models/event.model';
+import {  CALtest } from '../models/event.model';
 
 
 export class staff {

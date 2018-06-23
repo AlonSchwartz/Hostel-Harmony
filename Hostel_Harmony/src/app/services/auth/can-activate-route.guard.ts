@@ -1,15 +1,10 @@
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  Router,
-  CanActivateChild
+  Router
 } from '@angular/router';
-import { Observable,Observer ,Subject} from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
-import { Http,Headers,Response,RequestOptions} from '@angular/http';
 import { AuthService } from './auth.service';
-import { UserService } from '../user/user.service';
 
 @Injectable()
 export class CanActivateRouteGuard{
@@ -21,7 +16,7 @@ export class CanActivateRouteGuard{
       return true;
     }
     this.authService.redirectUrl = state.url;    
-    //this.router.navigateByUrl('login')
+
     return false;
     
   }

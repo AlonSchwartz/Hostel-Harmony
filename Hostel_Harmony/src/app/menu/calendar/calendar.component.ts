@@ -1,15 +1,11 @@
-import { Component, OnInit,Input, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { CalendarEvent, CalendarEventTitleFormatter ,CalendarDateFormatter,DAYS_OF_WEEK} from 'angular-calendar';
 import {  ChangeDetectionStrategy, OnChanges, SimpleChange } from '@angular/core';
-import {  CalendarMonthViewDay } from 'angular-calendar';
-import { isSameMonth, isSameDay } from 'ngx-bootstrap/chronos/utils/date-getters';
 import { CustomEventTitleFormatter } from '../provider/custom-event-title-formatter.provider';
 import { CustomDateFormatter } from '../provider/custom-date-formatter.provider';
-import { EventComponent } from '../../event/event.component';
 import {CalEvent, CALtest} from '../../models/event.model';
 import { startOfDay, endOfDay,getMonth,startOfMonth,startOfWeek,endOfMonth,endOfWeek} from 'date-fns';
 import { Subject } from 'rxjs';
-import { start } from 'repl';
 import { RRule } from 'rrule';
 import {NameSelectService} from '../../services/nameSelect/name-select.service';
 import { staff } from '../../models/staff.model';
@@ -17,21 +13,6 @@ import { resident } from '../../models/resident.model';
 import {MatDialog, MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig} from '@angular/material';
 import { dialogPopup } from './dialogPopup.component';
 import { UserService } from '../../services/user/user.service';
-
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3'
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF'
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA'
-  }
-};
 
 @Component({
   selector: 'app-calendar',
@@ -63,7 +44,6 @@ export class CalendarComponent implements OnInit,OnChanges {
       this.updateCalendarEvents()
     });  
 
-    
     
   }
   
@@ -123,12 +103,10 @@ ngOnChanges(changes:{[propKey:string]:SimpleChange}){
 
 /**Saves the information of selected person*/
 public getUserSelected(){
-  //this.events=[];//empty arrey of current user, need to keep reaccuring events(from database!)
   this.nameSel.cm.subscribe(selected => this.selected = selected);
   if(this.selected==null){
     alert('no user entered')
   }
-  // this.addEventToCal(this.selected.events);
 }
 
 getRecEvents(){
@@ -139,7 +117,7 @@ getRecEvents(){
 
 /** Updating the events view according to selected person */
 updateCalendarEvents(): void {
-  //this.events = [];
+
   const startOfPeriod: any = {
     month: startOfMonth,
     week: startOfWeek,
@@ -162,7 +140,6 @@ updateCalendarEvents(): void {
         })
       );
       
-      //console.log(this.recurringEvents)
       rule.all().forEach(date => {
         this.events.push(
           Object.assign({}, event, {
@@ -190,7 +167,7 @@ addEventToCal(eve:CALtest[]): void {
 }
 
 
-// *** PLEASE NOTE *** this method is working, but isn't done yet!
+/** Change the view according to the selected person */
 changeView(per: resident|staff){
   this.nameSel.cm.subscribe(selected => this.selected = selected);
   
@@ -199,7 +176,7 @@ changeView(per: resident|staff){
     return;
   }    
   
-  let d = new Date();////2
+  let d = new Date();
   
   let i = 0;
   
@@ -208,15 +185,15 @@ changeView(per: resident|staff){
   }
   else {
     this.events = this.selected.events;
-    // console.log(this.events.length)
+
     for (i=0; i<this.events.length ; i++)
     {
       if (this.events[i].start == null || this.events[i].end == null){// TODO: Deleted after changes persons in firebase!
         console.log("this is null");
       }
-      this.events[i].start = new Date(this.events[i].start);///2
-      this.events[i].end = new Date(this.events[i].end);///2
-      this.events[i].title = this.selected.events[i].describe;/////2 
+      this.events[i].start = new Date(this.events[i].start);
+      this.events[i].end = new Date(this.events[i].end);
+      this.events[i].title = this.selected.events[i].describe;
       if (this.events[i].color != null){ // delete this line after changing persons on Database
         
         this.events[i].color.secondary = this.selected.events[i].activity.color;
@@ -237,7 +214,6 @@ changeView(per: resident|staff){
 /** Shows a popup with event details */
 eventClicked({ event }: { event: CALtest }): void {
   
-  console.log('Event clicked', event);
   
   const dialogConfig = new MatDialogConfig();
   dialogConfig.disableClose = false;
@@ -257,7 +233,7 @@ eventClicked({ event }: { event: CALtest }): void {
     }
   }
 
-  else{ // recurring event
+  else{ // It's a recurring event
     dialogConfig.data = {
       header: "אירוע",
       title: event.title,
@@ -270,8 +246,7 @@ eventClicked({ event }: { event: CALtest }): void {
     }
 
   }
-  var dialogRef = this.dialog.open(dialogPopup, dialogConfig) 
-  // this.dialog.open(MyDialogComponent, { panelClass: 'custom-dialog-container' })
+  var dialogRef = this.dialog.open(dialogPopup, dialogConfig)
   
   
 };

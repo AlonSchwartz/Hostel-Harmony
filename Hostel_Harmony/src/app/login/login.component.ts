@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user/user.service';
-import { test } from '../models/test.model';
-import { resident } from '../models/resident.model';
-import { staff } from '../models/staff.model';
-import { Router ,RouterEvent} from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 import {FormControl, Validators} from '@angular/forms';
 @Component({

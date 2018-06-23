@@ -1,6 +1,5 @@
 import { CalendarEvent } from "angular-calendar";
 import { ActivityTypes } from "./activity-types.model";
-import { EventColor } from "calendar-utils";
 
 export class CalEvent{
     constructor(

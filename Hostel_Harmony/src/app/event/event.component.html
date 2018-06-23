@@ -3,7 +3,6 @@
   <h1 *ngIf="model.activity!='general-0'">
   הוסף אירוע חדש עבור {{user?.firstName}}
   </h1>
-  {{diagnostic}}
   
   <form (ngSubmit)="subEvent()" #eventForm="ngForm">
       <div class="form-group row" style="direction: rtl">

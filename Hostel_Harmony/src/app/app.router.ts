@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from "./login/login.component";
 import { MenuComponent } from "./menu/menu.component";
 import { CalendarComponent } from "./menu/calendar/calendar.component";
-import { TestingComponent } from "./testing/testing.component";
 import { EventComponent } from "./event/event.component";
 import { AddResidentComponent} from "./add-resident/add-resident.component";
 import { AddStaffComponent } from "./add-staff/add-staff.component"
@@ -17,7 +16,6 @@ export const routes: Routes = [
         { path: '', component: CalendarComponent}
         ]
     },
-    { path: "testing", component: TestingComponent },
     { path: "event",canActivate: [CanActivateRouteGuard],component: EventComponent},
     { path: "add-staff",canActivate: [CanActivateRouteGuard], component: AddStaffComponent},
     { path: "add-resident",canActivate: [CanActivateRouteGuard], component: AddResidentComponent},

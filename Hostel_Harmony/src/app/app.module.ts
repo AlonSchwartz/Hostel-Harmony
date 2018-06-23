@@ -22,7 +22,6 @@ import { EventComponent } from './event/event.component';
 import { OwlDateTimeModule,OwlNativeDateTimeModule ,OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
-import { TestingComponent } from './testing/testing.component';
 import { UserService } from './services/user/user.service';
 import { FilesService } from './services/files/files.service';
 import { AngularFireModule } from 'angularfire2';
@@ -57,7 +56,6 @@ registerLocaleData(localeFr);
     AddResidentComponent,
     AddStaffComponent,
     EventComponent,
-    TestingComponent,
     EvaluationFormComponent,
     ViewComponent,
     FilesComponent,

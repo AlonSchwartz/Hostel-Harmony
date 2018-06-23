@@ -2,7 +2,6 @@
 
 import { Component, OnInit, Input, SimpleChange } from '@angular/core';
 import { FilesService } from '../../services/files/files.service';
-import { UpFile } from '../../models/up-file.model';
 import { NameSelectService } from '../../services/nameSelect/name-select.service';
 import { resident } from '../../models/resident.model';
 import { staff } from '../../models/staff.model';

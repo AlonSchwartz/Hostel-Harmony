@@ -1,7 +1,7 @@
 import { Component, OnInit , Input, SimpleChange, OnChanges } from '@angular/core';
 import {staff} from '../../models/staff.model'
 import {resident} from '../../models/resident.model'
-import { NgModel,FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms'
+import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms'
 import { UserService } from '../../services/user/user.service';
 import { NameSelectService } from '../../services/nameSelect/name-select.service';
 @Component({
@@ -78,7 +78,7 @@ export class ViewComponent implements OnInit,OnChanges {
   }
   
   editUser() : void {
-    console.log(this.copy)
+
     this.pageMode = "editMode";
   }
   

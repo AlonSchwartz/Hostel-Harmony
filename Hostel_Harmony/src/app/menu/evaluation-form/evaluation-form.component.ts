@@ -1,6 +1,6 @@
 import { Component, OnInit,Input, SimpleChange, OnChanges } from '@angular/core';
 import { EvalForm} from '../../models/eval-form.model'
-import {NgModel,FormGroup,FormArray,FormBuilder ,FormControl} from '@angular/forms';
+import {FormGroup,FormArray,FormBuilder ,FormControl} from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
 import { NameSelectService } from '../../services/nameSelect/name-select.service';
 import { resident } from '../../models/resident.model';

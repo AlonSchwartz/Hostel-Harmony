@@ -70,9 +70,6 @@ export class EventComponent implements OnInit {
     this.monthNday();
   }
   
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.recEvent); }
-  
   /** Blocking the option to select days that are earlier that selected start time (day+exact time in hours, minutes)
   * @param min: selected start day
   */
@@ -122,7 +119,8 @@ export class EventComponent implements OnInit {
     if (this.recEvent.rrule.bymonthday != null){
     this.recEvent.rrule.bymonthday = this.recEvent.rrule.bymonthday+1;
     }
-    console.log(this.recEvent)
+    
+    
     let answer;
     if (this.model.activity.value == "general-0"){
       answer = this.userService.addRecurringEvent(JSON.parse(JSON.stringify(this.recEvent)));
