@@ -11,7 +11,7 @@ This project is developed as part of the requirements for a [software engineerin
 
 ### For more details about the creators of this project, please visit our [Team Page](../../wiki/Team).
 
-### For furthur project info, please visit our wiki:
+### For further project info, please visit our wiki:
 
 ### [User Manual](../../wiki/User-manual) 
 
