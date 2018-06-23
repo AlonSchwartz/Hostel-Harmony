@@ -9,13 +9,13 @@
 ## Disclaimer
 This project is developed as part of the requirements for a [software engineering course](https://github.com/jce-il/se-class/wiki) at the software engineering department - [Azrieli College of Engineering](http://www.jce.ac.il/), Jerusalem, Israel.
 
-Please visit our wiki for furthur project info: 
+### For more details about the creators of this project, please visit our [Team Page](../../wiki/Team).
+
+### For furthur project info, please visit our wiki:
 
 ### [User Manual](../../wiki/User-manual) 
 
 ### [Developer Manual](../../wiki/Developer-Manual)
-
-### [Team Page](../../wiki/Team)
 
 ### [Project Management Board](https://github.com/elchi28/Hostel-Harmony/projects/1)
 
