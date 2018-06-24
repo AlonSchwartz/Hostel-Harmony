@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.pass=null;
     if (this.authService.isLoggedIn){
       this.router.navigate(['/menu']);
-      console.log("needs to nav to menu");
+
     }
   } 
 }

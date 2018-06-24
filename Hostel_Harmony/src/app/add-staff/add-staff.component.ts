@@ -50,7 +50,7 @@ export class AddStaffComponent implements OnInit {
       "staff",
       []
     );
-    console.log(this.model);
+
   }
   ngOnInit() {
   }

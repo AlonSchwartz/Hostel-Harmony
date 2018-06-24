@@ -4,6 +4,7 @@ import {resident} from '../../models/resident.model'
 import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms'
 import { UserService } from '../../services/user/user.service';
 import { NameSelectService } from '../../services/nameSelect/name-select.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
@@ -17,7 +18,7 @@ export class ViewComponent implements OnInit,OnChanges {
   
   myForm: FormGroup;
   pageMode : string;
-  constructor(private fb:FormBuilder,private userService: UserService,private nameSel: NameSelectService) {
+  constructor(private fb:FormBuilder,private userService: UserService,private nameSel: NameSelectService,public router: Router) {
    }
 
   ngOnInit() {
@@ -93,8 +94,11 @@ export class ViewComponent implements OnInit,OnChanges {
     this.pageMode = "viewMode";
   }
   alertUser(){
-    if(confirm('האם אתה בטוח שברצונך להסיר? \n אם כן- אשר ושמור שינויים')){
-      this.selected.isActive=false;
+    if(confirm('האם אתה בטוח שברצונך להסיר? ההסרה היא לצמיתות!\n אם כן- אשר וההסרה תתבצע מיידית')){
+     
+     this.userService.deletePerson(this.selected.id, this.selected.className);
+     this.router.navigateByUrl('/')
+
     }
   }
   get checkActive(){

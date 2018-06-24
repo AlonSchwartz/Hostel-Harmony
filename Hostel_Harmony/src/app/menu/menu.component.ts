@@ -33,23 +33,24 @@ export class MenuComponent implements OnInit {
       userService.getResidents().then(()=>{ 
         this.getNames() 
       }); 
-
+      
     }
     name:string;
     current = new Date();
     selected:staff|resident;
     sel2:resident;
     staff:string[][] = new Array(["",""]);
-
+    
     residents:string[][] =new Array(["",""]);
     ress:resident[] = [];
     
     staa: staff[] = [];
     
+    
     getNames(){
       this.staa=this.userService.staffUsers;
       this.ress = this.userService.residentsUsers;
-
+     
       for (var i=0; i<this.staa.length; i++)
       {
         this.staff[i] = [this.staa[i].firstName + " " + this.staa[i].lastName,this.staa[i].id];
@@ -59,17 +60,7 @@ export class MenuComponent implements OnInit {
       {
         this.residents[i] = [this.ress[i].firstName + " " + this.ress[i].lastName,this.ress[i].id];
       }
-      //remove non active users //
-      for (var i=0; i<this.staff.length; i++){
-        if(!this.staa[i].isActive){
-          this.staff.splice(i)
-        }
-      }
-      for (var i=0; i<this.residents.length; i++){
-        if(!this.ress[i].isActive){
-          this.residents.splice(i)
-        } 
-      } 
+      
     }
     
     navigateTo(value) {
@@ -79,13 +70,13 @@ export class MenuComponent implements OnInit {
       return false;
     }
     ngOnInit() {
-
+      
     }
     sendVal(selval:string[][]){
-
+      
       let svConv = JSON.parse(JSON.stringify(selval));
       let svSplitted = svConv.split(',')
-
+      
       if((this.selected=this.userService.getSelectedUser(svSplitted,this.residents,this.ress))!=null || 
       (this.selected=this.userService.getSelectedUser(svSplitted,this.staff,this.staa))!=null){
         this.data.changeMessage(this.selected)        
@@ -102,4 +93,5 @@ export class MenuComponent implements OnInit {
     }
     
   }
+  
   

@@ -419,6 +419,21 @@ export class UserService  {
         return true;
         
       }
+      
+      /** Deletes resident/staff from DB */
+      deletePerson(id:string, classID:string): boolean{
+      
+        if (classID == "resident"){
+          this.residentsCollection.doc(JSON.parse(JSON.stringify(id))).delete();
+        }
+        
+        if (classID == "staff"){
+          this.staffCollection.doc(JSON.parse(JSON.stringify(id))).delete();
+        }
+        
+        return true;
+        
+      }
     }
     
     
