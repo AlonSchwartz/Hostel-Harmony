@@ -98,7 +98,7 @@ export class UserService  {
   
   /** Receives a resident/staff object and adds it to the relevant database. */
   addToDatabase(per: resident | staff){
-    console.log("--------")
+
     if (per.className == "resident"){
       this.residentsCollection.add(JSON.parse(JSON.stringify(per)));
     }
